@@ -9,11 +9,14 @@ import java.util.Collection;
 @Data
 public class UserDetailsImpl implements UserDetails {
 
+    private Long id;
     private String username;
     private String email;
     private String password;
 
+    public static UserDetailsImpl(User user) {
 
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
