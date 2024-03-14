@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,11 @@ public class SecurityConfigurator {
     private UserService userService;
 
     @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
     public void setTokenFilter(TokenFilter tokenFilter) {
         this.tokenFilter = tokenFilter;
     }
@@ -38,11 +44,13 @@ public class SecurityConfigurator {
         return new BCryptPasswordEncoder();
     }
 
+    @Primary
     @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    @Primary
     @Bean
     public AuthenticationManagerBuilder configureAuthenticationManagerBuilder(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
         authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder());

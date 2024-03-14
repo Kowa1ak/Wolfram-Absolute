@@ -1,6 +1,8 @@
 package com.stk.wolframabsolute;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,10 +55,11 @@ public class SecurityController {
         user.setEmail(signupRequest.getEmail());
         String hashed = passwordEncoder.encode(signupRequest.getPassword());
         user.setPassword(hashed);
+        userRepository.save(user);
         return ResponseEntity.ok("Success");
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/signin")
     ResponseEntity<?> signin(@RequestBody SigninRequest signinRequest) {
         Authentication authentication = null;
         try {

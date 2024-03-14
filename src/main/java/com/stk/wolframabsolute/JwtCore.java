@@ -1,6 +1,6 @@
 package com.stk.wolframabsolute;
 
-import io.jsonwebtoken.security.Keys;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,6 @@ public class JwtCore {
     public String getNameFromJwt(String token) {
         return Jwts.parser()
                 .setSigningKey(secret)
-                .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
