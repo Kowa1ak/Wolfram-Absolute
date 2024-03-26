@@ -51,8 +51,11 @@ export class RegisterComponent {
     this.authService.registerUser(postData as User).subscribe(
       response => {
         console.log(response);
+        this.authService.signOut(); // Выход из текущего аккаунта, если пользователь уже был авторизован
+        const email = postData.email || ''; // Проверка на undefined и присвоение пустой строки, если email не определен
+        sessionStorage.setItem('email', email); // Авторизация нового пользователя
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Register successfully' });
-        this.router.navigate(['login'])
+        this.router.navigate(['home']);
       },
       error => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });

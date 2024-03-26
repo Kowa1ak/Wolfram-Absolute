@@ -1,2 +1,13 @@
-<p>home works!</p>
-<p-button label="Sign out" (onClick)="logOut()"></p-button>
+<!-- home.component.html -->
+<p>Home works!</p>
+
+<div *ngIf="authService.isUserLoggedIn(); else loginButtons">
+  <!-- Кнопка "Sign Out" -->
+  <p-button label="Sign Out" (onClick)="signOut()"></p-button>
+</div>
+
+<ng-template #loginButtons>
+  <!-- Кнопки "Sign In" и "Sign Up" -->
+  <p-button label="Sign In" (onClick)="navigateToLogin()"></p-button>
+  <p-button label="Sign Up" (onClick)="navigateToRegister()"></p-button>
+</ng-template>

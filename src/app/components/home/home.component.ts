@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,10 +9,17 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  constructor(private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) {}
 
-  logOut() {
-    sessionStorage.clear();
-    this.router.navigate(['login']);
+  signOut() {
+    this.authService.signOut();
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }

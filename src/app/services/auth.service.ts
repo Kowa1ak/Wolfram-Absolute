@@ -7,12 +7,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
+  
   private baseUrl = 'http://localhost:3000';
 
-
   constructor(private http: HttpClient) { }
+  
+  isUserLoggedIn(): boolean {
+    return !!sessionStorage.getItem('email');
+  }
 
+  signOut() {
+    sessionStorage.removeItem('email');
+  }
   registerUser(userDetails: User) {
     return this.http.post(`${this.baseUrl}/users`, userDetails);
   }
