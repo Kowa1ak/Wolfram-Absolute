@@ -22,4 +22,7 @@ export class HomeComponent {
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
+  reloadPage(): void {
+    window.location.reload();
+  }
 }

@@ -1,0 +1,9 @@
+.home-icon {
+    cursor: pointer;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    font-size: 24px;
+    color: #ffffff;
+    z-index: 1000;
+  }

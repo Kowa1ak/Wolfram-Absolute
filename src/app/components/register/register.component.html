@@ -1,5 +1,11 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+
 <form [formGroup]="registerForm" (ngSubmit)="submitDetails()">
   <p-card header="Register" [style]="{ width: '360px' }">
+    <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
     <div class="field">
       <label for="fullName">FullName</label>
       <input

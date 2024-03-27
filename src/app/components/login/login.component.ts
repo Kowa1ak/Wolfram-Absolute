@@ -21,7 +21,9 @@ export class LoginComponent {
     private router: Router,
     private msgService: MessageService
   ) { }
-
+  navigateToHome() {
+    this.router.navigate(['']);
+  }
   get email() {
     return this.loginForm.controls['email'];
   }

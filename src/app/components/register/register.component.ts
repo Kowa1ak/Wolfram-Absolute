@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { User } from 'src/app/interfaces/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { passwordMatchValidator } from 'src/app/shared/password-match.directive';
-
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -28,7 +28,9 @@ export class RegisterComponent {
     private messageService: MessageService,
     private router: Router
   ) { }
-
+  navigateToHome() {
+    this.router.navigate(['']);
+  }
   get fullName() {
     return this.registerForm.controls['fullName'];
   }
