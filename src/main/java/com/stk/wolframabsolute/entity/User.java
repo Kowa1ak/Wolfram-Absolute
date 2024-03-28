@@ -1,4 +1,4 @@
-package com.stk.wolframabsolute;
+package com.stk.wolframabsolute.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -27,15 +28,19 @@ public class User implements UserDetails {
     private String email;
     @Column(name="password")
     private String password;
+    @Transient
+    private String passwordConfirm;
+    //FetchType.EAGER – «жадная» загрузка,
+    // т.е. список ролей загружается вместе с пользователем сразу
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
+    public User(){}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Возвращаем коллекцию ролей пользователя
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        return authorities;
+        return getRoles();
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
