@@ -26,3 +26,6 @@ export class HomeComponent {
     window.location.reload();
   }
 }
+
+
+

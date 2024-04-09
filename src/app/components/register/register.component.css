@@ -7,3 +7,9 @@
     color: #ffffff;
     z-index: 1000;
   }
+  body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0F102B;
+}
