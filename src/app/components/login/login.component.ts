@@ -12,9 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
+    password: ['', [Validators.required, Validators.minLength(4)]],
   })
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -28,7 +27,6 @@ export class LoginComponent {
     return this.loginForm.controls['email'];
   }
   get password() { return this.loginForm.controls['password']; }
-
   loginUser() {
     const { email, password } = this.loginForm.value;
     this.authService.getUserByEmail(email as string).subscribe(
