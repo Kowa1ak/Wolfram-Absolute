@@ -1,12 +1,13 @@
 package com.stk.wolframabsolute.entity;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
 import lombok.Generated;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
