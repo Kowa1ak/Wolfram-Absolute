@@ -1,4 +1,4 @@
-package ru.kors.springsecurityexample;
+package com.stk.wolframabsolute;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,13 +1,13 @@
-package ru.kors.springsecurityexample.services;
+package com.stk.wolframabsolute.service;
 
 import com.github.javafaker.Faker;
+import com.stk.wolframabsolute.entity.Application;
+import com.stk.wolframabsolute.entity.User;
+import com.stk.wolframabsolute.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kors.springsecurityexample.models.Application;
-import ru.kors.springsecurityexample.models.MyUser;
-import ru.kors.springsecurityexample.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -43,7 +43,7 @@ public class AppService {
                 .orElse(null);
     }
 
-    public void addUser(MyUser user) {
+    public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }

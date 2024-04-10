@@ -1,4 +1,4 @@
-package ru.kors.springsecurityexample.models;
+package com.stk.wolframabsolute.entity;
 
 import lombok.Builder;
 import lombok.Data;

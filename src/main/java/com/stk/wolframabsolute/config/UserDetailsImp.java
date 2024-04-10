@@ -1,18 +1,17 @@
-package ru.kors.springsecurityexample.config;
+package com.stk.wolframabsolute.config;
 
+import com.stk.wolframabsolute.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import ru.kors.springsecurityexample.models.MyUser;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class MyUserDetails implements UserDetails {
-    private MyUser user;
+public class UserDetailsImp implements org.springframework.security.core.userdetails.UserDetails {
+    private User user;
 
-    public MyUserDetails(MyUser user){
+    public UserDetailsImp(User user){
         this.user = user;
     }
 
@@ -30,7 +29,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getUsername();
     }
 
     @Override

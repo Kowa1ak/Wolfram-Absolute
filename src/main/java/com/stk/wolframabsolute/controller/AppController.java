@@ -1,16 +1,16 @@
-package ru.kors.springsecurityexample.controllers;
+package com.stk.wolframabsolute.controller;
 
+import com.stk.wolframabsolute.entity.Application;
+import com.stk.wolframabsolute.entity.User;
+import com.stk.wolframabsolute.service.AppService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.kors.springsecurityexample.models.Application;
-import ru.kors.springsecurityexample.models.MyUser;
-import ru.kors.springsecurityexample.services.AppService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/apps")
+@RequestMapping("/wolfram")
 @AllArgsConstructor
 public class AppController {
     private AppService service;
@@ -32,9 +32,11 @@ public class AppController {
         return service.applicationByID(id);
     }
 
-    @PostMapping("/new-user")
-    public String addUser(@RequestBody MyUser user) {
+    @PostMapping("/registration")
+    public String addUser(@RequestBody User user) {
         service.addUser(user);
-        return "User is saved";
+        return "Saved user: " + user.toString();
     }
+
+    
 }

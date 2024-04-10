@@ -10,11 +10,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>ru.kors</groupId>
-	<artifactId>spring-security-example</artifactId>
+	<groupId>com.stk</groupId>
+	<artifactId>WolframAbsolute</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security-example</name>
-	<description>Demo project for Spring Boot</description>
+	<name>WolframAbsolute</name>
+	<description>WolframAbsolute</description>
 
 	<properties>
 		<java.version>17</java.version>
