@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("wolfram/welcome", "wolfram/registration").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("wolfram/welcome", "wolfram/registration", "wolfram/login").permitAll()
                         .requestMatchers("wolfram/**").authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();

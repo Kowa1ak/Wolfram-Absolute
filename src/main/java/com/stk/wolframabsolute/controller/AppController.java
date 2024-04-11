@@ -3,6 +3,7 @@ package com.stk.wolframabsolute.controller;
 import com.stk.wolframabsolute.entity.Application;
 import com.stk.wolframabsolute.entity.User;
 import com.stk.wolframabsolute.service.AppService;
+import com.stk.wolframabsolute.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AppController {
     private AppService service;
+    private UserService userService;
 
     @GetMapping("/welcome")
     public String welcome(){
@@ -32,11 +34,11 @@ public class AppController {
         return service.applicationByID(id);
     }
 
-    @PostMapping("/registration")
+    /*@PostMapping("/registration")
     public String addUser(@RequestBody User user) {
-        service.addUser(user);
+        userService.addUser(user);
         return "Saved user: " + user.toString();
-    }
+    }*/
 
-    
+
 }

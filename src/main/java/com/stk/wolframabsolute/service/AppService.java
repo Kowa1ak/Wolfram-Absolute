@@ -43,8 +43,8 @@ public class AppService {
                 .orElse(null);
     }
 
-    public void addUser(User user) {
+    /*public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
-    }
+    }*/
 }
