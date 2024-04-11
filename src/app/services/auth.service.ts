@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'http://localhost:8080/wolfram'; // URL вашего Spring сервера
 
   constructor(private http: HttpClient) { }
   
@@ -19,13 +19,16 @@ export class AuthService {
   signOut() {
     sessionStorage.removeItem('email');
   }
-  registerUser(userDetails: User) {
-    return this.http.post(`${this.baseUrl}/users`, userDetails);
+
+  registerUser(userDetails: User): Observable<any> {
+    return this.http.post(`${this.baseUrl}/registration`, userDetails, {responseType: 'text'});
+  }
+
+  loginUser(userDetails: User): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, userDetails);
   }
 
   getUserByEmail(email: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/users?email=${email}`);
   }
-
-
 }

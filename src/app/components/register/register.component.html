@@ -23,17 +23,17 @@
     <div class="field">
       <input
         type="text"
-        formControlName="fullName"
-        name="fullName"
-        placeholder="FullName"
-        [class.error]="fullName.invalid && (fullName.dirty || fullName.touched)"
+        formControlName="username"
+        name="username"
+        placeholder="username"
+        [class.error]="username.invalid && (username.dirty || username.touched)"
       />
       <small
-        *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
+        *ngIf="username.invalid && (username.dirty || username.touched)"
         class="block p-error"
       >
-        <div *ngIf="fullName.errors?.['required']">Name is required</div>
-        <div *ngIf="fullName.errors?.['pattern']">Enter a valid Name</div>
+        <div *ngIf="username.errors?.['required']">Name is required</div>
+        <div *ngIf="username.errors?.['pattern']">Enter a valid Name</div>
       </small>
     </div>
     <div class="field">
