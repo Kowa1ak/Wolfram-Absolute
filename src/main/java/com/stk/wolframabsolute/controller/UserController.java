@@ -17,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/wolfram")
@@ -29,18 +32,35 @@ public class UserController {
 
 
     @PostMapping("/registration")
-    public String addUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, String>> addUser(@RequestBody User user) {
+        user.setRoles("ROLE_USER");
         userService.addUser(user);
-        return "Saved user: " + user.toString();
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Saved user: " + user.toString());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody SigninRequest signinRequest) {
-        // Проверка аутентификации пользователя
+    public ResponseEntity<Map<String, String>> login(@RequestBody SigninRequest signinRequest) {
+        Map<String, String> response = new HashMap<>();
         if (userService.authenticateUser(signinRequest.getEmail(), signinRequest.getPassword())) {
-            return ResponseEntity.ok("User logged in successfully");
+            User user = userService.getUserByEmail(signinRequest.getEmail());
+            response.put("message", "User logged in successfully");
+            response.put("username", user.getUsername());
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            response.put("error", "Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
+        User user = userService.getUserByEmail(email);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 

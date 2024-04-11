@@ -19,6 +19,17 @@ public class UserService {
         repository.save(user);
     }
 
+    public User getUserByEmail(String email) {
+        Optional<User> optionalUser = repository.findByEmail(email);
+        // Check if user is present
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        }
+        // User not found
+        return null;
+    }
+
+
     public boolean authenticateUser(String email, String password) {
         Optional<User> optionalUser = repository.findByEmail(email);
 
