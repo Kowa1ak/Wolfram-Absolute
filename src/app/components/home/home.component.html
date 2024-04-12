@@ -8,49 +8,56 @@
   href="https://fonts.googleapis.com/css2?family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
   rel="stylesheet"
 />
-<body style="background-image: url(https://i.imgur.com/9klOJtW.png)">
-  <header>
-    <div class="logo" (click)="reloadPage()"></div>
-    <div class="authButtons">
-      <div *ngIf="authService.isUserLoggedIn(); else loginButtons">
-        <button class="SignButton" (click)="navigateToLogin()">Account</button>
-        <button class="SignUpButton" (click)="signOut()">Sign Out</button>
-      </div>
+<body>
+  <div class="mainContent">
+    <header>
+      <div class="logo" (click)="reloadPage()"></div>
+      <div class="authButtons">
+        <div *ngIf="authService.isUserLoggedIn(); else loginButtons">
+          <button class="SignButton" (click)="navigateToLogin()">
+            Account
+          </button>
+          <button class="SignUpButton" (click)="signOut()">Sign Out</button>
+        </div>
 
-      <ng-template #loginButtons>
-        <button class="SignButton" (click)="navigateToLogin()">About</button>
-        <button class="SignButton" (click)="navigateToLogin()">Sign In</button>
-        <button class="SignUpButton" (click)="navigateToRegister()">
-          Sign Up
-        </button>
-      </ng-template>
-    </div>
-  </header>
-  <div class="nameProject">WOLFRAM ABSOLUTE</div>
-  <div class="formContainer">
-    <div class="formList formBasic">
-      <div class="formName">Basic</div>
-      <ul class="listOperation">
-        <li>Basic Arithmetic Operations</li>
-        <li>Operations with fractions</li>
-        <li>Calculation of trigonometric functions</li>
-        <li>Exponentiation</li>
-        <li>Transfers to other number systems</li>
-        <li>Calculating compound interest</li>
-      </ul>
-    </div>
-    <div class="formList formMatrix">
-      <div class="formName">Matrix</div>
-      <ul class="listOperation">
-        <li>Matrix Operations</li>
-        <li>Vector Arithmetic</li>
-      </ul>
-    </div>
-    <div class="formList formIntegral">
-      <div class="formName">Integral</div>
-      <ul class="listOperation">
-        <li>Calculation of integrals</li>
-      </ul>
+        <ng-template #loginButtons>
+          <button class="SignButton" (click)="navigateToLogin()">About</button>
+          <button class="SignButton" (click)="navigateToLogin()">
+            Sign In
+          </button>
+          <button class="SignUpButton" (click)="navigateToRegister()">
+            Sign Up
+          </button>
+        </ng-template>
+      </div>
+    </header>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="formContainer">
+      <div class="formList formBasic">
+        <div class="formName">Basic</div>
+        <ul class="listOperation">
+          <li>Basic Arithmetic Operations</li>
+          <li>Operations with fractions</li>
+          <li>Calculation of trigonometric functions</li>
+          <li>Exponentiation</li>
+          <li>Transfers to other number systems</li>
+          <li>Calculating compound interest</li>
+        </ul>
+      </div>
+      <div class="formList formMatrix">
+        <div class="formName">Matrix</div>
+        <ul class="listOperation">
+          <li>Matrix Operations</li>
+          <li>Vector Arithmetic</li>
+        </ul>
+      </div>
+      <div class="formList formIntegral">
+        <div class="formName">Integral</div>
+        <ul class="listOperation">
+          <li>Calculation of integrals</li>
+        </ul>
+      </div>
     </div>
   </div>
+  <div class="backImage"></div>
 </body>

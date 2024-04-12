@@ -18,6 +18,7 @@ export class AuthService {
 
   signOut() {
     sessionStorage.removeItem('email');
+    sessionStorage.removeItem('username');
   }
 
   registerUser(userDetails: User): Observable<any> {

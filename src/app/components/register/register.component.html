@@ -13,97 +13,106 @@
   rel="stylesheet"
 />
 <body style="background-image: url(https://i.imgur.com/P3vowqA.png)">
-  <div class="logo" (click)="navigateToHome()"></div>
-  <div class="nameProject">WOLFRAM ABSOLUTE</div>
-  <form [formGroup]="registerForm" (ngSubmit)="submitDetails()">
-    <div class="goHome">
-      <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
-    </div>
-    <h1 class="form-title">SIGN UP NOW</h1>
-    <div class="field">
-      <input
-        type="text"
-        formControlName="username"
-        name="username"
-        placeholder="username"
-        [class.error]="username.invalid && (username.dirty || username.touched)"
-      />
-      <small
-        *ngIf="username.invalid && (username.dirty || username.touched)"
-        class="block p-error"
-      >
-        <div *ngIf="username.errors?.['required']">Name is required</div>
-        <div *ngIf="username.errors?.['pattern']">Enter a valid Name</div>
-      </small>
-    </div>
-    <div class="field">
-      <input
-        type="text"
-        formControlName="email"
-        name="email"
-        placeholder="EMAIL"
-        [class.error]="email.invalid && (email.dirty || email.touched)"
-      />
-      <small
-        *ngIf="email.invalid && (email.dirty || email.touched)"
-        class="block p-error"
-      >
-        <div *ngIf="email.errors?.['required']">Email is required</div>
-        <div *ngIf="email.errors?.['email']">Email should be valid</div>
-      </small>
-    </div>
-    <div class="field">
-      <input
-        type="password"
-        formControlName="password"
-        name="password"
-        placeholder="PASSWORD"
-        [class.error]="password.invalid && (password.dirty || password.touched)"
-      />
-      <div
-        *ngIf="password.invalid && (password.dirty || password.touched)"
-        class="p-error"
-      >
-        <small *ngIf="password.errors?.['required']"
-          >Password is required</small
-        >
-        <small *ngIf="password.errors?.['minlength']"
-          >Password must be at least 4 characters long</small
-        >
-      </div>
-    </div>
-    <div class="field">
-      <input
-        type="password"
-        formControlName="confirmPassword"
-        name="confirmPassword"
-        placeholder="CONFIRM PASSWORD"
-        [class.error]="
-          confirmPassword.invalid &&
-          (confirmPassword.dirty || confirmPassword.touched)
-        "
-      />
-      <small
-        *ngIf="
-          confirmPassword.invalid &&
-          (confirmPassword.dirty || confirmPassword.touched)
-        "
-        class="block p-error"
-      >
-        <div *ngIf="confirmPassword.errors?.['required']">
-          Confirm the password
+  <div class="mainContent">
+    <div class="logo" (click)="navigateToHome()"></div>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="formContent">
+      <form [formGroup]="registerForm" (ngSubmit)="submitDetails()">
+        <div class="goHome">
+          <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
         </div>
-      </small>
-      <small
-        class="block p-error"
-        *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid"
-      >
-        Password should match
-      </small>
+        <h1 class="form-title">SIGN UP NOW</h1>
+        <div class="field">
+          <input
+            type="text"
+            formControlName="username"
+            name="username"
+            placeholder="USERNAME"
+            [class.error]="
+              username.invalid && (username.dirty || username.touched)
+            "
+          />
+          <small
+            *ngIf="username.invalid && (username.dirty || username.touched)"
+            class="block p-error"
+          >
+            <div *ngIf="username.errors?.['required']">Name is required</div>
+            <div *ngIf="username.errors?.['pattern']">Enter a valid Name</div>
+          </small>
+        </div>
+        <div class="field">
+          <input
+            type="text"
+            formControlName="email"
+            name="email"
+            placeholder="EMAIL"
+            [class.error]="email.invalid && (email.dirty || email.touched)"
+          />
+          <small
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="block p-error"
+          >
+            <div *ngIf="email.errors?.['required']">Email is required</div>
+            <div *ngIf="email.errors?.['email']">Email should be valid</div>
+          </small>
+        </div>
+        <div class="field">
+          <input
+            type="password"
+            formControlName="password"
+            name="password"
+            placeholder="PASSWORD"
+            [class.error]="
+              password.invalid && (password.dirty || password.touched)
+            "
+          />
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="p-error"
+          >
+            <small *ngIf="password.errors?.['required']"
+              >Password is required</small
+            >
+            <small *ngIf="password.errors?.['minlength']"
+              >Password must be at least 4 characters long</small
+            >
+          </div>
+        </div>
+        <div class="field">
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            name="confirmPassword"
+            placeholder="CONFIRM PASSWORD"
+            [class.error]="
+              confirmPassword.invalid &&
+              (confirmPassword.dirty || confirmPassword.touched)
+            "
+          />
+          <small
+            *ngIf="
+              confirmPassword.invalid &&
+              (confirmPassword.dirty || confirmPassword.touched)
+            "
+            class="block p-error"
+          >
+            <div *ngIf="confirmPassword.errors?.['required']">
+              Confirm the password
+            </div>
+          </small>
+          <small
+            class="block p-error"
+            *ngIf="registerForm.errors?.['passwordMismatch'] && confirmPassword.valid && password.valid"
+          >
+            Password should match
+          </small>
+        </div>
+        <button [disabled]="registerForm.invalid" type="submit">Sign Up</button>
+        <div class="addOption">
+          Already a member? <a routerLink="/login">Login</a>
+        </div>
+      </form>
     </div>
-    <button [disabled]="registerForm.invalid" type="submit">Sign Up</button>
-    <div class="addOption">
-      Already a member? <a routerLink="/login">Login</a>
-    </div>
-  </form>
+  </div>
+  <div class="backImage"></div>
 </body>
