@@ -1,0 +1,61 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+  rel="stylesheet"
+/>
+<body>
+  <div class="mainContent">
+    <div class="logo" (click)="navigateToHome()"></div>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="formContent">
+      <form (ngSubmit)="submitDetails()">
+        <div class="goHome">
+          <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+        </div>
+        <h1 class="form-title">ACCOUNT SETTINGS</h1>
+        <div class="field">
+          <div class="labelName">USERNAME</div>
+          <div class="labelInfo">Danila</div>
+        </div>
+        <div class="field">
+          <div class="labelName">EMAIL</div>
+          <div class="labelInfo">Danila@gmail.com</div>
+        </div>
+        <div class="field">
+          <div class="labelName">NEW PASSWORD</div>
+          <input
+            type="password"
+            formControlName="password"
+            name="password"
+            placeholder=""
+          />
+        </div>
+        <div class="field">
+          <div class="labelName">REPEAT PASSWORD</div>
+          <input
+            type="password"
+            formControlName="password"
+            name="password"
+            placeholder=""
+          />
+        </div>
+        <div class="buttons">
+          <button class="buttonCancel" (click)="navigateToHome()">
+            Cancel
+          </button>
+          <button class="buttonChange">Change Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>

@@ -15,12 +15,16 @@ import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
 import { MatIconModule } from '@angular/material/icon';
+import { AccountComponent } from './components/account/account.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    AccountComponent,
+    
   ],
   imports: [
     BrowserModule,

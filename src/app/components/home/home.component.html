@@ -14,13 +14,16 @@
       <div class="logo" (click)="reloadPage()"></div>
       <div class="authButtons">
         <div *ngIf="authService.isUserLoggedIn(); else loginButtons">
-          <button class="SignButton" (click)="navigateToLogin()">
+          <button class="SignButton" (click)="navigateToAccount()">
             Account
           </button>
           <button class="SignUpButton" (click)="signOut()">Sign Out</button>
         </div>
 
         <ng-template #loginButtons>
+          <button class="SignButton" (click)="navigateToAccount()">
+            Account
+          </button>
           <button class="SignButton" (click)="navigateToLogin()">About</button>
           <button class="SignButton" (click)="navigateToLogin()">
             Sign In
