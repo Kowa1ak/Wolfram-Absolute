@@ -12,24 +12,44 @@
   <div class="mainContent">
     <header>
       <div class="logo" (click)="reloadPage()"></div>
+      <div class="languages">
+        <button (click)="toggleLanguageOptions()" class="languageButton">
+          {{ languageService.activeLanguage }}
+        </button>
+        <div *ngIf="showLanguageOptions" class="languageOptions">
+          <button (click)="setActiveLanguage('RU')" class="languageButton">
+            RU
+          </button>
+          <button (click)="setActiveLanguage('BY')" class="languageButton">
+            BY
+          </button>
+          <button (click)="setActiveLanguage('EN')" class="languageButton">
+            EN
+          </button>
+        </div>
+      </div>
       <div class="authButtons">
         <div *ngIf="authService.isUserLoggedIn(); else loginButtons">
-          <button class="SignButton" (click)="navigateToAccount()">
-            Account
+          <button class="SignButton" (click)="navigateToAccount()" i18n>
+            {{ "home.account" | translate : languageService.locale.language }}
           </button>
-          <button class="SignUpButton" (click)="signOut()">Sign Out</button>
+          <button class="SignUpButton" (click)="signOut()">
+            {{ "home.SignOut" | translate : languageService.locale.language }}
+          </button>
         </div>
 
         <ng-template #loginButtons>
           <button class="SignButton" (click)="navigateToAccount()">
-            Account
+            {{ "home.account" | translate : languageService.locale.language }}
           </button>
-          <button class="SignButton" (click)="navigateToLogin()">About</button>
           <button class="SignButton" (click)="navigateToLogin()">
-            Sign In
+            {{ "home.about" | translate : languageService.locale.language }}
+          </button>
+          <button class="SignButton" (click)="navigateToLogin()">
+            {{ "home.SignIn" | translate : languageService.locale.language }}
           </button>
           <button class="SignUpButton" (click)="navigateToRegister()">
-            Sign Up
+            {{ "home.SignUp" | translate : languageService.locale.language }}
           </button>
         </ng-template>
       </div>
@@ -37,27 +57,72 @@
     <div class="nameProject">WOLFRAM ABSOLUTE</div>
     <div class="formContainer">
       <div class="formList formBasic">
-        <div class="formName">Basic</div>
+        <div class="formName">
+          {{ "home.basic" | translate : languageService.locale.language }}
+        </div>
         <ul class="listOperation">
-          <li>Basic Arithmetic Operations</li>
-          <li>Operations with fractions</li>
-          <li>Calculation of trigonometric functions</li>
-          <li>Exponentiation</li>
-          <li>Transfers to other number systems</li>
-          <li>Calculating compound interest</li>
+          <li>
+            {{
+              "home.arithmetic" | translate : languageService.locale.language
+            }}
+          </li>
+          <li>
+            {{ "home.fractions" | translate : languageService.locale.language }}
+          </li>
+          <li>
+            {{
+              "home.trigonometric" | translate : languageService.locale.language
+            }}
+          </li>
+          <li>
+            {{
+              "home.exponentiation"
+                | translate : languageService.locale.language
+            }}
+          </li>
+          <li>
+            {{
+              "home.numberSystems" | translate : languageService.locale.language
+            }}
+          </li>
+          <li>
+            {{
+              "home.compoundInterest"
+                | translate : languageService.locale.language
+            }}
+          </li>
         </ul>
       </div>
       <div class="formList formMatrix">
-        <div class="formName">Matrix</div>
+        <div class="formName">
+          {{ "home.matrix" | translate : languageService.locale.language }}
+        </div>
         <ul class="listOperation">
-          <li>Matrix Operations</li>
-          <li>Vector Arithmetic</li>
+          <li>
+            {{
+              "home.matrixOperations"
+                | translate : languageService.locale.language
+            }}
+          </li>
+          <li>
+            {{
+              "home.vectorArithmetic"
+                | translate : languageService.locale.language
+            }}
+          </li>
         </ul>
       </div>
       <div class="formList formIntegral">
-        <div class="formName">Integral</div>
+        <div class="formName">
+          {{ "home.integral" | translate : languageService.locale.language }}
+        </div>
         <ul class="listOperation">
-          <li>Calculation of integrals</li>
+          <li>
+            {{
+              "home.integralCalculation"
+                | translate : languageService.locale.language
+            }}
+          </li>
         </ul>
       </div>
     </div>

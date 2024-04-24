@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
 import { MatIconModule } from '@angular/material/icon';
 import { AccountComponent } from './components/account/account.component';
+import { LocalizationModule } from './localization/localization.module';
+import { L10nTranslationModule } from 'angular-l10n';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { AccountComponent } from './components/account/account.component';
     HttpClientModule,
     ToastModule,
     MatIconModule,
+    LocalizationModule,
+    L10nTranslationModule,
     BrowserAnimationsModule
   ],
   providers: [MessageService],

@@ -1,0 +1,24 @@
+{
+  "home": {
+    "account": "Account",
+    "about": "About",
+    "SignOut": "Sign Out",
+    "SignIn": "Sign In",
+    "SignUp": "Sign Up",
+
+    "basic": "Basic",
+    "arithmetic": "Arithmetic",
+    "fractions": "Fractions",
+    "trigonometric": "Trigonometric",
+    "exponentiation": "Exponentiation",
+    "numberSystems": "Number Systems",
+    "compoundInterest": "Compound Interest",
+
+    "matrix": "Matrix",
+    "matrixOperations": "Matrix Operations",
+    "vectorArithmetic": "Vector Arithmetic",
+
+    "integral": "Integral",
+    "integralCalculation": "Integral Calculation"
+  }
+}

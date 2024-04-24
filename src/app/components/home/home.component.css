@@ -20,6 +20,32 @@ body {
   background-position: center;
   z-index: -1;
 }
+.languages {
+  padding-top: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: flex-start;
+  float: left;
+  width: 200px;
+  height: 150px;
+}
+
+.languageOptions {
+  margin-top: 10px;
+  width: 90%;
+  height: 50%;
+  border-radius: 20px;
+  background-color: #23243C;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.languageButton {
+  color: #FFF;
+  border: none;
+  font-family: "Inter", sans-serif;
+}
 .logo {
     float: left;
     width: 135px;
@@ -51,7 +77,8 @@ button {
 }
 .SignUpButton {
     margin-left: 20px;
-    width: 130px;
+    padding: 0 20px;
+    width: auto;
     height: 50px;
     border: 1px solid white;
     border-radius: 10px;

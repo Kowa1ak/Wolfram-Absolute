@@ -1,0 +1,23 @@
+{
+  "home": {
+    "account": "Акаўнт",
+    "about": "Пра нас",
+    "SignOut": "Выйсці",
+    "SignIn": "Увайсці",
+    "SignUp": "Рэгістрацыя",
+    "basic": "Асноўныя",
+    "arithmetic": "Арыфметыка",
+    "fractions": "Дробі",
+    "trigonometric": "Трыганаметрыя",
+    "exponentiation": "Падняцце ў ступень",
+    "numberSystems": "Сістэмы лічэння",
+    "compoundInterest": "Складаныя прадзенты",
+
+    "matrix": "Матрыца",
+    "matrixOperations": "Аперацыі з матрыцамі",
+    "vectorArithmetic": "Арыфметыка вектараў",
+
+    "integral": "Інтэграл",
+    "integralCalculation": "Вылічэнне інтэграла"
+  }
+}
