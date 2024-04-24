@@ -6,13 +6,13 @@ import { LanguageService } from 'src/app/services/localization.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    public languageService: LanguageService // Обратите внимание, что сервис теперь публичный
+    public languageService: LanguageService
   ) {}
 
   ngOnInit() {
@@ -24,11 +24,11 @@ export class HomeComponent implements OnInit {
   }
   get showLanguageOptions() {
     return this.languageService.showLanguageOptions;
-}
+  }
 
-get activeLanguage() {
+  get activeLanguage() {
     return this.languageService.activeLanguage;
-}
+  }
   toggleLanguageOptions() {
     this.languageService.toggleLanguageOptions();
   }

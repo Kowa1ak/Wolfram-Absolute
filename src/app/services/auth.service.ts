@@ -4,13 +4,12 @@ import { User } from '../interfaces/auth';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  
   private baseUrl = 'http://localhost:8080/wolfram'; // URL вашего Spring сервера
-  constructor(private http: HttpClient) { }
-  
+  constructor(private http: HttpClient) {}
+
   isUserLoggedIn(): boolean {
     return !!sessionStorage.getItem('email');
   }
@@ -21,7 +20,9 @@ export class AuthService {
   }
 
   registerUser(userDetails: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/registration`, userDetails, {responseType: 'text'});
+    return this.http.post(`${this.baseUrl}/registration`, userDetails, {
+      responseType: 'text',
+    });
   }
 
   loginUser(userDetails: User): Observable<any> {
