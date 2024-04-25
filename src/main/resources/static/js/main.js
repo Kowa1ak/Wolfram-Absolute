@@ -23,7 +23,7 @@ function connect(event) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
-        var socket = new SockJS('/wolfram/chat/ws');
+        var socket = new SockJS('/wolfram/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);

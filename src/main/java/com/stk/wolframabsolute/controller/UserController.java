@@ -30,7 +30,6 @@ public class UserController {
     private UserDetailsImpService userDetailsImpService;
     private PasswordEncoder passwordEncoder;
 
-
     @PostMapping("/registration")
     public ResponseEntity<Map<String, String>> addUser(@RequestBody User user) {
         user.setRoles("ROLE_USER");

@@ -28,12 +28,6 @@ public class AppController {
         return service.allApplications();
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public Application applicationByID(@PathVariable int id) {
-        return service.applicationByID(id);
-    }
-
     /*@PostMapping("/registration")
     public String addUser(@RequestBody User user) {
         userService.addUser(user);
