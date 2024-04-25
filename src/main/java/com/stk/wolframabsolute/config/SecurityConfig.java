@@ -28,8 +28,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("wolfram/welcome", "wolfram/registration", "wolfram/login", "wolfram/users").permitAll()
-                        .requestMatchers("wolfram/**").authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("wolfram/welcome", "wolfram/registration", "wolfram/login", "wolfram/users", "wolfram/chat", "ws").permitAll()
+                        .requestMatchers("wolfram/chat/**").authenticated()
+                        .requestMatchers("wolfram/**").authenticated()
+                )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();
     }

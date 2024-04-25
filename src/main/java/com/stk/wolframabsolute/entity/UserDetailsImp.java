@@ -1,4 +1,4 @@
-package com.stk.wolframabsolute.config;
+package com.stk.wolframabsolute.entity;
 
 import com.stk.wolframabsolute.entity.User;
 import org.springframework.security.core.GrantedAuthority;

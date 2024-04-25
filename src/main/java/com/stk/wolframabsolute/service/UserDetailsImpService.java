@@ -1,6 +1,6 @@
 package com.stk.wolframabsolute.service;
 
-import com.stk.wolframabsolute.config.UserDetailsImp;
+import com.stk.wolframabsolute.entity.UserDetailsImp;
 import com.stk.wolframabsolute.entity.User;
 import com.stk.wolframabsolute.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
