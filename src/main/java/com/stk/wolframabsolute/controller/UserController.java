@@ -53,6 +53,27 @@ public class UserController {
         }
     }
 
+    @PutMapping("/changePassword")
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody SigninRequest signinRequest) {
+        User user = userService.getUserByEmail(signinRequest.getEmail());
+        if (user != null) {
+
+            user.setPassword(signinRequest.getPassword()); // Установите исходный пароль
+
+            userService.updateUserPassword(user);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Password changed successfully for user: " + user.getUsername());
+            return ResponseEntity.ok(response);
+        } else {
+            // Пользователь не найден
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
+
+
     @GetMapping("/users")
     public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
         User user = userService.getUserByEmail(email);

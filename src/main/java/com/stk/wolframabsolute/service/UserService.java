@@ -19,6 +19,15 @@ public class UserService {
         repository.save(user);
     }
 
+    public void updateUserPassword(User user) {
+        Optional<User> optionalUser = repository.findByEmail(user.getEmail());
+        if (optionalUser.isPresent()) {
+            User existingUser = optionalUser.get();
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            repository.save(existingUser);
+        }
+    }
+
     public User getUserByEmail(String email) {
         Optional<User> optionalUser = repository.findByEmail(email);
         // Check if user is present
