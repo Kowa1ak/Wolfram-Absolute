@@ -49,6 +49,6 @@
     "passwordMismatch": "Passwords do not match",
     "alreadyMember": "Already a member?",
     "SignUp": "Sign Up",
-    "login": "Login"
+    "logIn": "Login"
   }
 }

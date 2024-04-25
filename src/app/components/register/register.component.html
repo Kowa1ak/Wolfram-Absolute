@@ -53,7 +53,9 @@
             type="text"
             formControlName="username"
             name="username"
-            placeholder="USERNAME"
+            placeholder="{{
+              'register.username' | translate : languageService.locale.language
+            }}"
             [class.error]="
               username.invalid && (username.dirty || username.touched)
             "
@@ -81,7 +83,9 @@
             type="text"
             formControlName="email"
             name="email"
-            placeholder="EMAIL"
+            placeholder="{{
+              'register.email' | translate : languageService.locale.language
+            }}"
             [class.error]="email.invalid && (email.dirty || email.touched)"
           />
           <small
@@ -107,7 +111,9 @@
             type="password"
             formControlName="password"
             name="password"
-            placeholder="PASSWORD"
+            placeholder="{{
+              'register.password' | translate : languageService.locale.language
+            }}"
             [class.error]="
               password.invalid && (password.dirty || password.touched)
             "
@@ -135,7 +141,10 @@
             type="password"
             formControlName="confirmPassword"
             name="confirmPassword"
-            placeholder="CONFIRM PASSWORD"
+            placeholder="{{
+              'register.confirmPassword'
+                | translate : languageService.locale.language
+            }}"
             [class.error]="
               confirmPassword.invalid &&
               (confirmPassword.dirty || confirmPassword.touched)
@@ -174,7 +183,7 @@
               | translate : languageService.locale.language
           }}
           <a routerLink="/login">{{
-            "register.login" | translate : languageService.locale.language
+            "register.logIn" | translate : languageService.locale.language
           }}</a>
         </div>
       </form>
