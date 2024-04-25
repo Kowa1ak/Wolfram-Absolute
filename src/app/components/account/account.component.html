@@ -34,8 +34,8 @@
           <div class="labelName">NEW PASSWORD</div>
           <input
             type="password"
-            formControlName="password"
-            name="password"
+            formControlName="newPassword"
+            name="newPassword"
             placeholder=""
           />
         </div>
@@ -43,8 +43,8 @@
           <div class="labelName">REPEAT PASSWORD</div>
           <input
             type="password"
-            formControlName="password"
-            name="password"
+            formControlName="confirmPassword"
+            name="confirmPassword"
             placeholder=""
           />
         </div>
@@ -52,7 +52,9 @@
           <button class="buttonCancel" (click)="navigateToHome()">
             Cancel
           </button>
-          <button class="buttonChange">Change Password</button>
+          <button class="buttonChange" (click)="changePassword()">
+            Change Password
+          </button>
         </div>
       </form>
     </div>

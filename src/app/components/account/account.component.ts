@@ -8,23 +8,68 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Location } from '@angular/common';
 import { passwordMatchValidator } from 'src/app/shared/password-match.directive';
 import { MatIconModule } from '@angular/material/icon';
-
+import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.css'],
 })
 export class AccountComponent {
+  form: FormGroup;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
     private location: Location,
-    private router: Router
-  ) { }
+    private router: Router,
+    private http: HttpClient
+  ) {
+    this.form = new FormGroup({
+      newPassword: new FormControl(''),
+      confirmPassword: new FormControl(''),
+    });
+  }
+  changePassword() {
+    // Проверка, что форма и ее поля были инициализированы
+    if (
+      !this.form ||
+      !this.form.get('newPassword') ||
+      !this.form.get('confirmPassword')
+    ) {
+      console.error('Form or form fields are not initialized');
+      return;
+    }
+
+    // Получение значений из полей ввода
+    const newPassword = this.form.get('newPassword')!.value;
+    const confirmPassword = this.form.get('confirmPassword')!.value;
+
+    // Проверка, что пароли совпадают
+    if (newPassword !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    // Отправка запроса на сервер
+    this.http
+      .post('http://your-api-url.com/change-password', {
+        password: newPassword,
+      })
+      .subscribe(
+        (response) => {
+          // Обработка ответа сервера
+          console.log(response);
+          this.navigateToHome();
+        },
+        (error) => {
+          // Обработка ошибки
+          console.error(error);
+        }
+      );
+  }
   navigateToHome() {
     this.router.navigate(['']);
   }
-  submitDetails() {
-  }
+  submitDetails() {}
 }
