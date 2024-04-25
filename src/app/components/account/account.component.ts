@@ -53,7 +53,9 @@ export class AccountComponent {
 
     // Отправка запроса на сервер
     this.http
-      .post('http://your-api-url.com/change-password', {
+      //.put('http://25.77.202.144:8080/wolfram/changepassword', {
+      .put('http://localhost:8080/wolfram/changePassword', {
+        email: sessionStorage.getItem('email'),
         password: newPassword,
       })
       .subscribe(

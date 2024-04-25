@@ -17,7 +17,7 @@
     <div class="logo" (click)="navigateToHome()"></div>
     <div class="nameProject">WOLFRAM ABSOLUTE</div>
     <div class="formContent">
-      <form (ngSubmit)="submitDetails()">
+      <form [formGroup]="form" (ngSubmit)="submitDetails()">
         <div class="goHome">
           <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
         </div>

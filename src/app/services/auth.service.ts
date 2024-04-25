@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://25.77.202.144:8080/wolfram'; // URL вашего Spring сервера
+  //private baseUrl = 'http://25.77.202.144:8080/wolfram';
+  private baseUrl = 'http://localhost:8080/wolfram'; // URL вашего Spring сервера
   constructor(private http: HttpClient) {}
 
   isUserLoggedIn(): boolean {
