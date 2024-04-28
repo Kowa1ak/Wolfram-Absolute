@@ -19,26 +19,65 @@
     <div class="nameProject">WOLFRAM ABSOLUTE</div>
     <div class="nameProjectDop">ARITHMETIC</div>
     <div class="calculator">
-      <div class="formInput" [formGroup]="form">
-        <input
-          #inputArithmetic
-          type="text"
-          formControlName="inputArithmetic"
-          (keydown)="handleBackspace($event)"
-          name="inputArithmetic"
-          placeholder="Start typing..."
-        />
-        <div class="equels">
-          <img src="/assets/img/Equel.png" alt="My Image" />
+      <div class="input-container">
+        <div class="formInput" [formGroup]="form">
+          <input
+            #inputArithmetic
+            type="text"
+            formControlName="inputArithmetic"
+            (keydown)="handleBackspace($event)"
+            name="inputArithmetic"
+            placeholder="Start typing..."
+          />
+          <div class="equels">
+            <img src="/assets/img/Equel.png" alt="My Image" />
+          </div>
+        </div>
+        <div
+          class="additional-buttons"
+          [ngStyle]="{
+            'padding-bottom':
+              showLibraryList || isFunctionsVisible ? '100px' : '0'
+          }"
+        >
+          <button (click)="toggleLibraryList()" class="btnLibrary">
+            library <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+
+          <button (click)="toggleThreadList()" class="btnThread">
+            threads <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <button (click)="toggleHistoryList()" class="btnHistory">
+            <mat-icon>history</mat-icon>
+          </button>
+          <button (click)="toggleFunctionList()" class="btnFunction">
+            <mat-icon>calculate</mat-icon>
+          </button>
         </div>
       </div>
-      <div class="function-buttons">
+      <div *ngIf="showLibraryList" class="btnLibraryList">
+        <ul>
+          <li (click)="selectLibrary('C++')" class="btnLibraryItem">C++</li>
+          <li (click)="selectLibrary('Java')" class="btnLibraryItem">Java</li>
+        </ul>
+      </div>
+      <div *ngIf="isFunctionsVisible" class="function-buttons">
         <button (click)="insertFunction('cos')">cos</button>
         <button (click)="insertFunction('sin')">sin</button>
         <button (click)="insertFunction('tan')">tg</button>
         <button (click)="insertFunction('ctg')">ctg</button>
       </div>
-      <div class="result">Result:</div>
+      <div
+        class="result"
+        [ngStyle]="{
+          transform:
+            showLibraryList || isFunctionsVisible
+              ? 'translateY(-80px)'
+              : 'translateY(-55px)'
+        }"
+      >
+        Result:
+      </div>
     </div>
   </div>
   <div class="backImage"></div>

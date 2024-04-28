@@ -21,6 +21,24 @@ export class ArithmeticComponent {
     this.router.navigate(['']);
   }
   funcs = ['sin', 'cos', 'tan', 'ctg'];
+  showLibraryList = false;
+  isFunctionsVisible = false;
+
+  toggleLibraryList() {
+    this.showLibraryList = !this.showLibraryList;
+  }
+  toggleThreadList() {}
+
+  toggleHistoryList() {}
+
+  toggleFunctionList() {
+    this.isFunctionsVisible = !this.isFunctionsVisible;
+  }
+
+  selectLibrary(library: string) {
+    console.log(`Selected library: ${library}`);
+    this.showLibraryList = false;
+  }
   insertFunction(func: string) {
     const currentValue = this.form.get('inputArithmetic')!.value;
     this.form.get('inputArithmetic')!.setValue(currentValue + func + '()');
