@@ -19,7 +19,7 @@ body {
   background-size: cover;
   background-position: center;
   z-index: -1;
-}
+} 
 .languages {
   padding-top: 35px;
   display: flex;
@@ -108,32 +108,6 @@ button {
     background: #23243C;
     box-shadow: 10px 10px 48.8px 5px rgba(0, 0, 0, 0.25);
 }
-/* .equals {
-    float: right;
-    width: 95px;
-    height: 172px;
-    background-image: url(https://i.imgur.com/SZCOqy0.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-} */
-
-
-/* .formContainer {
-    padding-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 40px;
-}
-.formList {
-    width: 20%;
-    height: 30%;
-    border-radius: 20px;
-    background: #23243C;
-    box-shadow: 10px 10px 48.8px 5px rgba(0, 0, 0, 0.25);
-} */
 .formContainer {
   width: 70%;
   padding-top: 20px;

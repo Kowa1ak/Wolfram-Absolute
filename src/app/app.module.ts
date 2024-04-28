@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AccountComponent } from './components/account/account.component';
 import { LocalizationModule } from './localization/localization.module';
 import { L10nTranslationModule } from 'angular-l10n';
+import { ArithmeticComponent } from './components/arithmetic/arithmetic.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { L10nTranslationModule } from 'angular-l10n';
     RegisterComponent,
     HomeComponent,
     AccountComponent,
+    ArithmeticComponent,
     
   ],
   imports: [

@@ -1,0 +1,149 @@
+body {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.mainContent {
+  position: relative;
+  z-index: 1;
+}
+.backImage {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://i.imgur.com/9klOJtW.png");
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+header {
+  width: 100%;
+}
+.logo {
+  cursor: pointer;
+  top: 0;
+  padding: 40px 40px;
+  text-align: center;
+  width: 135px;
+  height: 50px;
+  background-image: url(https://i.imgur.com/I1VDLHu.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.goHome {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 30px 40px;
+}
+.home-icon {
+  cursor: pointer;
+  transform: scale(2);
+  color: #d9d9d9;
+  z-index: 1000;
+}
+.nameProject {
+  color: #fff;
+  font-family: "KoHo", sans-serif;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+.nameProjectDop {
+    color: #fff;
+    font-family: "KoHo", sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.formInput {
+    z-index: 1;
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+input {
+    z-index: 2;
+    width: 450px;
+    height: 80px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #23243C;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
+    padding: 0 20px;
+    border: none;
+}
+img {
+    margin-left: -10px;
+}
+.equals {
+    z-index: 3;
+    width: 95px;
+    height: 172px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.function-buttons {
+    transform: translateY(-60px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 4;
+}
+button {
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    border: none;
+    background-color: #23243C;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
+}
+.result {
+    padding: 30px;
+    max-width: 750px;
+    width: 100%;
+    height: 300px;
+    background-color: #23243C;
+    border-radius: 20px;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
+}
+
+

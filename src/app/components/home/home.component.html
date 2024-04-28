@@ -61,7 +61,7 @@
           {{ "home.basic" | translate : languageService.locale.language }}
         </div>
         <ul class="listOperation">
-          <li>
+          <li [routerLink]="['/arithmetic']">
             {{
               "home.arithmetic" | translate : languageService.locale.language
             }}
