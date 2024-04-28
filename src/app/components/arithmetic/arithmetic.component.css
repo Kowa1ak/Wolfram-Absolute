@@ -81,7 +81,6 @@ header {
     position: relative;
     padding: 0 10%; 
 }
-
 .formInput {
     z-index: 0;
     margin-top: 20px;
@@ -107,6 +106,9 @@ input {
     border: none;
     box-shadow: 10px 10px 48px 5px rgba(0, 0, 0, 0.2);
 }
+input:focus {
+    outline: none;
+}
 img {
     margin-left: -10px;
 }
@@ -119,12 +121,12 @@ img {
     background-repeat: no-repeat;
 }
 .additional-buttons {
-    margin-right: 195px;
+    justify-content: flex-start;
+    margin-right: 190px;
     transform: translateY(-80px);
     max-width: 450px;
     width: 100%;
     display: flex;
-    float: left;
     z-index: 4;
 }
 .additional-buttons button  {
@@ -136,16 +138,26 @@ img {
 }
 .function-buttons {
     position: absolute;
+    margin-top: 200px;
+    max-width: 540px;
     width: 100%;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     z-index: 4;
+    background-color: #23243C;
+}
+.function-buttons button {
+    padding: 30px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
 button {
     height: 50px;
     margin: 0 10px;
     cursor: pointer;
-    width: 80px;
     border: none;
     background-color: #23243C;
     color: #FFF;
@@ -156,25 +168,71 @@ button {
     line-height: normal;
     
 }
-.btnLibrary {
-    padding-left: 10px;
+.containerList {
+    display: flex;
+    flex-direction: column;
     width: 25%;
+}
+.btnLibrary{
+    width: 80%;
 }
 .btnLibraryList {
-    position: absolute;
-    width: 100px;
-    height: 100px;
+    padding: 0;
+    margin-left: 10px;
+    width: 80%;
     color: #fff;
+    background-color: #23243C;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
 }
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+}
+.btnLibraryItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
+}
+
 .btnThread {
-    padding-left: 10px;
-    width: 25%;
+    width: 90%;
+}
+.btnThreadList {
+    padding: 0;
+    margin-left: 10px;
+    width: 90%;
+    color: #fff;
+    background-color: #23243C;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+}
+.btnThreadItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
 }
 .btnHistory {
-    width: 25%;
+    width: 17%;
 }
 .btnFunction {
-    width: 25%;
+    width: 17%;
 }
 .result {
     text-align: center;
@@ -199,7 +257,5 @@ button {
     box-shadow: 10px 10px 48px 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
 }
-input:focus {
-    outline: none;
-}
+
  
