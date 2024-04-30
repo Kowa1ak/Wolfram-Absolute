@@ -8,7 +8,12 @@ body {
   position: relative;
   z-index: 1;
 }
-
+.red-text {
+    color: red !important;
+  }
+  .center-snackbar {
+    top: 50% !important;
+  }
 .backImage {
   position: fixed;
   bottom: 0;

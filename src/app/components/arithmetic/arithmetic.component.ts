@@ -1,26 +1,58 @@
-import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms'; // добавьте этот импорт
+import {
+  FormBuilder,
+  FormControl,
+  Validators,
+  AbstractControl,
+  FormGroup,
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-arithmetic',
   templateUrl: './arithmetic.component.html',
   styleUrls: ['./arithmetic.component.css'],
 })
-export class ArithmeticComponent {
-  form: FormGroup;
+export class ArithmeticComponent implements OnInit {
+  form!: FormGroup;
   @ViewChild('inputArithmetic', { static: false }) inputArithmetic!: ElementRef;
   @ViewChild('btnLibrary', { static: false }) btnLibrary!: ElementRef;
   @ViewChild('btnThread', { static: false }) btnThread!: ElementRef;
   constructor(
     private router: Router,
-    private ngZone: NgZone,
-    private http: HttpClient
-  ) {
-    this.form = new FormGroup({
-      inputArithmetic: new FormControl(''), // добавьте эту строку
+    private http: HttpClient,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private msgService: MessageService
+  ) {}
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      inputArithmetic: new FormControl(''),
     });
+  }
+  errorShown = false;
+  preventRussianCharacters(event: KeyboardEvent) {
+    const russianRegex = /[а-яё]/i;
+    if (russianRegex.test(event.key)) {
+      event.preventDefault();
+      if (!this.errorShown) {
+        this.msgService.clear(); // Удаляем все текущие сообщения
+        this.msgService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Ввод русских символов запрещен',
+        });
+        this.errorShown = true;
+        setTimeout(() => {
+          this.errorShown = false;
+        }, 3000); // Сбрасываем errorShown через 3 секунды
+      }
+    } else {
+      this.errorShown = false;
+    }
   }
   serverResponse: string | null = null;
   sendData() {
@@ -161,7 +193,7 @@ export class ArithmeticComponent {
     inputField.setValue(newValue);
 
     setTimeout(() => {
-      const newPosition = cursorPosition + func.length + 1; // 1 for the opening parenthesis
+      const newPosition = cursorPosition + func.length + 1; // 2 for the parentheses
       this.inputArithmetic.nativeElement.focus();
       this.inputArithmetic.nativeElement.setSelectionRange(
         newPosition,
@@ -169,78 +201,59 @@ export class ArithmeticComponent {
       );
     });
   }
-
   handleBackspace(event: KeyboardEvent) {
     if (event.key === 'Backspace') {
-      const currentValue = this.form.get('inputArithmetic')!.value;
-      const cursorPosition = this.inputArithmetic.nativeElement.selectionStart;
-      if (currentValue.slice(cursorPosition - 1, cursorPosition) === ')') {
-        const regex = /(\w+\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))/g;
-        let match;
-        let lastMatch;
-        while (
-          (match = regex.exec(currentValue.slice(0, cursorPosition))) !== null
-        ) {
-          lastMatch = match;
-        }
-        if (lastMatch) {
-          this.form
-            .get('inputArithmetic')!
-            .setValue(
-              currentValue.slice(0, lastMatch.index) +
-                currentValue.slice(cursorPosition)
-            );
-        }
-      } else {
-        const lastOpenBracket = currentValue
-          .slice(0, cursorPosition)
-          .lastIndexOf('(');
-        const lastCloseBracket = currentValue
-          .slice(0, cursorPosition)
-          .lastIndexOf(')');
-        if (lastOpenBracket !== -1 && lastOpenBracket > lastCloseBracket) {
-          this.form
-            .get('inputArithmetic')!
-            .setValue(
-              currentValue.slice(0, lastOpenBracket) +
-                currentValue.slice(cursorPosition)
-            );
-        } else if (lastOpenBracket !== -1) {
-          const funcStart = currentValue
-            .slice(0, lastOpenBracket)
-            .search(/\W\w*$/);
-          const correspondingClosingBracket = currentValue.indexOf(
-            ')',
-            cursorPosition
-          );
-          if (correspondingClosingBracket !== -1) {
-            this.form
-              .get('inputArithmetic')!
-              .setValue(
-                currentValue.slice(0, funcStart === -1 ? 0 : funcStart + 1) +
-                  currentValue.slice(correspondingClosingBracket + 1)
-              );
-          }
-        } else {
-          this.form
-            .get('inputArithmetic')!
-            .setValue(
-              currentValue.slice(0, cursorPosition - 1) +
-                currentValue.slice(cursorPosition)
-            );
+      let cursorPosition = this.inputArithmetic.nativeElement.selectionStart;
+      let text = this.form.get('inputArithmetic')!.value;
+
+      // Создаем регулярное выражение, которое будет искать все функции, включая вложенные
+      let regex = new RegExp(
+        `\\b(${this.funcs.join('|')})\\(.*?\\)(?![a-zA-Z0-9])`,
+        'g'
+      );
+
+      // Находим все функции в тексте
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        let start = match.index;
+        let end = start + match[0].length;
+
+        // Проверяем, находится ли курсор внутри или сразу после функции
+        if (cursorPosition > start && cursorPosition <= end) {
+          // Удаляем функцию
+          let newValue = text.slice(0, start) + text.slice(end);
+          this.form.get('inputArithmetic')!.setValue(newValue);
+          this.inputArithmetic.nativeElement.setSelectionRange(start, start);
+          break;
         }
       }
     }
   }
+  private history: string[] = [];
+  private redoStack: string[] = [];
 
-  findLastFunction(str: string, pos: number) {
-    let lastFuncPos = -1;
-    this.funcs.forEach((func) => {
-      const funcPos = str.lastIndexOf(func, pos);
-      if (funcPos !== -1 && (lastFuncPos === -1 || funcPos > lastFuncPos)) {
-        lastFuncPos = funcPos;
-      }
-    });
-    return lastFuncPos;
+  handleInput(event: KeyboardEvent) {
+    if (event.ctrlKey && event.key === 'z') {
+      this.undo();
+    } else if (event.ctrlKey && event.key === 'y') {
+      this.redo();
+    } else if (event.key === 'Enter' || event.key === 'Backspace') {
+      this.history.push(this.form.get('inputArithmetic')!.value);
+      this.redoStack = [];
+    }
+  }
+  undo() {
+    if (this.history.length > 0) {
+      const lastValue = this.history.pop();
+      this.redoStack.push(this.form.get('inputArithmetic')!.value);
+      this.form.get('inputArithmetic')!.setValue(lastValue);
+    }
+  }
+  redo() {
+    if (this.redoStack.length > 0) {
+      const redoValue = this.redoStack.pop();
+      this.history.push(this.form.get('inputArithmetic')!.value);
+      this.form.get('inputArithmetic')!.setValue(redoValue);
+    }
   }
 }

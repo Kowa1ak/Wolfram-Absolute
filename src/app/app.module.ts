@@ -19,7 +19,7 @@ import { AccountComponent } from './components/account/account.component';
 import { LocalizationModule } from './localization/localization.module';
 import { L10nTranslationModule } from 'angular-l10n';
 import { ArithmeticComponent } from './components/arithmetic/arithmetic.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,6 @@ import { ArithmeticComponent } from './components/arithmetic/arithmetic.componen
     HomeComponent,
     AccountComponent,
     ArithmeticComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -43,9 +42,10 @@ import { ArithmeticComponent } from './components/arithmetic/arithmetic.componen
     MatIconModule,
     LocalizationModule,
     L10nTranslationModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSnackBarModule,
   ],
   providers: [MessageService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

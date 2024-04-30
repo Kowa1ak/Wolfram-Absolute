@@ -26,6 +26,7 @@
             type="text"
             formControlName="inputArithmetic"
             (keydown)="handleBackspace($event)"
+            (keypress)="preventRussianCharacters($event)"
             name="inputArithmetic"
             placeholder="Start typing..."
           />
