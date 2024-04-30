@@ -33,10 +33,10 @@ export class ArithmeticComponent {
     };
 
     this.http
-      .post('http://localhost:8080/wolfram/basic', data)
+      .post<{ Result: string }>('http://localhost:8080/wolfram/basic', data)
       .subscribe((response) => {
         console.log(response);
-        this.serverResponse = JSON.stringify(response);
+        this.serverResponse = response.Result;
       });
   }
 
