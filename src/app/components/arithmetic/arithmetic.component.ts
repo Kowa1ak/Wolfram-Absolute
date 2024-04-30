@@ -22,9 +22,10 @@ export class ArithmeticComponent {
       inputArithmetic: new FormControl(''), // добавьте эту строку
     });
   }
-  sendData(email: string) {
+  sendData() {
+    const email = sessionStorage.getItem('email');
     const data = {
-      email: sessionStorage.getItem('email'),
+      email: email,
       expression: this.form.get('inputArithmetic')?.value,
       library: this.selectedLibrary,
       threads: this.selectedThread,
