@@ -22,6 +22,7 @@ export class ArithmeticComponent {
       inputArithmetic: new FormControl(''), // добавьте эту строку
     });
   }
+  serverResponse: string | null = null;
   sendData() {
     const email = sessionStorage.getItem('email');
     const data = {
@@ -35,6 +36,7 @@ export class ArithmeticComponent {
       .post('http://localhost:8080/wolfram/basic', data)
       .subscribe((response) => {
         console.log(response);
+        this.serverResponse = JSON.stringify(response);
       });
   }
 
