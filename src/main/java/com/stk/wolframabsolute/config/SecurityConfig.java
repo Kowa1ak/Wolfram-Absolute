@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("wolfram/welcome", "wolfram/basic", "wolfram/registration", "wolfram/login", "wolfram/users", "wolfram/chat", "wolfram/ws", "wolfram/changePassword").permitAll()
+                        .requestMatchers("wolfram/welcome", "wolfram/basic", "wolfram/converter", "wolfram/registration", "wolfram/login", "wolfram/users", "wolfram/chat", "wolfram/ws", "wolfram/changePassword").permitAll()
                         .requestMatchers( "wolfram/**").authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
