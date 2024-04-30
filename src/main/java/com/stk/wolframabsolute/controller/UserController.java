@@ -1,19 +1,12 @@
 package com.stk.wolframabsolute.controller;
 
-import com.stk.wolframabsolute.entity.SigninRequest;
+import com.stk.wolframabsolute.requests.SigninRequest;
 import com.stk.wolframabsolute.entity.User;
 import com.stk.wolframabsolute.service.UserDetailsImpService;
 import com.stk.wolframabsolute.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

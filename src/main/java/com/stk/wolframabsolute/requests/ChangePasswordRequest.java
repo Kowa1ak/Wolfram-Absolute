@@ -1,4 +1,4 @@
-package com.stk.wolframabsolute.entity;
+package com.stk.wolframabsolute.requests;
 
 import lombok.Data;
 

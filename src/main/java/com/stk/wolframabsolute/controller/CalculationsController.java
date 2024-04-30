@@ -1,8 +1,7 @@
 package com.stk.wolframabsolute.controller;
 
 import com.stk.wolframabsolute.calculations.BasicOperations;
-import com.stk.wolframabsolute.entity.CalculationRequest;
-import com.stk.wolframabsolute.entity.User;
+import com.stk.wolframabsolute.requests.CalculationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
