@@ -21,6 +21,7 @@ export class ArithmeticComponent implements OnInit {
   @ViewChild('inputArithmetic', { static: false }) inputArithmetic!: ElementRef;
   @ViewChild('btnLibrary', { static: false }) btnLibrary!: ElementRef;
   @ViewChild('btnThread', { static: false }) btnThread!: ElementRef;
+  @ViewChild('image', { static: false }) image!: ElementRef;
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -97,6 +98,28 @@ export class ArithmeticComponent implements OnInit {
     'tanh',
     'signum',
   ];
+  funcDescriptions = {
+    sin: 'Синус',
+    cos: 'Косинус',
+    tan: 'Тангенс',
+    ctg: 'Котангенс',
+    abs: 'Абсолютное значение',
+    acos: 'Арккосинус',
+    asin: 'Арксинус',
+    atan: 'Арктангенс',
+    cbrt: 'Кубический корень',
+    ceil: 'Округление вверх',
+    cosh: 'Гиперболический косинус',
+    exp: 'Экспонента',
+    floor: 'Округление вниз',
+    log: 'Натуральный логарифм',
+    log10: 'Десятичный логарифм',
+    log2: 'Логарифм по основанию 2',
+    sinh: 'Гиперболический синус',
+    sqrt: 'Квадратный корень',
+    tanh: 'Гиперболический тангенс',
+    signum: 'Знак числа',
+  };
   showLibraryList = false;
   isFunctionsVisible = false;
   showThreadList = false;
@@ -255,5 +278,16 @@ export class ArithmeticComponent implements OnInit {
       this.history.push(this.form.get('inputArithmetic')!.value);
       this.form.get('inputArithmetic')!.setValue(redoValue);
     }
+  }
+  ngAfterViewInit() {
+    this.image.nativeElement.onmouseover = () => {
+      this.inputArithmetic.nativeElement.style.transform = 'scale(1.1)';
+      this.image.nativeElement.style.transform = 'scale(1.1)';
+    };
+
+    this.image.nativeElement.onmouseout = () => {
+      this.inputArithmetic.nativeElement.style.transform = 'scale(1)';
+      this.image.nativeElement.style.transform = 'scale(1)';
+    };
   }
 }

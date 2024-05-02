@@ -32,6 +32,7 @@
           />
           <div class="equels">
             <img
+              #image
               src="/assets/img/Equel.png"
               alt="My Image"
               (click)="sendData()"
@@ -100,34 +101,134 @@
 
       <div *ngIf="isFunctionsVisible" class="function-buttons">
         <div>
-          <button (click)="insertFunction('cos')">cos</button>
-          <button (click)="insertFunction('sin')">sin</button>
-          <button (click)="insertFunction('tan')">tg</button>
-          <button (click)="insertFunction('ctg')">ctg</button>
+          <button
+            (click)="insertFunction('cos')"
+            title="{{ funcDescriptions['cos'] }}"
+          >
+            cos
+          </button>
+          <button
+            (click)="insertFunction('sin')"
+            title="{{ funcDescriptions['sin'] }}"
+          >
+            sin
+          </button>
+          <button
+            (click)="insertFunction('tan')"
+            title="{{ funcDescriptions['tan'] }}"
+          >
+            tg
+          </button>
+          <button
+            (click)="insertFunction('ctg')"
+            title="{{ funcDescriptions['ctg'] }}"
+          >
+            ctg
+          </button>
         </div>
         <div>
-          <button (click)="insertFunction('abs')">abs</button>
-          <button (click)="insertFunction('acos')">acos</button>
-          <button (click)="insertFunction('asin')">asin</button>
-          <button (click)="insertFunction('atan')">atan</button>
+          <button
+            (click)="insertFunction('abs')"
+            title="{{ funcDescriptions['abs'] }}"
+          >
+            abs
+          </button>
+          <button
+            (click)="insertFunction('acos')"
+            title="{{ funcDescriptions['acos'] }}"
+          >
+            acos
+          </button>
+          <button
+            (click)="insertFunction('asin')"
+            title="{{ funcDescriptions['asin'] }}"
+          >
+            asin
+          </button>
+          <button
+            (click)="insertFunction('atan')"
+            title="{{ funcDescriptions['atan'] }}"
+          >
+            atan
+          </button>
         </div>
         <div>
-          <button (click)="insertFunction('cbrt')">cbrt</button>
-          <button (click)="insertFunction('ceil')">ceil</button>
-          <button (click)="insertFunction('cosh')">cosh</button>
-          <button (click)="insertFunction('exp')">exp</button>
+          <button
+            (click)="insertFunction('cbrt')"
+            title="{{ funcDescriptions['cbrt'] }}"
+          >
+            cbrt
+          </button>
+          <button
+            (click)="insertFunction('ceil')"
+            title="{{ funcDescriptions['ceil'] }}"
+          >
+            ceil
+          </button>
+          <button
+            (click)="insertFunction('cosh')"
+            title="{{ funcDescriptions['cosh'] }}"
+          >
+            cosh
+          </button>
+          <button
+            (click)="insertFunction('exp')"
+            title="{{ funcDescriptions['exp'] }}"
+          >
+            exp
+          </button>
         </div>
         <div>
-          <button (click)="insertFunction('floor')">floor</button>
-          <button (click)="insertFunction('log')">log</button>
-          <button (click)="insertFunction('log10')">log10</button>
-          <button (click)="insertFunction('log2')">log2</button>
+          <button
+            (click)="insertFunction('floor')"
+            title="{{ funcDescriptions['floor'] }}"
+          >
+            floor
+          </button>
+          <button
+            (click)="insertFunction('log')"
+            title="{{ funcDescriptions['log'] }}"
+          >
+            log
+          </button>
+          <button
+            (click)="insertFunction('log10')"
+            title="{{ funcDescriptions['log10'] }}"
+          >
+            log10
+          </button>
+          <button
+            (click)="insertFunction('log2')"
+            title="{{ funcDescriptions['log2'] }}"
+          >
+            log2
+          </button>
         </div>
         <div>
-          <button (click)="insertFunction('sinh')">sinh</button>
-          <button (click)="insertFunction('sqrt')">sqrt</button>
-          <button (click)="insertFunction('tanh')">tanh</button>
-          <button (click)="insertFunction('signum')">signum</button>
+          <button
+            (click)="insertFunction('sinh')"
+            title="{{ funcDescriptions['sinh'] }}"
+          >
+            sinh
+          </button>
+          <button
+            (click)="insertFunction('sqrt')"
+            title="{{ funcDescriptions['sqrt'] }}"
+          >
+            sqrt
+          </button>
+          <button
+            (click)="insertFunction('tanh')"
+            title="{{ funcDescriptions['tanh'] }}"
+          >
+            tanh
+          </button>
+          <button
+            (click)="insertFunction('signum')"
+            title="{{ funcDescriptions['signum'] }}"
+          >
+            signum
+          </button>
         </div>
       </div>
       <div
