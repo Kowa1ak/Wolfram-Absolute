@@ -1,8 +1,10 @@
 package com.stk.wolframabsolute.controller;
 
 import com.stk.wolframabsolute.calculations.BasicOperations;
+import com.stk.wolframabsolute.calculations.CompoundInterestCalculator;
 import com.stk.wolframabsolute.calculations.NumberSystemConverter;
 import com.stk.wolframabsolute.requests.CalculationRequest;
+import com.stk.wolframabsolute.requests.CompoundInterestRequest;
 import com.stk.wolframabsolute.requests.NumSysConverterRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.Map;
 public class CalculationsController {
     BasicOperations basicOperations;
     NumberSystemConverter converter;
+    CompoundInterestCalculator compoundInterestCalculator;
+
 
     //TODO:  запись запроса и результата в БД
     @PostMapping("/basic")
@@ -36,6 +40,18 @@ public class CalculationsController {
         String result = converter.baseConversion(request.getNumber(), request.getBase1(), request.getBase2());
         Map<String, String> response = new HashMap<>();
         response.put("Result", result.toUpperCase());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/compound")
+    public ResponseEntity<Map<String, String>> calculateInterest(@RequestBody CompoundInterestRequest request) {
+        String result = Double.toString(compoundInterestCalculator.calculate(request.getInitialAmount(),
+                request.getAdditionalContributions(), request.getInterestRate(),
+                request.getContributionFrequency(), request.getInterestFrequency(),
+                request.getYears()));
+
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
         return ResponseEntity.ok(response);
     }
 }
