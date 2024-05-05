@@ -16,7 +16,7 @@
             "outputPath": "dist/angular-primeng-app",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": ["zone.js", "src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
@@ -50,6 +50,7 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
+              "allowedCommonJsDependencies": ["sockjs-client"],
               "namedChunks": true
             }
           },

@@ -18,7 +18,14 @@
   color: white;
   cursor: pointer;
   border: none;
-  transition: right 0.3s ease;
+  transition: right 0.4s ease;
+  
+}
+.chat-button.open {
+  padding: 0px;
+  padding-left: 15px;
+  width: 50px; 
+  transition: transform width 0.4s ease-in-out;
 }
 mat-icon {
   margin-right: 10px;
@@ -79,4 +86,37 @@ h1 {
   font-weight: 500;
   margin-bottom: 20px;
 
+}
+.user-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.user-content h1{
+  padding-top: 20px;
+  color: white;
+}
+img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.account-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+.account-info p {
+  padding-top: 10px;
+}
+hr {
+  margin-top: 20px;
+  width: 80%;
+  color: #434459;
 }

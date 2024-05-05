@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/auth';
 import { Observable } from 'rxjs';
-
+import { of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +14,7 @@ export class AuthService {
 
   isUserLoggedIn(): boolean {
     return !!sessionStorage.getItem('email');
+    // return true;
   }
 
   signOut() {
@@ -27,9 +29,17 @@ export class AuthService {
   }
 
   loginUser(userDetails: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, userDetails);
+    return this.http.post<User>(`${this.baseUrl}/login`, userDetails).pipe(
+      tap((user) => {
+        // Сохраняем email и username пользователя после успешного входа
+        sessionStorage.setItem('email', user.email);
+        sessionStorage.setItem('username', user.username);
+      })
+    );
   }
-
+  getLoggedInUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/loggedInUsers`);
+  }
   getUserByEmail(email: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/users?email=${email}`);
   }

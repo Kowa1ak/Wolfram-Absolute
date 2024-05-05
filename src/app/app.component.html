@@ -19,7 +19,7 @@
   <mat-icon>{{
     isChatOpen ? "keyboard_arrow_right" : "keyboard_arrow_left"
   }}</mat-icon>
-  CHAT
+  <span *ngIf="!isChatOpen">CHAT</span>
 </button>
 
 <div
@@ -28,18 +28,45 @@
   [ngClass]="{ open: isChatOpen }"
   *ngIf="!isLoginPage()"
 >
-  <ng-container *ngIf="isUserLoggedIn(); else guest">
-    <p>Chat Now</p>
-    <!-- Здесь может быть ваш код для чата -->
-  </ng-container>
+  <div id="username-page" *ngIf="!username">
+    <form id="usernameForm" (submit)="connect(); $event.preventDefault()">
+      <input
+        #name
+        type="text"
+        id="name"
+        name="username"
+        placeholder="Enter your name..."
+        required
+      />
+      <button type="submit">Start chatting</button>
+    </form>
+  </div>
 
-  <ng-template #guest>
-    <div class="guest-content">
-      <h1 class="form-title">CHAT NOW</h1>
-      <div class="buttonsAuth">
-        <button class="large-button" routerLink="/login">Login</button>
-        <button class="large-button" routerLink="/register">Register</button>
-      </div>
-    </div>
-  </ng-template>
+  <div id="chat-page" *ngIf="stompClient">
+    <div class="connecting" *ngIf="!stompClient.connected">Connecting...</div>
+
+    <ul id="messageArea">
+      <li
+        *ngFor="let message of messages"
+        [class.event-message]="message.type !== 'CHAT'"
+        [class.chat-message]="message.type === 'CHAT'"
+      >
+        <span *ngIf="message.type === 'CHAT'">{{ message.sender }}</span>
+        <p>{{ message.content }}</p>
+      </li>
+    </ul>
+
+    <form id="messageForm" (submit)="sendMessage($event)">
+      <input
+        name="messageInput"
+        type="text"
+        id="message"
+        [(ngModel)]="messageInput"
+        placeholder="Type a message..."
+        (input)="handleInput($event)"
+        required
+      />
+      <button type="submit">Send</button>
+    </form>
+  </div>
 </div>
