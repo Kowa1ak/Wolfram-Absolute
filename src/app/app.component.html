@@ -28,45 +28,67 @@
   [ngClass]="{ open: isChatOpen }"
   *ngIf="!isLoginPage()"
 >
-  <div id="username-page" *ngIf="!username">
-    <form id="usernameForm" (submit)="connect(); $event.preventDefault()">
-      <input
-        #name
-        type="text"
-        id="name"
-        name="username"
-        placeholder="Enter your name..."
-        required
-      />
-      <button type="submit">Start chatting</button>
-    </form>
-  </div>
+  <ng-container *ngIf="isUserLoggedIn(); else guest">
+    <div class="user-content">
+      <h1>CHAT</h1>
+      <div class="account-option">
+        <div class="account-info">
+          <img src="/assets/img/man-shape.png" alt="" />
+          <p>{{ getUsername() | async }}</p>
+        </div>
+        <button
+          *ngIf="username"
+          mat-icon-button
+          class="exit-button"
+          (click)="disconnect(); $event.stopPropagation()"
+        >
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+      </div>
+      <div id="username-page" *ngIf="!username">
+        <form id="usernameForm" (submit)="connect(); $event.preventDefault()">
+          <button type="submit" class="start-button">Start chatting</button>
+        </form>
+      </div>
 
-  <div id="chat-page" *ngIf="stompClient">
-    <div class="connecting" *ngIf="!stompClient.connected">Connecting...</div>
+      <div id="chat-page" *ngIf="stompClient">
+        <div class="connecting" *ngIf="!stompClient.connected">
+          Connecting...
+        </div>
 
-    <ul id="messageArea">
-      <li
-        *ngFor="let message of messages"
-        [class.event-message]="message.type !== 'CHAT'"
-        [class.chat-message]="message.type === 'CHAT'"
-      >
-        <span *ngIf="message.type === 'CHAT'">{{ message.sender }}</span>
-        <p>{{ message.content }}</p>
-      </li>
-    </ul>
+        <ul id="messageArea">
+          <li
+            *ngFor="let message of messages"
+            [class.event-message]="message.type !== 'CHAT'"
+            [class.chat-message]="message.type === 'CHAT'"
+          >
+            <span *ngIf="message.type === 'CHAT'">{{ message.sender }}</span>
+            <p>{{ message.content }}</p>
+          </li>
+        </ul>
 
-    <form id="messageForm" (submit)="sendMessage($event)">
-      <input
-        name="messageInput"
-        type="text"
-        id="message"
-        [(ngModel)]="messageInput"
-        placeholder="Type a message..."
-        (input)="handleInput($event)"
-        required
-      />
-      <button type="submit">Send</button>
-    </form>
-  </div>
+        <form id="messageForm" (submit)="sendMessage($event)">
+          <input
+            name="messageInput"
+            type="text"
+            id="message"
+            [(ngModel)]="messageInput"
+            placeholder="Type a message..."
+            (input)="handleInput($event)"
+            required
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #guest>
+    <div class="guest-content">
+      <h1 class="form-title">CHAT NOW</h1>
+      <div class="buttonsAuth">
+        <button class="large-button" routerLink="/login">Login</button>
+        <button class="large-button" routerLink="/register">Register</button>
+      </div>
+    </div>
+  </ng-template>
 </div>

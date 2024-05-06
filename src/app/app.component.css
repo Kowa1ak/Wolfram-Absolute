@@ -93,6 +93,7 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
 .user-content h1{
   padding-top: 20px;
   color: white;
@@ -115,8 +116,56 @@ img {
 .account-info p {
   padding-top: 10px;
 }
+.account-option {
+  align-items: center;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+
+}
 hr {
   margin-top: 20px;
   width: 80%;
   color: #434459;
+}
+#usernameForm {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  top: 48%;
+}
+#username-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.start-button {
+  cursor: pointer;
+  max-width: 200px;
+  width: 100%;
+  height: 55px;
+  border: none;
+  background-color: #D9D9D9;
+  color: #737483;
+  border-radius: 40px;
+  font-size: 18px;
+}
+.exit-button {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  border: none;
+  background-color: transparent;
+ 
+}
+.exit-button .mat-icon {
+  
+  color: red;
 }

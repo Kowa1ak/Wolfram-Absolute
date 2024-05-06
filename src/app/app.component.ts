@@ -84,18 +84,19 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
   connect() {
-    this.username = this.name?.nativeElement?.value?.trim() || '';
-    console.log('connect method called, username:', this.username);
-    if (this.username) {
-      const socket = new SockJS('http://localhost:8080/ws');
-      this.stompClient = Stomp.over(socket);
+    this.getUsername().subscribe((username) => {
+      this.username = username.trim();
+      if (this.username) {
+        const socket = new SockJS('http://localhost:8080/ws');
+        this.stompClient = Stomp.over(socket);
 
-      this.stompClient.connect(
-        {},
-        this.onConnected.bind(this),
-        this.onError.bind(this)
-      );
-    }
+        this.stompClient.connect(
+          {},
+          this.onConnected.bind(this),
+          this.onError.bind(this)
+        );
+      }
+    });
   }
   onConnected() {
     this.stompClient.subscribe(
@@ -117,7 +118,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   sendMessage(event: any) {
-    console.log('sendMessage method called, messageInput:', this.messageInput);
     const messageContent = this.messageInput.trim();
     if (messageContent && this.stompClient && this.username) {
       const chatMessage = {
@@ -147,5 +147,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   handleInput(event: any) {
     this.messageInput = event.target.value;
+  }
+  disconnect() {
+    if (this.stompClient) {
+      this.stompClient.disconnect();
+      this.stompClient = null;
+    }
+    this.username = null;
   }
 }
