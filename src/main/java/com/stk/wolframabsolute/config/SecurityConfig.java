@@ -30,9 +30,9 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("wolfram/welcome", "wolfram/basic", "wolfram/compound", "wolfram/converter", "wolfram/registration",
-                                "wolfram/login", "wolfram/users", "wolfram/chat", "wolfram/ws",
+                                "wolfram/login", "wolfram/users", "/ws", "/ws/**", "/ws/info",
                                 "wolfram/changePassword").permitAll()
-                        .requestMatchers( "wolfram/**").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .build();

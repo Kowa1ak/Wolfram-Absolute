@@ -16,6 +16,7 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:4200"); // URL вашего приложения
         config.addAllowedOrigin("http://localhost:8080");
+        config.addAllowedOrigin("http://localhost:1");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
