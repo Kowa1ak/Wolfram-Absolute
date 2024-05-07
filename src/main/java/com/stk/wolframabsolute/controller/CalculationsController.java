@@ -1,13 +1,7 @@
 package com.stk.wolframabsolute.controller;
 
-import com.stk.wolframabsolute.calculations.BasicOperations;
-import com.stk.wolframabsolute.calculations.CompoundInterestCalculator;
-import com.stk.wolframabsolute.calculations.ExponentiationService;
-import com.stk.wolframabsolute.calculations.NumberSystemConverter;
-import com.stk.wolframabsolute.requests.CalculationRequest;
-import com.stk.wolframabsolute.requests.CompoundInterestRequest;
-import com.stk.wolframabsolute.requests.ExponentiationRequest;
-import com.stk.wolframabsolute.requests.NumSysConverterRequest;
+import com.stk.wolframabsolute.calculations.*;
+import com.stk.wolframabsolute.requests.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +20,8 @@ public class CalculationsController {
     NumberSystemConverter converter;
     CompoundInterestCalculator compoundInterestCalculator;
 
+
+    //Basic operations mappings
 
     //TODO:  запись запроса и результата в БД
     @PostMapping("/basic")
@@ -64,4 +60,39 @@ public class CalculationsController {
         response.put("Result", result);
         return ResponseEntity.ok(response);
     }
+
+    // Matrix mappings
+    @PostMapping("/matrix_sum")
+    public ResponseEntity<Map<String, String>> matrix_sum(@RequestBody MatrixOperationsRequest request) {
+        String result = MatrixOperations.addMatrices(request.getMatrix1(), request.getMatrix2(), request.getThreads());
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/matrix_multiply")
+    public ResponseEntity<Map<String, String>> matrix_multiply(@RequestBody MatrixOperationsRequest request) {
+        String result = MatrixOperations.multiplyMatrices(request.getMatrix1(), request.getMatrix2(), request.getThreads());
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/matrix_transpose")
+    public ResponseEntity<Map<String, String>> matrix_transpose(@RequestBody MatrixOperationsRequest request) {
+        String result = MatrixOperations.transposeMatrix(request.getMatrix1(), request.getThreads());
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/matrix_by_scalar")
+    public ResponseEntity<Map<String, String>> matrix_by_scalar(@RequestBody MatrixOperationsRequest request) {
+        String result = MatrixOperations.multiplyMatrixByScalar(request.getMatrix1(), Integer.valueOf(request.getMatrix2()));
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
+        return ResponseEntity.ok(response);
+    }
+
+
 }
