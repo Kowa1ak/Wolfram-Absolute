@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ChatController {
 
+
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
     public ChatMessage sendMessage(
             @Payload ChatMessage chatMessage
     ) {
@@ -21,6 +23,7 @@ public class ChatController {
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
     public ChatMessage addUser(
             @Payload ChatMessage chatMessage,
             SimpMessageHeaderAccessor headerAccessor

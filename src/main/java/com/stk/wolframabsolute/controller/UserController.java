@@ -1,5 +1,7 @@
 package com.stk.wolframabsolute.controller;
 
+import com.stk.wolframabsolute.chat.ChatController;
+import com.stk.wolframabsolute.chat.ChatMessage;
 import com.stk.wolframabsolute.requests.SigninRequest;
 import com.stk.wolframabsolute.entity.User;
 import com.stk.wolframabsolute.service.UserDetailsImpService;
@@ -7,6 +9,7 @@ import com.stk.wolframabsolute.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,7 @@ public class UserController {
     private UserService userService;
     private UserDetailsImpService userDetailsImpService;
     private PasswordEncoder passwordEncoder;
+    private ChatController chatController;
 
     @PostMapping("/registration")
     public ResponseEntity<Map<String, String>> addUser(@RequestBody User user) {
@@ -29,6 +33,7 @@ public class UserController {
         userService.addUser(user);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Saved user: " + user.toString());
+
         return ResponseEntity.ok(response);
     }
 

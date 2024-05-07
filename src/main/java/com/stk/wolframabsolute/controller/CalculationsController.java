@@ -2,9 +2,11 @@ package com.stk.wolframabsolute.controller;
 
 import com.stk.wolframabsolute.calculations.BasicOperations;
 import com.stk.wolframabsolute.calculations.CompoundInterestCalculator;
+import com.stk.wolframabsolute.calculations.ExponentiationService;
 import com.stk.wolframabsolute.calculations.NumberSystemConverter;
 import com.stk.wolframabsolute.requests.CalculationRequest;
 import com.stk.wolframabsolute.requests.CompoundInterestRequest;
+import com.stk.wolframabsolute.requests.ExponentiationRequest;
 import com.stk.wolframabsolute.requests.NumSysConverterRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,14 @@ public class CalculationsController {
                 request.getContributionFrequency(), request.getInterestFrequency(),
                 request.getYears()));
 
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/exp")
+    public ResponseEntity<Map<String, String>> exponentiation(@RequestBody ExponentiationRequest request) {
+        String result = ExponentiationService.calculateExponentiation(request.getBase(), request.getExponent());
         Map<String,String> response = new HashMap<>();
         response.put("Result", result);
         return ResponseEntity.ok(response);
