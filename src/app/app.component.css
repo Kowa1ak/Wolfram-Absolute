@@ -46,7 +46,7 @@ mat-icon {
   height: 100%;
   overflow: auto;
   transition: right 0.3s ease;
-  background-color: #23243C;
+  background-color: #242424;
   box-shadow: 10px 10px 48px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -84,27 +84,38 @@ h1 {
   color: #737483;
   font-size: 30px;
   font-weight: 500;
-  margin-bottom: 20px;
+  
 
+}
+.user-content h1{
+  height: 100%;
+  margin: 0;
+  color: white;
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  text-align: center;
 }
 .user-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  height: 100%;
   align-items: center;
 }
 
-.user-content h1{
-  padding-top: 20px;
-  color: white;
-}
+
 img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  margin-left: 20px;
   margin-right: 20px;
 }
 .account-info {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,18 +128,32 @@ img {
   padding-top: 10px;
 }
 .account-option {
-  align-items: center;
   width: 100%;
+  height: 80px;
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
   flex-direction: row;
+  /* padding-bottom: 10px; */
 
 }
-hr {
-  margin-top: 20px;
-  width: 80%;
-  color: #434459;
+.exit-button {
+  padding: 0;
+  flex: 1;
+  cursor: pointer;
+  /* position: absolute;
+  top: 20%;
+  right: 5%; */
+  border: none;
+  background-color: transparent;
+ 
+}
+.exit-button .mat-icon {
+  padding: 0;
+  margin-left: 50px;
+  color: #6C2FCD;
 }
 #usernameForm {
   position: absolute;
@@ -157,15 +182,93 @@ hr {
   border-radius: 40px;
   font-size: 18px;
 }
-.exit-button {
-  position: absolute;
-  top: 20%;
-  right: 5%;
-  border: none;
+
+#messageForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 8px;
+  height: 8%;
+  width: 100%;
+}
+#messageForm input {
+  font-size: 16px;
+  color: white;
+  padding: 10px 20px;
+  width: 90%;
+  border: 1px solid #6C2FCD;
+  border-radius: 20px;
   background-color: transparent;
- 
 }
-.exit-button .mat-icon {
+#messageForm button {
+  cursor: pointer;
+  padding: 0px 17px;
+  background-color: transparent;
+  border: none;
+  width: 10%;
+}
+#messageForm button .mat-icon {
+  transform: scale(1.4);
+  color: #6C2FCD;
+}
+
+#chat-page {
   
-  color: red;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: #181818;
+  overflow: hidden;
 }
+#messageArea {
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  
+  overflow-y: auto;
+  padding: 0;
+  padding-top: 10px;
+  margin: 0 ;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.join-message {
+  color: #6D747B;
+  text-align: center;
+  
+}
+.message-area {
+  font-size: 1.3vw;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  clear: both; 
+  overflow-wrap: break-word;
+  padding: 10px 10px;
+  width: fit-content; /* Добавлено для определения ширины по содержимому */
+  max-width: 50%;
+  margin-bottom: 10px;
+}
+
+.message-area span {
+  font-size: 1em;
+  color: #888;
+}
+.message-area p {
+  margin: 0;
+}
+.my-message {
+  margin-right: 10px;
+  
+  float: right; 
+  background-color: #393EB7;
+  
+}
+.other-message {
+  margin-left: 10px;
+  text-align: left;
+  background-color: #242424;
+}
+/* #393EB7  #242424 #181818*/

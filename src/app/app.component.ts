@@ -142,8 +142,19 @@ export class AppComponent implements OnInit, OnDestroy {
     } else if (message.type === 'LEAVE') {
       message.content = message.sender + ' left!';
     }
+    if (!message.content || !message.sender) {
+      return; // Не добавлять сообщение, если нет содержимого или отправителя
+    }
+    this.messages.unshift(message);
+  }
+  userColors: { [key: string]: string } = {};
 
-    this.messages.push(message);
+  getColorForUser(user: string): string {
+    if (!this.userColors[user]) {
+      this.userColors[user] =
+        '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
+    return this.userColors[user];
   }
   handleInput(event: any) {
     this.messageInput = event.target.value;
