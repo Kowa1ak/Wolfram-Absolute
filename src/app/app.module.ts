@@ -22,6 +22,7 @@ import { ArithmeticComponent } from './components/arithmetic/arithmetic.componen
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { NumberSystemsComponent } from './components/number-systems/number-systems.component';
+import { MatrixComponent } from './components/matrix/matrix.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { NumberSystemsComponent } from './components/number-systems/number-syste
     AccountComponent,
     ArithmeticComponent,
     NumberSystemsComponent,
+    MatrixComponent,
   ],
   imports: [
     FormsModule,

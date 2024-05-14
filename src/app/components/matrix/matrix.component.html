@@ -1,0 +1,67 @@
+<body>
+  <div class="mainContent">
+    <header>
+      <div class="logo" (click)="navigateToHome()"></div>
+      <div class="goHome">
+        <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+      </div>
+    </header>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="nameProjectDop">MATRIX OPERATIONS</div>
+    <div class="calculator">
+      <div class="btn-container">
+        <button class="large-button" (click)="isModalOpen = true">
+          Добавить матрицу
+        </button>
+        <button class="large-button" (click)="isModalOpen = true">
+          Выбрать действие
+        </button>
+      </div>
+      <div class="input-container" *ngIf="selectedMatrix.length > 0">
+        <div class="matrix">
+          <span class="bracket" #leftBracket>[</span>
+          <div class="matrix-content">
+            <div
+              class="matrix-row"
+              *ngFor="let row of selectedMatrix; let i = index"
+            >
+              <div *ngFor="let item of row; let j = index">
+                <input
+                  class="matrix-cell"
+                  #input
+                  [(ngModel)]="item.value"
+                  (keyup.enter)="focusNextInput(i, j)"
+                />
+              </div>
+            </div>
+          </div>
+          <span class="bracket" #rightBracket>]</span>
+        </div>
+      </div>
+      <div class="modal" *ngIf="isModalOpen">
+        <div class="modal-content">
+          <mat-icon class="close-icon" (click)="isModalOpen = false"
+            >close</mat-icon
+          >
+          <div class="grid-container">
+            <button
+              class="grid-item"
+              *ngFor="let item of gridItems; let i = index"
+              [class.highlight]="isHighlighted(i)"
+              (mouseenter)="onMouseEnter(i)"
+              (mouseleave)="onMouseLeave()"
+              (click)="selectMatrixSize(i)"
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div class="result">
+        Result:
+        <div class="serverResponse">
+          <!-- {{ serverResponse }} -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>
