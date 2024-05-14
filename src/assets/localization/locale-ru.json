@@ -5,20 +5,9 @@
     "SignOut": "Выйти",
     "SignIn": "Войти",
     "SignUp": "Регистрация",
-    "basic": "Основные",
     "arithmetic": "Арифметика",
-    "fractions": "Дроби",
-    "trigonometric": "Тригонометрия",
-    "exponentiation": "Возведение в степень",
     "numberSystems": "Системы счисления",
-    "compoundInterest": "Сложные проценты",
-
-    "matrix": "Матрица",
-    "matrixOperations": "Операции с матрицами",
-    "vectorArithmetic": "Арифметика векторов",
-
-    "integral": "Интеграл",
-    "integralCalculation": "Вычисление интеграла"
+    "matrixOperation": "Операции с матрицами"
   },
   "login": {
     "welcome": "Добро пожаловать",

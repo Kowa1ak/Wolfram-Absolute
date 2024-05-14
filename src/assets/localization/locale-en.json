@@ -6,20 +6,9 @@
     "SignIn": "Sign In",
     "SignUp": "Sign Up",
 
-    "basic": "Basic",
     "arithmetic": "Arithmetic",
-    "fractions": "Fractions",
-    "trigonometric": "Trigonometric",
-    "exponentiation": "Exponentiation",
     "numberSystems": "Number Systems",
-    "compoundInterest": "Compound Interest",
-
-    "matrix": "Matrix",
-    "matrixOperations": "Matrix Operations",
-    "vectorArithmetic": "Vector Arithmetic",
-
-    "integral": "Integral",
-    "integralCalculation": "Integral Calculation"
+    "matrixOperation": "Matrix Operation"
   },
   "login": {
     "welcome": "Welcome",

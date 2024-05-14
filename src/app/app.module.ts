@@ -21,6 +21,7 @@ import { L10nTranslationModule } from 'angular-l10n';
 import { ArithmeticComponent } from './components/arithmetic/arithmetic.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
+import { NumberSystemsComponent } from './components/number-systems/number-systems.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     AccountComponent,
     ArithmeticComponent,
+    NumberSystemsComponent,
   ],
   imports: [
     FormsModule,

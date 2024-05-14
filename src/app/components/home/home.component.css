@@ -15,7 +15,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://i.imgur.com/9klOJtW.png');
+  background-image: url('/assets/img/background.png');
   background-size: cover;
   background-position: center;
   z-index: -1;
@@ -95,87 +95,34 @@ button {
     justify-content: center;
     margin-top: 12%;
 }
-.input {
-    margin-top: 1%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.rectangle {
-    width: 650px;
-    height: 85px;
-    border-radius: 20px;
-    background: #23243C;
-    box-shadow: 10px 10px 48.8px 5px rgba(0, 0, 0, 0.25);
-}
-.formContainer {
+.container { 
+
   width: 70%;
-  padding-top: 20px;
-  display: flex;
-  justify-content: center;
+  padding-top: 6.5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  justify-items: center;
   align-items: center;
-  flex-direction: row;
-  gap: 40px;
-  margin-left: auto; /* Центрируем контейнер по горизонтали */
+  margin-left: auto; 
   margin-right: auto;
 }
-
-.formList {
-  height: 400px; /* Изменяем высоту форм на автоматическую */
+.container button {
+  padding: 20px 40px;
   border-radius: 20px;
-  background: #23243C;
-  box-shadow: 10px 10px 48.8px 5px rgba(0, 0, 0, 0.25);
-  overflow: auto; /* Добавляем свойство overflow для скрытия контента, который вылезает */
+  background-color: #23243C;
+  max-width: 350px;
+  width: 100%;
+  border: none;
+  transition: transform 0.3s  ease-in-out;
+}
+.container button:hover {
+  transform: scale(1.1); 
 }
 
-/* Добавляем медиа-запросы для разных размеров экранов */
 
-@media (min-width: 768px) {
-  /* Для экранов шире 768px */
-  .formContainer {
-    flex-direction: row;
-  }
 
-  .formList {
-    width: 30%; /* Например, формы будут занимать 30% от ширины контейнера */
-  }
-}
 
-@media (max-width: 767px) {
-  /* Для экранов до 767px */
-  .formContainer {
-    flex-direction: column;
-  }
 
-  .formList {
-    width: 100%; /* Например, формы будут занимать 100% ширины контейнера в столбец */
-    margin-bottom: 20px; /* Добавляем отступ между формами */
-  }
-}
-.formName {
-    color: #FFF;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 250;
-    line-height: normal;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
-.listOperation {
-    color: #FFF;
-    list-style-type: none; /* Убирает маркеры списка */
-    padding: 0; /* Убирает отступы */
-    padding: 10px;
-}
 
-.listOperation li {
-    opacity: 0.7;
-    padding: 10px; 
-    margin-bottom: 10px;/* Добавляет отступы вокруг каждого элемента списка */
-    font-size: 16px; /* Устанавливает размер шрифта */
-    border: 1px solid #434459; 
-    border-radius: 10px;
-}
 
