@@ -10,15 +10,69 @@
     <div class="nameProjectDop">MATRIX OPERATIONS</div>
     <div class="calculator">
       <div class="btn-container">
-        <button class="large-button" (click)="isModalOpen = true">
+        <button class="large-button" (click)="openModal()">
           Добавить матрицу
         </button>
-        <button class="large-button" (click)="isModalOpen = true">
-          Выбрать действие
+        <button class="large-button">Вычислить</button>
+      </div>
+      <div class="operations-container" *ngIf="firstMatrixAdded">
+        <button class="operation-button" (click)="add()">+</button>
+        <button class="operation-button" (click)="multiply()">
+          <mat-icon>clear</mat-icon>
         </button>
+        <button class="operation-button" (click)="divide()">/</button>
+        <button class="operation-button" (click)="transpose()">T</button>
       </div>
       <div class="input-container" *ngIf="selectedMatrix.length > 0">
-        <div class="matrix">
+        <div class="matrix" *ngIf="selectedMatrix[0]">
+          <span class="bracket" #leftBracket>[</span>
+
+          <div class="matrix-content">
+            <div
+              class="matrix-row"
+              *ngFor="let row of selectedMatrix[0]; let i = index"
+            >
+              <div *ngFor="let item of row; let j = index">
+                <input
+                  class="matrix-cell"
+                  #input
+                  [(ngModel)]="item.value"
+                  (keyup.enter)="focusNextInput(0, i, j)"
+                />
+              </div>
+            </div>
+          </div>
+          <span class="bracket" #rightBracket>]</span>
+        </div>
+        <div class="operation-container">
+          <div
+            class="operation-display"
+            [class.transpose-operation]="currentOperation === 'T'"
+          >
+            {{ currentOperation }}
+          </div>
+        </div>
+        <div class="matrix" *ngIf="selectedMatrix[1]">
+          <span class="bracket" #leftBracket2>[</span>
+
+          <div class="matrix-content">
+            <div
+              class="matrix-row"
+              *ngFor="let row of selectedMatrix[1]; let i = index"
+            >
+              <div *ngFor="let item of row; let j = index">
+                <input
+                  class="matrix-cell"
+                  #input
+                  [(ngModel)]="item.value"
+                  (keyup.enter)="focusNextInput(1, i, j)"
+                />
+              </div>
+            </div>
+          </div>
+          <span class="bracket" #rightBracket2>]</span>
+        </div>
+        <!-- <div class="matrix" #matrix2Container>
           <span class="bracket" #leftBracket>[</span>
           <div class="matrix-content">
             <div
@@ -36,7 +90,7 @@
             </div>
           </div>
           <span class="bracket" #rightBracket>]</span>
-        </div>
+        </div> -->
       </div>
       <div class="modal" *ngIf="isModalOpen">
         <div class="modal-content">
@@ -56,7 +110,7 @@
         </div>
       </div>
       <div class="result">
-        Result:
+        <div class="nameResult">Result:</div>
         <div class="serverResponse">
           <!-- {{ serverResponse }} -->
         </div>

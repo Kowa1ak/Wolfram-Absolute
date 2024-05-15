@@ -29,12 +29,22 @@ import {
 export class MatrixComponent implements AfterViewChecked {
   @ViewChild('leftBracket', { static: false }) leftBracket!: ElementRef;
   @ViewChild('rightBracket', { static: false }) rightBracket!: ElementRef;
+  @ViewChild('leftBracket2', { static: false }) leftBracket2!: ElementRef;
+  @ViewChild('rightBracket2', { static: false }) rightBracket2!: ElementRef;
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
+
   isModalOpen = false;
   gridItems = Array(25);
   hoverIndex = -1;
   gridSize = 5;
-  selectedMatrix: { value: string }[][] = [];
+  selectedMatrix: { value: string }[][][] = [];
+  currentOperation: string = '';
+
+  firstMatrixAdded = false;
+  operationSelected = false;
+  currentMatrixIndex: number = 0;
+  isMatrixAdded: boolean = false;
+  public errorOccurred = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -44,20 +54,33 @@ export class MatrixComponent implements AfterViewChecked {
   ) {}
 
   ngAfterViewChecked() {
-    this.adjustBracketSize();
+    this.adjustBracketSize(
+      this.selectedMatrix[0],
+      this.leftBracket,
+      this.rightBracket
+    );
+    this.adjustBracketSize(
+      this.selectedMatrix[1],
+      this.leftBracket2,
+      this.rightBracket2
+    );
   }
-  adjustBracketSize() {
-    if (this.selectedMatrix && this.selectedMatrix.length > 0) {
-      const rowCount = this.selectedMatrix.length;
+  adjustBracketSize(
+    matrix: any[],
+    leftBracket: ElementRef,
+    rightBracket: ElementRef
+  ) {
+    if (matrix && matrix.length > 0) {
+      const rowCount = matrix.length;
       const fontSize = rowCount * 40; // Измените множитель, чтобы подогнать под нужный размер
 
       this.renderer.setStyle(
-        this.leftBracket.nativeElement,
+        leftBracket.nativeElement,
         'font-size',
         `${fontSize}px`
       );
       this.renderer.setStyle(
-        this.rightBracket.nativeElement,
+        rightBracket.nativeElement,
         'font-size',
         `${fontSize}px`
       );
@@ -79,19 +102,103 @@ export class MatrixComponent implements AfterViewChecked {
     return row <= currentRow && column <= currentColumn;
   }
   selectMatrixSize(index: number) {
+    if (this.selectedMatrix.length >= 2) {
+      this.showError('Вы не можете добавить больше двух матриц');
+      return;
+    }
+    if (this.selectedMatrix.length === 0) {
+      this.firstMatrixAdded = true;
+    } else if (this.selectedMatrix.length === 1 && !this.operationSelected) {
+      this.showError('Выберите операцию перед добавлением второй матрицы');
+      return;
+    }
+    this.isMatrixAdded = true;
     const rows = Math.floor(index / this.gridSize) + 1;
     const columns = (index % this.gridSize) + 1;
-    this.selectedMatrix = Array.from({ length: rows }, (_, i) =>
+    const newMatrix = Array.from({ length: rows }, (_, i) =>
       Array.from({ length: columns }, (_, j) => ({ value: '' }))
     );
+
+    this.selectedMatrix.push(newMatrix);
+
+    this.currentMatrixIndex++;
     this.isModalOpen = false;
-    setTimeout(() => this.inputs.first.nativeElement.focus(), 0);
+    let firstInputIndexInSecondMatrix = 0;
+    if (this.selectedMatrix.length > 1) {
+      firstInputIndexInSecondMatrix =
+        this.selectedMatrix[0].length * this.selectedMatrix[0][0].length;
+    }
+    setTimeout(
+      () =>
+        this.inputs
+          .toArray()
+          [firstInputIndexInSecondMatrix].nativeElement.focus(),
+      0
+    );
   }
-  focusNextInput(i: number, j: number) {
-    const nextInputIndex = this.selectedMatrix[0].length * i + j + 1;
+  openModal() {
+    if (this.firstMatrixAdded && !this.operationSelected) {
+      this.showError('Выберите операцию перед добавлением второй матрицы');
+      return;
+    }
+
+    this.isModalOpen = true;
+  }
+  focusNextInput(matrixIndex: number, i: number, j: number) {
+    let previousElements = 0;
+    for (let index = 0; index < matrixIndex; index++) {
+      previousElements +=
+        this.selectedMatrix[index].length *
+        this.selectedMatrix[index][0].length;
+    }
+    const nextInputIndex =
+      previousElements + this.selectedMatrix[matrixIndex][i].length * i + j + 1;
     if (nextInputIndex < this.inputs.length) {
       this.inputs.toArray()[nextInputIndex].nativeElement.focus();
     }
+  }
+  add(): void {
+    this.operationSelected = true;
+
+    if (!this.isMatrixAdded) {
+      this.showError('Матрица не выбрана');
+      return;
+    }
+    this.currentOperation = '+';
+  }
+
+  multiply(): void {
+    this.operationSelected = true;
+    if (!this.isMatrixAdded) {
+      this.showError('Матрица не выбрана');
+      return;
+    }
+    this.currentOperation = '*';
+  }
+
+  divide(): void {
+    this.operationSelected = true;
+    if (!this.isMatrixAdded) {
+      this.showError('Матрица не выбрана');
+      return;
+    }
+    this.currentOperation = '/';
+  }
+
+  transpose(): void {
+    if (!this.isMatrixAdded) {
+      this.showError('Матрица не выбрана');
+      return;
+    }
+    this.currentOperation = 'T';
+  }
+  showError(detail: string): void {
+    setTimeout(() => (this.errorOccurred = true), 10);
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Ошибка',
+      detail: detail,
+    });
   }
   navigateToHome() {
     this.router.navigate(['']);
