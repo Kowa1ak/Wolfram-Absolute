@@ -31,6 +31,8 @@ export class MatrixComponent implements AfterViewChecked {
   @ViewChild('rightBracket', { static: false }) rightBracket!: ElementRef;
   @ViewChild('leftBracket2', { static: false }) leftBracket2!: ElementRef;
   @ViewChild('rightBracket2', { static: false }) rightBracket2!: ElementRef;
+  @ViewChild('leftBracket3', { static: false }) leftBracket3!: ElementRef;
+  @ViewChild('rightBracket3', { static: false }) rightBracket3!: ElementRef;
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
 
   isModalOpen = false;
@@ -45,6 +47,14 @@ export class MatrixComponent implements AfterViewChecked {
   currentMatrixIndex: number = 0;
   isMatrixAdded: boolean = false;
   public errorOccurred = false;
+  isInputContainerVisible = true;
+  operationsContainerVisible: boolean = true;
+  operationMappings: { [key: string]: string } = {
+    '*': 'matrix_multiply',
+    '/': 'matrix_by_scalar',
+    T: 'matrix_transpose',
+    '+': 'matrix_sum',
+  };
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -63,6 +73,11 @@ export class MatrixComponent implements AfterViewChecked {
       this.selectedMatrix[1],
       this.leftBracket2,
       this.rightBracket2
+    );
+    this.adjustBracketSize(
+      this.serverResponse,
+      this.leftBracket3,
+      this.rightBracket3
     );
   }
   adjustBracketSize(
@@ -137,7 +152,7 @@ export class MatrixComponent implements AfterViewChecked {
     );
   }
   openModal() {
-    if (this.firstMatrixAdded && !this.operationSelected) {
+    if (this.selectedMatrix.length > 0 && !this.operationSelected) {
       this.showError('Выберите операцию перед добавлением второй матрицы');
       return;
     }
@@ -199,6 +214,60 @@ export class MatrixComponent implements AfterViewChecked {
       summary: 'Ошибка',
       detail: detail,
     });
+  }
+  serverResponse: number[][] = [];
+  sendData() {
+    this.errorOccurred = false;
+    const email = sessionStorage.getItem('email');
+    const serverOperation = this.operationMappings[this.currentOperation];
+    const data = {
+      matrix1: this.selectedMatrix[0]
+        .map(
+          (innerArray) => `{${innerArray.map((obj) => obj.value).join(', ')}}`
+        )
+        .join(', '),
+      matrix2: this.selectedMatrix[1]
+        ? this.selectedMatrix[1]
+            .map(
+              (innerArray) =>
+                `{${innerArray.map((obj) => obj.value).join(', ')}}`
+            )
+            .join(', ')
+        : '',
+      threads: '2',
+      library: 'Java',
+      email: email,
+    };
+    console.log(data);
+    this.http
+      .post<{ Result: string }>(
+        'http://localhost:8080/wolfram/' + serverOperation,
+        data
+      )
+      .subscribe(
+        (response) => {
+          console.log('Server response:', response);
+          this.serverResponse = response.Result.slice(1, -1)
+            .split('}, {')
+            .map((row) => row.split(', ').map(Number));
+          this.adjustBracketSize(
+            this.serverResponse,
+            this.leftBracket3,
+            this.rightBracket3
+          );
+          console.log('Parsed server response:', this.serverResponse);
+        },
+        (error) => {
+          this.showError('Произошла ошибка при обработке вашего запроса');
+        }
+      );
+  }
+  deleteAllAndClose() {
+    // удалить все данные
+    this.selectedMatrix = [];
+    this.operationSelected = false;
+    this.currentOperation = '';
+    this.firstMatrixAdded = false;
   }
   navigateToHome() {
     this.router.navigate(['']);

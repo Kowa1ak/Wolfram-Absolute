@@ -13,7 +13,7 @@
         <button class="large-button" (click)="openModal()">
           Добавить матрицу
         </button>
-        <button class="large-button">Вычислить</button>
+        <button class="large-button" (click)="sendData()">Вычислить</button>
       </div>
       <div class="operations-container" *ngIf="firstMatrixAdded">
         <button class="operation-button" (click)="add()">+</button>
@@ -24,6 +24,9 @@
         <button class="operation-button" (click)="transpose()">T</button>
       </div>
       <div class="input-container" *ngIf="selectedMatrix.length > 0">
+        <mat-icon class="delete-icon" (click)="deleteAllAndClose()"
+          >delete_forever</mat-icon
+        >
         <div class="matrix" *ngIf="selectedMatrix[0]">
           <span class="bracket" #leftBracket>[</span>
 
@@ -111,8 +114,20 @@
       </div>
       <div class="result">
         <div class="nameResult">Result:</div>
-        <div class="serverResponse">
-          <!-- {{ serverResponse }} -->
+        <div class="numberResult">
+          <span class="bracket" *ngIf="serverResponse.length" #leftBracket3
+            >[</span
+          >
+          <table>
+            <tr class="matrix-row" *ngFor="let row of serverResponse">
+              <td class="matrix-cell" *ngFor="let cell of row">
+                {{ cell }}
+              </td>
+            </tr>
+          </table>
+          <span class="bracket" *ngIf="serverResponse.length" #rightBracket3
+            >]</span
+          >
         </div>
       </div>
     </div>
