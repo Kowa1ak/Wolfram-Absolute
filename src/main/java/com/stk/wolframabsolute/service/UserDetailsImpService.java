@@ -16,6 +16,8 @@ public class UserDetailsImpService implements org.springframework.security.core.
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = repository.findByEmail(username);
+
+
         return user.map(UserDetailsImp::new)
                 .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
     }

@@ -4,9 +4,11 @@ import com.stk.wolframabsolute.chat.ChatController;
 import com.stk.wolframabsolute.chat.ChatMessage;
 import com.stk.wolframabsolute.requests.SigninRequest;
 import com.stk.wolframabsolute.entity.User;
+import com.stk.wolframabsolute.service.EmailService;
 import com.stk.wolframabsolute.service.UserDetailsImpService;
 import com.stk.wolframabsolute.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -27,6 +29,8 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     private ChatController chatController;
 
+    @Autowired
+    EmailService emailService;
     @PostMapping("/registration")
     public ResponseEntity<Map<String, String>> addUser(@RequestBody User user) {
         user.setRoles("ROLE_USER");
@@ -34,6 +38,7 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Saved user: " + user.toString());
 
+        emailService.sendSimpleEmail(user.getEmail(), "Welcome", "This is a welcome email for your!!");
         return ResponseEntity.ok(response);
     }
 
