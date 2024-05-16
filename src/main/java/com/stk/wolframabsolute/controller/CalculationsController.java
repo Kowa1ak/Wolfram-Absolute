@@ -94,5 +94,12 @@ public class CalculationsController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/matrix_find_inverse")
+    public ResponseEntity<Map<String, String>> matrix_find_inverse(@RequestBody MatrixOperationsRequest request) {
+        String result = MatrixOperations.findInverseMatrix(request.getMatrix1(), request.getThreads());
+        Map<String,String> response = new HashMap<>();
+        response.put("Result", result);
+        return ResponseEntity.ok(response);
+    }
 
 }
