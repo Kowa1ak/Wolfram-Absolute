@@ -51,7 +51,7 @@ export class MatrixComponent implements AfterViewChecked {
   operationsContainerVisible: boolean = true;
   operationMappings: { [key: string]: string } = {
     '*': 'matrix_multiply',
-    '/': 'matrix_by_scalar',
+    '-1': 'matrix_find_inverse',
     T: 'matrix_transpose',
     '+': 'matrix_sum',
   };
@@ -191,13 +191,12 @@ export class MatrixComponent implements AfterViewChecked {
     this.currentOperation = '*';
   }
 
-  divide(): void {
-    this.operationSelected = true;
+  inverse(): void {
     if (!this.isMatrixAdded) {
       this.showError('Матрица не выбрана');
       return;
     }
-    this.currentOperation = '/';
+    this.currentOperation = '-1';
   }
 
   transpose(): void {
@@ -249,7 +248,8 @@ export class MatrixComponent implements AfterViewChecked {
           console.log('Server response:', response);
           this.serverResponse = response.Result.slice(1, -1)
             .split('}, {')
-            .map((row) => row.split(', ').map(Number));
+            .map((row) => row.split(', ').map(Number))
+            .map((row) => row.map((num) => parseFloat(num.toFixed(1))));
           this.adjustBracketSize(
             this.serverResponse,
             this.leftBracket3,
@@ -262,9 +262,30 @@ export class MatrixComponent implements AfterViewChecked {
         }
       );
   }
+  handleServerResponse(serverResponse: string) {
+    // Преобразовать ответ от сервера в объект
+    let responseObj = JSON.parse(serverResponse);
+
+    // Теперь вы можете обратиться к свойству Result
+    let resultMatrix = JSON.parse(responseObj.Result);
+
+    // Преобразовать каждый элемент матрицы
+    for (let i = 0; i < resultMatrix.length; i++) {
+      for (let j = 0; j < resultMatrix[i].length; j++) {
+        resultMatrix[i][j] = parseFloat(resultMatrix[i][j].toFixed(1));
+      }
+    }
+
+    // Обновить responseObj с новой матрицей
+    responseObj.Result = JSON.stringify(resultMatrix);
+
+    // Вернуть обновленный объект ответа
+    return responseObj;
+  }
   deleteAllAndClose() {
     // удалить все данные
     this.selectedMatrix = [];
+    this.serverResponse = [];
     this.operationSelected = false;
     this.currentOperation = '';
     this.firstMatrixAdded = false;

@@ -20,7 +20,7 @@
         <button class="operation-button" (click)="multiply()">
           <mat-icon>clear</mat-icon>
         </button>
-        <button class="operation-button" (click)="divide()">/</button>
+        <button class="operation-button" (click)="inverse()">-1</button>
         <button class="operation-button" (click)="transpose()">T</button>
       </div>
       <div class="input-container" *ngIf="selectedMatrix.length > 0">
@@ -51,6 +51,7 @@
           <div
             class="operation-display"
             [class.transpose-operation]="currentOperation === 'T'"
+            [class.transpose-operation]="currentOperation === '-1'"
           >
             {{ currentOperation }}
           </div>
