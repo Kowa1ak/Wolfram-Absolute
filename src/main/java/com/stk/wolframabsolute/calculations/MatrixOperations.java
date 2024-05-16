@@ -1,5 +1,7 @@
 package com.stk.wolframabsolute.calculations;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutorService;
@@ -7,6 +9,8 @@ import java.util.concurrent.Executors;
 
 @Service
 public class MatrixOperations {
+    private static final Logger logger = LogManager.getLogger(MatrixOperations.class);
+
 
     public static double[][] parseMatrix(String[] rowStrings, int numRows, int numCols) {
         double[][] matrix = new double[numRows][numCols];
@@ -17,7 +21,6 @@ public class MatrixOperations {
                 matrix[i][j] = Double.parseDouble(elements[j]);
             }
         }
-
         return matrix;
     }
 
@@ -42,6 +45,9 @@ public class MatrixOperations {
     }
 
     public static String transposeMatrix(String matrixString, int numThreads) {
+
+        logger.info("Transposing matrix with {} threads", numThreads);
+
         String[] rowStrings = matrixString.split("\\},\\s*\\{");
         int numRows = rowStrings.length;
         int numCols = rowStrings[0].split(",").length;
@@ -66,9 +72,11 @@ public class MatrixOperations {
             // Ожидание завершения всех потоков
         }
 
+        logger.info("Transposed matrix successfully");
         return matrixToString(transposedMatrix);
     }
     public static String addMatrices(String matrix1String, String matrix2String, int numThreads) {
+        logger.info("Adding matrices with {} threads", numThreads);
         String[] rowStrings1 = matrix1String.split("\\},\\s*\\{");
         String[] rowStrings2 = matrix2String.split("\\},\\s*\\{");
         int numRows = rowStrings1.length;
@@ -95,10 +103,12 @@ public class MatrixOperations {
             // Ожидание завершения всех потоков
         }
 
+        logger.info("Matrices added successfully");
         return matrixToString(resultMatrix);
     }
 
     public static String multiplyMatrices(String matrix1String, String matrix2String, int numThreads) {
+        logger.info("Multiplying matrices with {} threads", numThreads);
         String[] rowStrings1 = matrix1String.split("\\},\\s*\\{");
         String[] rowStrings2 = matrix2String.split("\\},\\s*\\{");
         int numRows1 = rowStrings1.length;
@@ -110,6 +120,7 @@ public class MatrixOperations {
         double[][] matrix2 = parseMatrix(rowStrings2, numRows2, numCols2);
 
         if (numCols1 != numRows2) {
+            logger.error("Matrix multiplication is impossible: wrong matrix sizes");
             throw new IllegalArgumentException("Matrix multiplication is impossible: wrong matrix sizes");
         }
 
@@ -133,10 +144,12 @@ public class MatrixOperations {
             // Ожидание завершения всех потоков
         }
 
+        logger.info("Matrices multiplied successfully");
         return matrixToString(resultMatrix);
     }
 
     public static String multiplyMatrixByScalar(String matrixString, double scalar) {
+        logger.info("Multiplying matrix by scalar {}", scalar);
         String[] rowStrings = matrixString.split("\\},\\s*\\{"); // Разделение на строки матрицы
         int numRows = rowStrings.length;
         int numCols = rowStrings[0].split(",").length;
@@ -151,10 +164,12 @@ public class MatrixOperations {
             }
         }
 
+        logger.info("Matrix multiplied by scalar successfully");
         return matrixToString(resultMatrix);
     }
 
     public static String findInverseMatrix(String matrixString, int numThreads) {
+        logger.info("Finding inverse of matrix with {} threads", numThreads);
         try {
             String[] rowStrings = matrixString.split("\\},\\s*\\{");
             int numRows = rowStrings.length;
@@ -188,11 +203,13 @@ public class MatrixOperations {
             while (!executor.isTerminated()) {
                 // Ожидание завершения всех потоков
             }
-
+            logger.info("Inverse of matrix found successfully");
             return matrixToString(inverseMatrix);
         } catch (IllegalArgumentException e) {
+            logger.error("Error: {}", e.getMessage());
             return "Error: " + e.getMessage();
         } catch (Exception e) {
+            logger.error("Error: An unexpected error occurred: {}", e.getMessage());
             return "Error: An unexpected error occurred: " + e.getMessage();
         }
     }
