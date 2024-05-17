@@ -7,12 +7,14 @@ import {
   ViewChildren,
   AfterViewChecked,
   QueryList,
+  HostBinding,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { gsap } from 'gsap';
 
 import {
   FormBuilder,
@@ -33,8 +35,9 @@ export class MatrixComponent implements AfterViewChecked {
   @ViewChild('rightBracket2', { static: false }) rightBracket2!: ElementRef;
   @ViewChild('leftBracket3', { static: false }) leftBracket3!: ElementRef;
   @ViewChild('rightBracket3', { static: false }) rightBracket3!: ElementRef;
+  @ViewChild('highlight', { static: false }) highlight!: ElementRef;
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
-
+  @HostBinding('style.color') color: string = 'white';
   isModalOpen = false;
   gridItems = Array(25);
   hoverIndex = -1;
@@ -51,6 +54,8 @@ export class MatrixComponent implements AfterViewChecked {
   secondMatrixAdded = false;
   selectedButton: string = 'Java';
   selectedThread: string = '1';
+  previousThread: string = '1';
+  highlightPosition = 5;
   operationsContainerVisible: boolean = true;
   operationMappings: { [key: string]: string } = {
     '*': 'matrix_multiply',
@@ -82,6 +87,28 @@ export class MatrixComponent implements AfterViewChecked {
       this.leftBracket3,
       this.rightBracket3
     );
+  }
+
+  selectThread(thread: string) {
+    const threadButton = document.querySelector(
+      `button[data-thread="${thread}"]`
+    ) as HTMLElement;
+    if (threadButton) {
+      this.highlightPosition = threadButton.offsetTop;
+    }
+    this.selectedThread = thread;
+  }
+
+  animateTransition(previousThread: string, nextThread: string) {
+    const previousButton = document.querySelector(
+      `button[data-thread="${previousThread}"]`
+    );
+    const nextButton = document.querySelector(
+      `button[data-thread="${nextThread}"]`
+    );
+
+    gsap.to(previousButton, { scale: 1, duration: 0.3 });
+    gsap.to(nextButton, { scale: 1.2, duration: 0.3 });
   }
   adjustBracketSize(
     matrix: any[],
@@ -164,6 +191,10 @@ export class MatrixComponent implements AfterViewChecked {
     );
   }
   openModal() {
+    if (this.selectedMatrix.length >= 2) {
+      this.showError('Вы не можете добавить больше двух матриц');
+      return;
+    }
     if (this.selectedMatrix.length > 0 && !this.operationSelected) {
       this.showError('Выберите операцию перед добавлением второй матрицы');
       return;
@@ -319,10 +350,11 @@ export class MatrixComponent implements AfterViewChecked {
             )
             .join(', ')
         : '',
-      threads: '2',
-      library: 'Java',
+      library: this.selectedButton,
+      threads: this.selectedThread,
       email: email,
     };
+    console.log(data);
     this.http
       .post<{ Result: string }>(
         'http://localhost:8080/wolfram/' + serverOperation,
