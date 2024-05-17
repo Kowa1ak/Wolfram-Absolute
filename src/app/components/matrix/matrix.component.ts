@@ -48,6 +48,9 @@ export class MatrixComponent implements AfterViewChecked {
   isMatrixAdded: boolean = false;
   public errorOccurred = false;
   isInputContainerVisible = true;
+  secondMatrixAdded = false;
+  selectedButton: string = 'Java';
+  selectedThread: string = '1';
   operationsContainerVisible: boolean = true;
   operationMappings: { [key: string]: string } = {
     '*': 'matrix_multiply',
@@ -87,7 +90,7 @@ export class MatrixComponent implements AfterViewChecked {
   ) {
     if (matrix && matrix.length > 0) {
       const rowCount = matrix.length;
-      const fontSize = rowCount * 40; // Измените множитель, чтобы подогнать под нужный размер
+      const fontSize = rowCount * 50; // Измените множитель, чтобы подогнать под нужный размер
 
       this.renderer.setStyle(
         leftBracket.nativeElement,
@@ -127,6 +130,15 @@ export class MatrixComponent implements AfterViewChecked {
       this.showError('Выберите операцию перед добавлением второй матрицы');
       return;
     }
+    if (this.selectedMatrix.length === 1) {
+      this.secondMatrixAdded = true;
+    }
+    if (this.currentOperation === '-1' || this.currentOperation === 'T') {
+      this.showError(
+        'Нельзя добавить вторую матрицу при выборе операции "-1" или "T"'
+      );
+      return;
+    }
     this.isMatrixAdded = true;
     const rows = Math.floor(index / this.gridSize) + 1;
     const columns = (index % this.gridSize) + 1;
@@ -156,7 +168,12 @@ export class MatrixComponent implements AfterViewChecked {
       this.showError('Выберите операцию перед добавлением второй матрицы');
       return;
     }
-
+    if (this.currentOperation === '-1' || this.currentOperation === 'T') {
+      this.showError(
+        'Нельзя добавить вторую матрицу при выборе операции "-1" или "T"'
+      );
+      return;
+    }
     this.isModalOpen = true;
   }
   focusNextInput(matrixIndex: number, i: number, j: number) {
@@ -179,6 +196,22 @@ export class MatrixComponent implements AfterViewChecked {
       this.showError('Матрица не выбрана');
       return;
     }
+    // Проверка, что все матрицы имеют одинаковый размер
+    const rows = this.selectedMatrix[0].length;
+    const cols = this.selectedMatrix[0][0].length;
+
+    for (let i = 1; i < this.selectedMatrix.length; i++) {
+      if (
+        this.selectedMatrix[i].length !== rows ||
+        this.selectedMatrix[i][0].length !== cols
+      ) {
+        this.showError(
+          'Все матрицы должны быть одного и того же размера для операции сложения'
+        );
+        return;
+      }
+    }
+
     this.currentOperation = '+';
   }
 
@@ -188,22 +221,75 @@ export class MatrixComponent implements AfterViewChecked {
       this.showError('Матрица не выбрана');
       return;
     }
+
     this.currentOperation = '*';
   }
 
   inverse(): void {
+    this.operationSelected = true;
     if (!this.isMatrixAdded) {
       this.showError('Матрица не выбрана');
       return;
     }
+
+    // Проверить, является ли матрица обратимой (определитель не равен нулю)
+    this.selectedMatrix.forEach((matrix, index) => {
+      if (matrix.length !== matrix[0].length) {
+        this.showError(
+          `Матрица номер ${
+            index + 1
+          } должна быть квадратной для операции обратной матрицы`
+        );
+        return;
+      }
+
+      let numericMatrix = matrix.map((row) =>
+        row.map((cell) => parseFloat(cell.value))
+      );
+      if (this.determinant(numericMatrix) === 0) {
+        this.showError(
+          `Матрица номер ${
+            index + 1
+          } должна быть обратимой (ее определитель не должен быть равен нулю)`
+        );
+        return;
+      }
+    });
+
     this.currentOperation = '-1';
+  }
+  determinant(matrix: number[][]): number {
+    const size = matrix.length;
+    let det = 0;
+
+    if (size === 1) {
+      return matrix[0][0];
+    }
+
+    if (size === 2) {
+      return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    }
+
+    for (let i = 0; i < size; i++) {
+      // Создать подматрицу, исключив первую строку и i-й столбец
+      const subMatrix = matrix
+        .slice(1)
+        .map((row) => row.filter((_, idx) => idx !== i));
+
+      // Рекурсивно вычислить определитель подматрицы и добавить его к общему определителю
+      det += Math.pow(-1, i) * matrix[0][i] * this.determinant(subMatrix);
+    }
+
+    return det;
   }
 
   transpose(): void {
+    this.operationSelected = true;
     if (!this.isMatrixAdded) {
       this.showError('Матрица не выбрана');
       return;
     }
+
     this.currentOperation = 'T';
   }
   showError(detail: string): void {
@@ -237,7 +323,6 @@ export class MatrixComponent implements AfterViewChecked {
       library: 'Java',
       email: email,
     };
-    console.log(data);
     this.http
       .post<{ Result: string }>(
         'http://localhost:8080/wolfram/' + serverOperation,
@@ -261,25 +346,48 @@ export class MatrixComponent implements AfterViewChecked {
           this.showError('Произошла ошибка при обработке вашего запроса');
         }
       );
+    const rows = this.selectedMatrix[0].length;
+    const cols = this.selectedMatrix[0][0].length;
+
+    if (this.currentOperation === '+') {
+      // Проверка для операции сложения
+      for (let i = 1; i < this.selectedMatrix.length; i++) {
+        if (
+          this.selectedMatrix[i].length !== rows ||
+          this.selectedMatrix[i][0].length !== cols
+        ) {
+          this.showError(
+            'Все матрицы должны быть одного и того же размера для операции сложения'
+          );
+          return;
+        }
+      }
+    } else if (this.currentOperation === '*') {
+      // Проверка для операции умножения
+      for (let i = 1; i < this.selectedMatrix.length; i++) {
+        if (
+          this.selectedMatrix[i - 1][0].length !== this.selectedMatrix[i].length
+        ) {
+          this.showError(
+            'Количество столбцов первой матрицы должно быть равно количеству строк второй матрицы для операции умножения'
+          );
+          return;
+        }
+      }
+    }
   }
   handleServerResponse(serverResponse: string) {
-    // Преобразовать ответ от сервера в объект
     let responseObj = JSON.parse(serverResponse);
 
-    // Теперь вы можете обратиться к свойству Result
     let resultMatrix = JSON.parse(responseObj.Result);
 
-    // Преобразовать каждый элемент матрицы
     for (let i = 0; i < resultMatrix.length; i++) {
       for (let j = 0; j < resultMatrix[i].length; j++) {
         resultMatrix[i][j] = parseFloat(resultMatrix[i][j].toFixed(1));
       }
     }
 
-    // Обновить responseObj с новой матрицей
     responseObj.Result = JSON.stringify(resultMatrix);
-
-    // Вернуть обновленный объект ответа
     return responseObj;
   }
   deleteAllAndClose() {
@@ -289,7 +397,9 @@ export class MatrixComponent implements AfterViewChecked {
     this.operationSelected = false;
     this.currentOperation = '';
     this.firstMatrixAdded = false;
+    this.secondMatrixAdded = false;
   }
+
   navigateToHome() {
     this.router.navigate(['']);
   }
