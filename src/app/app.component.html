@@ -97,7 +97,9 @@
           (input)="handleInput($event)"
           required
         />
-        <button type="submit"><mat-icon>send</mat-icon></button>
+        <button type="submit" [class.active]="isButtonActive">
+          <mat-icon>send</mat-icon>
+        </button>
       </form>
     </div>
   </ng-container>

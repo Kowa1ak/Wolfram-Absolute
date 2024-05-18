@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   globalClick: Function | null = null;
   @ViewChild('chatPanel', { static: false }) chatPanel!: ElementRef;
   @ViewChild('name') name: ElementRef | undefined;
-
+  isButtonActive = false;
   constructor(
     @Inject(L10N_LOCALE) public locale: L10nLocale,
     private translationService: L10nTranslationService,
@@ -130,6 +130,8 @@ export class AppComponent implements OnInit, OnDestroy {
         {},
         JSON.stringify(chatMessage)
       );
+      this.isButtonActive = true;
+      setTimeout(() => (this.isButtonActive = false), 200);
     }
     event.preventDefault();
     this.messageInput = '';
