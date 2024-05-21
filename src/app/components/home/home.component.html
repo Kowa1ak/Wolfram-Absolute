@@ -44,19 +44,23 @@
         </ng-template>
       </div>
     </header>
-    <div class="nameProject">WOLFRAM ABSOLUTE</div>
-    <div class="container">
-      <button [routerLink]="['/arithmetic']">
-        {{ "home.arithmetic" | translate : languageService.locale.language }}
-      </button>
-      <button [routerLink]="['/number-systems']">
-        {{ "home.numberSystems" | translate : languageService.locale.language }}
-      </button>
-      <button [routerLink]="['/matrix-operations']">
-        {{
-          "home.matrixOperation" | translate : languageService.locale.language
-        }}
-      </button>
+    <div class="content">
+      <div class="nameProject">WOLFRAM ABSOLUTE</div>
+      <div class="container">
+        <button (click)="navigateToArithmetic()">
+          {{ "home.arithmetic" | translate : languageService.locale.language }}
+        </button>
+        <button (click)="navigateToNumberSystems()">
+          {{
+            "home.numberSystems" | translate : languageService.locale.language
+          }}
+        </button>
+        <button (click)="navigateToMatrixOperations()">
+          {{
+            "home.matrixOperation" | translate : languageService.locale.language
+          }}
+        </button>
+      </div>
     </div>
   </div>
   <div class="backImage"></div>

@@ -13,6 +13,7 @@
   rel="stylesheet"
 />
 <router-outlet> </router-outlet>
+
 <p-toast></p-toast>
 <button
   class="chat-button"
@@ -25,7 +26,7 @@
   }}</mat-icon>
   <span *ngIf="!isChatOpen">CHAT</span>
 </button>
-
+<div *ngIf="isOverlayVisible" class="overlay"></div>
 <div
   #chatPanel
   class="chat-panel"

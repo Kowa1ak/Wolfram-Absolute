@@ -49,12 +49,15 @@ body {
     z-index: 1000;
   }
   .content {
+    height: 100vh;
+    
+    
     z-index: -1;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+   
   }
   .nameProject {
     text-align: center;
@@ -67,7 +70,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* margin-top: 5%; */
+
   }
   .nameProjectDop {
     text-align: center;
@@ -275,7 +278,7 @@ body {
   }
   
   .grid-item {
-    width: 55%;
+    width: 48%;
     height: 55%;
     background-color: transparent;
     border-radius: 10px;
@@ -456,4 +459,11 @@ body {
 .list-thread-button {
   z-index: 10;
   position: relative;
+}
+.kkk {
+  position: absolute;
+  width: 100%;
+  min-height: 100px;
+  background-color: #23243c;
+  z-index: 9999;
 }

@@ -55,9 +55,37 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+header {
+  width: 100%;
+  z-index: 11;
+  position: fixed;
+}
+.content {
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+ 
+}
+.nameProject {
+  width: 100%;
+    color: #FFF;
+    font-family: "KoHo", sans-serif;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+   
+} 
 .authButtons {
     padding: 20px 20px 0 0;
     text-align: right;
+    
 }
 button {
     color: #FFF;
@@ -83,42 +111,66 @@ button {
     border: 1px solid white;
     border-radius: 10px;
 }
-.nameProject {
-    color: #FFF;
-    font-family: "KoHo", sans-serif;
-    font-size: 50px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12%;
-}
-.container { 
 
-  width: 70%;
-  padding-top: 6.5%;
+.container { 
+  padding-top: 3%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 40px;
   justify-items: center;
   align-items: center;
   margin-left: auto; 
   margin-right: auto;
 }
+@media (max-width: 1000px) {
+  .content {
+    z-index: 12;
+    transform: translateY(100px);
+  }
+  .container {
+    padding: 4% 5%;
+    grid-template-columns: 1fr;
+  }
+  .container button {
+    min-width: none;
+    max-width: 450px;
+    width: 100%;
+   
+  }
+}
+
+
 .container button {
-  padding: 20px 40px;
-  border-radius: 20px;
-  background-color: #23243C;
-  max-width: 350px;
+  min-width: 400px;
   width: 100%;
-  border: none;
-  transition: transform 0.3s  ease-in-out;
+  padding: 20px 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 0;
+  background-color: #23243C;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 20px;
+  transition: all 0.5s ease;
 }
+
 .container button:hover {
-  transform: scale(1.1); 
+  letter-spacing: 5px;
+  background-color: hsl(262, 64%, 49%); /* #6C2FCD */
+  color: hsl(0, 0%, 100%);
+  box-shadow: #0F102B 0px 7px 29px 0px;
 }
+
+.container button:active {
+  letter-spacing: 5px;
+  background-color: hsl(262, 64%, 49%); /* #6C2FCD */
+  color: hsl(0, 0%, 100%);
+  box-shadow: #0F102B 0px 0px 0px 0px;
+  transform: translateY(10px);
+  transition: 100ms;
+}
+
 
 
 

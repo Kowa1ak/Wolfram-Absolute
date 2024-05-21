@@ -47,6 +47,23 @@ export class HomeComponent implements OnInit {
   navigateToRegister() {
     this.router.navigate(['/register']);
   }
+  navigateToArithmetic() {
+    setTimeout(() => {
+      this.router.navigate(['/arithmetic']);
+    }, 200);
+  }
+
+  navigateToNumberSystems() {
+    setTimeout(() => {
+      this.router.navigate(['/number-systems']);
+    }, 200);
+  }
+
+  navigateToMatrixOperations() {
+    setTimeout(() => {
+      this.router.navigate(['/matrix-operations']);
+    }, 200);
+  }
 
   reloadPage() {
     window.location.reload();

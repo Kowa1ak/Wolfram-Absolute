@@ -6,13 +6,15 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  HostListener,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { L10N_LOCALE, L10nLocale, L10nTranslationService } from 'angular-l10n';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/auth';
 import { Observable, of } from 'rxjs';
-// import { ChatService } from './services/chat.service';
+import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Client, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
@@ -26,20 +28,23 @@ export class AppComponent implements OnInit, OnDestroy {
   public username: string | null = null;
   public messageInput: string = '';
   public messages: { sender: string; content: string; type: string }[] = [];
-
+  routeSubscription: Subscription | undefined;
   loggedInUsers$: Observable<User[]> = of([]);
   isChatOpen = false;
   globalClick: Function | null = null;
   @ViewChild('chatPanel', { static: false }) chatPanel!: ElementRef;
   @ViewChild('name') name: ElementRef | undefined;
   isButtonActive = false;
+  isOverlayVisible = false;
+
   constructor(
     @Inject(L10N_LOCALE) public locale: L10nLocale,
     private translationService: L10nTranslationService,
     private renderer: Renderer2,
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -50,7 +55,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isChatOpen
       ) {
         this.isChatOpen = false;
+        this.isOverlayVisible = false;
       }
+    });
+    this.routeSubscription = this.router.events.subscribe((event) => {
+      this.isOverlayVisible = false;
     });
   }
 
@@ -61,11 +70,15 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.globalClick) {
       this.globalClick();
     }
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 
   toggleChat(event: MouseEvent) {
     event.stopPropagation();
     this.isChatOpen = !this.isChatOpen;
+    this.isOverlayVisible = this.isChatOpen;
   }
 
   isUserLoggedIn() {
