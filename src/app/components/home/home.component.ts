@@ -64,6 +64,11 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/matrix-operations']);
     }, 200);
   }
+  navigateToCompoundInterest() {
+    setTimeout(() => {
+      this.router.navigate(['/compound-interest']);
+    }, 200);
+  }
 
   reloadPage() {
     window.location.reload();

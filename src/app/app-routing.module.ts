@@ -8,6 +8,7 @@ import { AccountComponent } from './components/account/account.component';
 import { ArithmeticComponent } from './components/arithmetic/arithmetic.component';
 import { NumberSystemsComponent } from './components/number-systems/number-systems.component';
 import { MatrixComponent } from './components/matrix/matrix.component';
+import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'matrix-operations',
     component: MatrixComponent,
+  },
+  {
+    path: 'compound-interest',
+    component: CompoundInterestComponent,
   },
 ];
 

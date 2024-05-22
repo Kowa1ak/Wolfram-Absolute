@@ -7,7 +7,8 @@
     "SignUp": "Регистрация",
     "arithmetic": "Арифметика",
     "numberSystems": "Системы счисления",
-    "matrixOperation": "Операции с матрицами"
+    "matrixOperation": "Операции с матрицами",
+    "compound-interest": "Сложные проценты"
   },
   "login": {
     "welcome": "Добро пожаловать",

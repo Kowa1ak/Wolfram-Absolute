@@ -23,6 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { NumberSystemsComponent } from './components/number-systems/number-systems.component';
 import { MatrixComponent } from './components/matrix/matrix.component';
+import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +35,7 @@ import { MatrixComponent } from './components/matrix/matrix.component';
     ArithmeticComponent,
     NumberSystemsComponent,
     MatrixComponent,
+    CompoundInterestComponent,
   ],
   imports: [
     FormsModule,
