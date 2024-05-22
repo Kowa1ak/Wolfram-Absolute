@@ -1,0 +1,26 @@
+2024-05-23 00:12:39 INFO  SpringSecurityExampleApplication:51 - Starting SpringSecurityExampleApplication using Java 18.0.2.1 with PID 1412 (C:\Users\user\Documents\!WolframA\WolframAbsoluteBackend\target\classes started by user in C:\Users\user\Documents\!WolframA\WolframAbsoluteBackend)
+2024-05-23 00:12:39 INFO  SpringSecurityExampleApplication:638 - No active profile set, falling back to 1 default profile: "default"
+2024-05-23 00:12:39 INFO  RepositoryConfigurationDelegate:138 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-05-23 00:12:39 INFO  RepositoryConfigurationDelegate:207 - Finished Spring Data repository scanning in 29 ms. Found 1 JPA repository interface.
+2024-05-23 00:12:40 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2024-05-23 00:12:40 INFO  ServletWebServerApplicationContext:291 - Root WebApplicationContext: initialization completed in 960 ms
+2024-05-23 00:12:40 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-05-23 00:12:40 INFO  Version:44 - HHH000412: Hibernate ORM core version 6.2.13.Final
+2024-05-23 00:12:40 INFO  Environment:191 - HHH000406: Using bytecode reflection optimizer
+2024-05-23 00:12:40 INFO  SpringPersistenceUnitInfo:87 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-05-23 00:12:41 INFO  JtaPlatformInitiator:55 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-05-23 00:12:41 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-05-23 00:12:41 WARN  JpaBaseConfiguration$JpaWebConfiguration:231 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-05-23 00:12:41 INFO  WelcomePageHandlerMapping:59 - Adding welcome page: class path resource [static/index.html]
+2024-05-23 00:12:42 INFO  DefaultSecurityFilterChain:54 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@798ceea2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1509dade, org.springframework.security.web.context.SecurityContextHolderFilter@6092d41, org.springframework.security.web.header.HeaderWriterFilter@673d73da, org.springframework.security.web.authentication.logout.LogoutFilter@4096a622, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@142dbf1a, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@4b6c5fa2, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@6ca5720a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71d4b83b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c7478ac, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6bbf282d, org.springframework.security.web.access.ExceptionTranslationFilter@69a61267, org.springframework.security.web.access.intercept.AuthorizationFilter@2139aa1f]
+2024-05-23 00:12:42 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2024-05-23 00:12:42 INFO  SimpleBrokerMessageHandler:117 - Starting...
+2024-05-23 00:12:42 INFO  SimpleBrokerMessageHandler:117 - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@6bdc984]]
+2024-05-23 00:12:42 INFO  SimpleBrokerMessageHandler:117 - Started.
+2024-05-23 00:12:42 INFO  SpringSecurityExampleApplication:57 - Started SpringSecurityExampleApplication in 3.124 seconds (process running for 3.618)
+2024-05-23 00:13:19 INFO  DispatcherServlet:532 - Initializing Servlet 'dispatcherServlet'
+2024-05-23 00:13:19 INFO  DispatcherServlet:554 - Completed initialization in 1 ms
+2024-05-23 00:13:19 WARN  HandlerMappingIntrospector:454 - Cache miss for REQUEST dispatch to '/wolfram/matrix_find_inverse' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2024-05-23 00:13:19 INFO  MatrixOperations:172 - Finding inverse of matrix with 1 threads
+2024-05-23 00:13:19 INFO  MatrixOperations:206 - Inverse of matrix found successfully
+2024-05-23 00:13:42 INFO  WebSocketMessageBrokerStats:128 - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
