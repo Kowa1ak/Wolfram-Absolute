@@ -1,1 +1,52 @@
-<p>compound-interest works!</p>
+<body>
+  <div class="mainContent">
+    <header>
+      <div class="logo" (click)="navigateToHome()"></div>
+      <div class="goHome">
+        <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+      </div>
+    </header>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="nameProjectDop">COMPOUND INTEREST</div>
+    <div class="content">
+      <form>
+        <label for="initialAmount">Initial Amount:</label><br />
+        <input type="number" id="initialAmount" name="initialAmount" /><br />
+        <label for="additionalContributions">Additional Contributions:</label
+        ><br />
+        <input
+          type="number"
+          id="additionalContributions"
+          name="additionalContributions"
+        /><br />
+        <label for="interestRate">Interest Rate:</label><br />
+        <input type="number" id="interestRate" name="interestRate" /><br />
+        <label for="contributionFrequency">Contribution Frequency:</label><br />
+        <input
+          type="number"
+          id="contributionFrequency"
+          name="contributionFrequency"
+        /><br />
+        <label for="interestFrequency">Interest Frequency:</label><br />
+        <input
+          type="number"
+          id="interestFrequency"
+          name="interestFrequency"
+        /><br />
+        <label for="years">Years:</label><br />
+        <input type="number" id="years" name="years" /><br />
+        <button type="button" id="javaButton" name="javaButton">Java</button>
+        <button type="button" id="cppButton" name="cppButton">C++</button>
+        <button type="button" (click)="sendData()">Submit</button>
+      </form>
+      <div class="result">
+        Result:
+        <div class="serverResponse">
+          {{ serverResponse }}
+        </div>
+      </div>
+      <canvas id="myChart" #myChart></canvas>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>
