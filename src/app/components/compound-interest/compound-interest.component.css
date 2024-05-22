@@ -74,12 +74,29 @@ body {
   }
   .content {
     height: 100vh;
+    width: 100%;
     z-index: -1;
     display: flex;
-    justify-content: center;
+    justify-content:center;
+    align-items: center;
+    flex-direction: row;
+  }
+  form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-items: center;
+   
+  }
+  .grafik{
+    display: flex;
+    justify-content: right;
     align-items: center;
     flex-direction: column;
-   
+    width: 50%;
+    height: 50%;
+    margin-right: 10%;
   }
   
   

@@ -39,13 +39,23 @@
         <button type="button" id="cppButton" name="cppButton">C++</button>
         <button type="button" (click)="sendData()">Submit</button>
       </form>
-      <div class="result">
-        Result:
-        <div class="serverResponse">
-          {{ serverResponse }}
+
+      <div class="grafik">
+        <div class="result">
+          Result:
+          <div class="serverResponse">
+            {{ totalFinalAmount }}
+          </div>
+          <div class="totalReplenishments">
+            {{ totalReplenishments }}
+          </div>
+
+          <div class="totalInterests">
+            {{ totalInterests }}
+          </div>
         </div>
+        <canvas id="myChart" #myChart></canvas>
       </div>
-      <canvas id="myChart" #myChart></canvas>
     </div>
   </div>
   <div class="backImage"></div>

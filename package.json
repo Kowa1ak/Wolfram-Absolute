@@ -26,6 +26,7 @@
     "angular-i18n": "^1.8.3",
     "angular-l10n": "^16.0.0",
     "chart.js": "^4.4.3",
+    "chartjs-plugin-zoom": "^2.0.1",
     "gsap": "^3.12.5",
     "ngx-toastr": "^18.0.0",
     "primeflex": "^3.3.1",
