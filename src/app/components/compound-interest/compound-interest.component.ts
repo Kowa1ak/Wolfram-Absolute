@@ -34,9 +34,9 @@ export class CompoundInterestComponent implements AfterViewInit {
     AdditionalContributions: string;
     Interest: string;
   }> | null = null;
-  totalFinalAmount: number | null = null;
-  totalReplenishments: number | null = null;
-  totalInterests: number | null = null;
+  totalFinalAmount: number = 0;
+  totalReplenishments: number = 0;
+  totalInterests: number = 0;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -196,12 +196,15 @@ export class CompoundInterestComponent implements AfterViewInit {
       parseFloat(item.AdditionalContributions)
     );
     const interests = finalBalance.map((item) => parseFloat(item.Interest));
-    this.totalFinalAmount =
+    this.totalFinalAmount = Math.round(
       initialBalances[initialBalances.length - 1] +
-      replenishments[replenishments.length - 1] +
-      interests[interests.length - 1];
-    this.totalReplenishments = replenishments.reduce((a, b) => a + b, 0);
-    this.totalInterests = interests.reduce((a, b) => a + b, 0);
+        replenishments[replenishments.length - 1] +
+        interests[interests.length - 1]
+    );
+    this.totalReplenishments = Math.round(
+      replenishments.reduce((a, b) => a + b, 0)
+    );
+    this.totalInterests = Math.round(interests.reduce((a, b) => a + b, 0));
     if (this.chart) {
       // Обновляем данные в существующем графике
       this.chart.data.labels = Array.from({ length: years }, (_, i) => i + 1);

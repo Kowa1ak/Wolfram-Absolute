@@ -5,9 +5,9 @@
       <div class="goHome">
         <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
       </div>
+      <div class="nameProject">WOLFRAM ABSOLUTE</div>
+      <div class="nameProjectDop">COMPOUND INTEREST</div>
     </header>
-    <div class="nameProject">WOLFRAM ABSOLUTE</div>
-    <div class="nameProjectDop">COMPOUND INTEREST</div>
     <div class="content">
       <form>
         <label for="initialAmount">Initial Amount:</label><br />
@@ -39,19 +39,22 @@
         <button type="button" id="cppButton" name="cppButton">C++</button>
         <button type="button" (click)="sendData()">Submit</button>
       </form>
-
       <div class="grafik">
         <div class="result">
-          Result:
           <div class="serverResponse">
-            {{ totalFinalAmount }}
+            <p>{{ totalFinalAmount }}</p>
+            Total balance
           </div>
-          <div class="totalReplenishments">
-            {{ totalReplenishments }}
-          </div>
+          <div class="additional-total">
+            <div class="totalReplenishments">
+              <p>{{ totalReplenishments }}</p>
+              Total replenishments
+            </div>
 
-          <div class="totalInterests">
-            {{ totalInterests }}
+            <div class="totalInterests">
+              <p>{{ totalInterests }}</p>
+              Total interests
+            </div>
           </div>
         </div>
         <canvas id="myChart" #myChart></canvas>
