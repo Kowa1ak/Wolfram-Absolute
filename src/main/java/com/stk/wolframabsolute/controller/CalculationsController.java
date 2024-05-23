@@ -24,6 +24,17 @@ public class CalculationsController {
     BasicOperations basicOperations;
     NumberSystemConverter converter;
     CompoundInterestCalculator compoundInterestCalculator;
+    SlauService slauService;
+
+    @PostMapping("/slau")
+    public double[] solveSlau(@RequestBody SlauRequest request) {
+        try {
+            return slauService.solveSlau(request.getEquations(), request.getThreads());
+        } catch (Exception e) {
+            logger.error("Error in system solving: {}", e);
+            return null;
+        }
+    }
 
 
     //Basic operations mappings
