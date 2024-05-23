@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,16 +51,30 @@ public class CalculationsController {
     }
 
     @PostMapping("/compound")
-    public ResponseEntity<Map<String, String>> calculateInterest(@RequestBody CompoundInterestRequest request) {
+    public ResponseEntity<List<Map<String, String>>> calculateInterest(@RequestBody CompoundInterestRequest request) {
         logger.info("Received compound interest calculation request: {}", request);
-        String result = Double.toString(compoundInterestCalculator.calculate(request.getInitialAmount(),
-                request.getAdditionalContributions(), request.getInterestRate(),
-                request.getContributionFrequency(), request.getInterestFrequency(),
-                request.getYears()));
 
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Compound interest calculation result: {}", result);
+        List<CompoundInterestCalculator.YearlyInfo> results = compoundInterestCalculator.calculate(
+                request.getInitialAmount(),
+                request.getAdditionalContributions(),
+                request.getInterestRate(),
+                request.getContributionFrequency(),
+                request.getInterestFrequency(),
+                request.getYears()
+        );
+
+        List<Map<String, String>> response = new ArrayList<>();
+        for (CompoundInterestCalculator.YearlyInfo result : results) {
+            Map<String, String> yearResult = new HashMap<>();
+            yearResult.put("InitialAmount", Double.toString(result.initialAmount));
+            yearResult.put("AdditionalContributions", Double.toString(result.additionalContributions));
+            yearResult.put("Interest", Double.toString(result.interest));
+            response.add(yearResult);
+            logger.debug("Yearly result: InitialAmount={}, AdditionalContributions={}, Interest={}",
+                    result.initialAmount, result.additionalContributions, result.interest);
+        }
+
+        logger.info("Compound interest calculation completed with {} years of data.", results.size());
         return ResponseEntity.ok(response);
     }
 

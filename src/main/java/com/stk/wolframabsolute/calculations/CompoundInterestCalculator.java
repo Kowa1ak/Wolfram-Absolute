@@ -4,26 +4,56 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CompoundInterestCalculator {
     private static final Logger logger = LogManager.getLogger(CompoundInterestCalculator.class);
-    public double calculate(double initialAmount, double additionalContributions, double interestRate, int contributionFrequency, int interestFrequency, int years) {
+
+    public static class YearlyInfo {
+        public double initialAmount;
+        public double additionalContributions;
+        public double interest;
+
+        public YearlyInfo(double initialAmount, double additionalContributions, double interest) {
+            this.initialAmount = initialAmount;
+            this.additionalContributions = additionalContributions;
+            this.interest = interest;
+        }
+    }
+
+    public List<YearlyInfo> calculate(double initialAmount, double additionalContributions, double interestRate, int contributionFrequency, int interestFrequency, int years) {
         logger.info("Starting compound interest calculation with initialAmount: {}, additionalContributions: {}, interestRate: {}, contributionFrequency: {}, interestFrequency: {}, years: {}",
                 initialAmount, additionalContributions, interestRate, contributionFrequency, interestFrequency, years);
+
         double amount = initialAmount;
-        try {
-            for (int i = 0; i < years; i++) {
-                for (int j = 0; j < contributionFrequency; j++) {
-                    amount += additionalContributions;
-                }
-                for (int k = 0; k < interestFrequency; k++) {
-                    amount += amount * (interestRate / interestFrequency);
-                }
+        List<YearlyInfo> yearlyInfos = new ArrayList<>();
+
+        for (int i = 0; i < years; i++) {
+            logger.debug("Year {}: Starting amount: {}", i + 1, amount);
+
+            double yearlyContributions = 0;
+            for (int j = 0; j < contributionFrequency; j++) {
+                amount += additionalContributions;
+                yearlyContributions += additionalContributions;
+                logger.debug("Contribution {}: Total amount: {}", j + 1, amount);
             }
-            logger.info("Calculation completed. Final amount: {}", amount);
-        } catch (Exception ex) {
-            logger.error("Exception occurred during calculation", ex);
+
+            double yearlyInterest = 0;
+            for (int k = 0; k < interestFrequency; k++) {
+                double interest = amount * (interestRate / interestFrequency);
+                amount += interest;
+                yearlyInterest += interest;
+                logger.debug("Interest period {}: Interest: {}, Total amount: {}", k + 1, interest, amount);
+            }
+
+            YearlyInfo info = new YearlyInfo(amount - yearlyContributions - yearlyInterest, yearlyContributions, yearlyInterest);
+            yearlyInfos.add(info);
+            logger.info("Year {}: End amount: {}, Yearly contributions: {}, Yearly interest: {}", i + 1, amount, yearlyContributions, yearlyInterest);
         }
-        return amount;
+
+        logger.info("Compound interest calculation completed.");
+        return yearlyInfos;
     }
 }
