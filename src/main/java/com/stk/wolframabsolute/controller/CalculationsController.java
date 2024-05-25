@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/wolfram")
@@ -25,6 +22,22 @@ public class CalculationsController {
     NumberSystemConverter converter;
     SLAUSolverService solverService;
     CompoundInterestCalculator compoundInterestCalculator;
+    ODESolverService ODEsolver;
+
+    @PostMapping("/solveODE")
+    public ResponseEntity<?> solveODE(@RequestBody ODERequest odeRequest) {
+        String result = ODEsolver.solveODE(
+                odeRequest.getEquation(),
+                odeRequest.getY0(),
+                odeRequest.getT0(),
+                odeRequest.getT1(),
+                odeRequest.getStepSize()
+        );
+        if (result.startsWith("Error:")) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", result));
+        }
+        return ResponseEntity.ok(Collections.singletonMap("solution", result));
+    }
 
     @PostMapping("/slau")
     public ResponseEntity<Map<String, String>> solveSlau(@RequestBody SlauRequest request) {
@@ -84,7 +97,7 @@ public class CalculationsController {
             yearResult.put("AdditionalContributions", Double.toString(result.additionalContributions));
             yearResult.put("Interest", Double.toString(result.interest));
             response.add(yearResult);
-            logger.debug("Yearly result: InitialAmount={}, AdditionalContributions={}, Interest={}",
+            logger.info("Yearly result: InitialAmount={}, AdditionalContributions={}, Interest={}",
                     result.initialAmount, result.additionalContributions, result.interest);
         }
 
