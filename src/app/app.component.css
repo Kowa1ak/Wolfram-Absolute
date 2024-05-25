@@ -1,7 +1,7 @@
 .chat-button {
-  width: 140px;
-  height: 60px;
-  font-size: 18px;
+  width: 100px;
+  height: 50px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  padding: 10px 20px;
+  padding: 10px 10px;
   background-color: #6C2FCD;
   box-shadow: 10px 10px 48px 5px rgba(0, 0, 0, 0.2);
   color: white;
@@ -24,14 +24,14 @@
 .chat-button.open {
   right: 27%;
   padding: 0px;
-  padding-right: 30px;
+  padding-right: 40px;
   width: 100px; 
   transition: transform width 0.4s ease-in-out;
   transition: right 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 mat-icon {
-  margin-right: 10px;
-  transform: scale(1.7);
+  margin-right: 5px;
+  transform: scale(1.5);
   color: #d9d9d9;
 }
 

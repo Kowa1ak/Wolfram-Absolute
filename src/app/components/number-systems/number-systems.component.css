@@ -167,6 +167,7 @@ img:active, img.clicked {
   color: white;
   transform: scale(1.5);
 }
+
 .btnLibraryList {
   margin-left: 10px;
   height: 120px;
