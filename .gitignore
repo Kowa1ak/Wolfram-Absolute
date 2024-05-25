@@ -20,7 +20,7 @@ target/
 *.ipr
 
 ### Logs
-logs/
+/logs/
 
 ### NetBeans ###
 /nbproject/private/
