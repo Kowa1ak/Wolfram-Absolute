@@ -23,17 +23,20 @@ public class CalculationsController {
     private static final Logger logger = LogManager.getLogger(CalculationsController.class);
     BasicOperations basicOperations;
     NumberSystemConverter converter;
+    SLAUSolverService solverService;
     CompoundInterestCalculator compoundInterestCalculator;
-    SlauService slauService;
 
     @PostMapping("/slau")
-    public double[] solveSlau(@RequestBody SlauRequest request) {
+    public ResponseEntity<Map<String, String>> solveSlau(@RequestBody SlauRequest request) {
+        Map<String, String> response = new HashMap<>();
         try {
-            return slauService.solveSlau(request.getEquations(), request.getThreads());
+            String result = solverService.solve(request.getEquations(), request.getThreads());
+            response.put("Result", result);
         } catch (Exception e) {
-            logger.error("Error in system solving: {}", e);
-            return null;
+            response.put("Error", "Error in system solving: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
         }
+        return ResponseEntity.ok(response);
     }
 
 
