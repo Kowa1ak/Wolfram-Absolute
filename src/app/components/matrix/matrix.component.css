@@ -460,10 +460,3 @@ body {
   z-index: 10;
   position: relative;
 }
-.kkk {
-  position: absolute;
-  width: 100%;
-  min-height: 100px;
-  background-color: #23243c;
-  z-index: 9999;
-}

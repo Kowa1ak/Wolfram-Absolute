@@ -9,7 +9,8 @@
     "arithmetic": "Arithmetic",
     "numberSystems": "Number Systems",
     "matrixOperation": "Matrix Operation",
-    "compound-interest": "Compound Interest"
+    "compound-interest": "Compound Interest",
+    "slau": "SLAU"
   },
   "login": {
     "welcome": "Welcome",

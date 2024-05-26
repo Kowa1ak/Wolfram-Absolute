@@ -1,0 +1,224 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+/>
+
+<body>
+  <div class="mainContent">
+    <header>
+      <div class="logo" (click)="navigateToHome()"></div>
+      <div class="goHome">
+        <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="nameProject">WOLFRAM ABSOLUTE</div>
+      <div class="nameProjectDop">SLAU</div>
+      <div class="main-btn">
+        <div class="threads-container">
+          <h3>Threads</h3>
+          <div class="list-thread-button">
+            <div
+              #highlight
+              class="thread-highlight"
+              [style.left.px]="highlightPosition"
+            ></div>
+
+            <button
+              class="thread-button"
+              (click)="selectThread('1')"
+              [class.selected]="selectedThread === '1'"
+              data-thread="1"
+            >
+              1
+            </button>
+
+            <button
+              class="thread-button"
+              (click)="selectThread('2')"
+              [class.selected]="selectedThread === '2'"
+              data-thread="2"
+            >
+              2
+            </button>
+
+            <button
+              class="thread-button"
+              (click)="selectThread('3')"
+              [class.selected]="selectedThread === '3'"
+              data-thread="3"
+            >
+              3
+            </button>
+
+            <button
+              class="thread-button"
+              (click)="selectThread('4')"
+              [class.selected]="selectedThread === '4'"
+              data-thread="4"
+            >
+              4
+            </button>
+          </div>
+        </div>
+        <div class="counter-container">
+          <button (click)="decrement()" class="btn-counter">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="counter">{{ counter }}</span>
+          <button (click)="increment()" class="btn-counter">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div class="btn-library">
+          <h3>Library</h3>
+          <div class="btnLibraryList">
+            <button
+              mat-button
+              (click)="selectedButton = 'Java'"
+              [class.selected]="selectedButton === 'Java'"
+            >
+              Java
+              <mat-icon>check</mat-icon>
+            </button>
+            <button
+              mat-button
+              (click)="selectedButton = 'C++'"
+              [class.selected]="selectedButton === 'C++'"
+            >
+              C++
+              <mat-icon>check</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="input-container">
+        <svg
+          width="8"
+          [attr.height]="equations.length * 50"
+          viewBox="0 0 14 158"
+          xmlns="http://www.w3.org/2000/svg"
+          style="box-sizing: border-box"
+        >
+          <path
+            fill="#fff"
+            d="M0 81.11v-4.68c.95-.06 1.67-.2 2.15-.43.48-.24.9-.63 1.25-1.18.35-.56.6-1.25.72-2.09.1-.62.16-61.7.16-63.26 0-2.52.11-4.28.35-5.27.23-1 .66-1.8 1.27-2.4C6.5 1.18 7.4.7 8.57.35 9.37.12 10.62 0 12.32 0h1.04v4.67c-1.45 0-2.38.08-2.8.25-.4.16-.7.4-.9.74-.19.33-.29.9-.29 1.7 0 .82-.05 62.38-.17 64.67a11.9 11.9 0 0 1-.5 3.15c-.28.79-.63 1.45-1.06 1.97a8.02 8.02 0 0 1-1.94 1.62c.77.44 1.4.96 1.88 1.56.5.59.87 1.3 1.13 2.15.26.85.43 1.98.5 3.4.1 2.16.15 63.54.15 64.14 0 .86.1 1.46.3 1.8.22.34.53.59.95.76.43.18 1.34.27 2.75.27v4.69h-1.04c-1.75 0-3.1-.14-4.04-.43a4.97 4.97 0 0 1-3.67-3.8c-.22-.96-.33-2.46-.33-4.52 0-2.4-.1-63.95-.32-64.67a4.02 4.02 0 0 0-1.3-2.23A4.66 4.66 0 0 0 0 81.11z"
+          />
+        </svg>
+
+        <div class="slau">
+          <div
+            *ngFor="let equation of equations; let i = index"
+            class="equation-row"
+          >
+            <div
+              *ngFor="let variable of variables; let j = index"
+              class="variable-container"
+            >
+              <span *ngIf="j > 0" style="margin: 0 0 0 10px">+</span>
+              <span style="position: relative"
+                >X<span
+                  style="
+                    position: absolute;
+                    font-size: 10px;
+                    margin-left: 0;
+                    margin-right: 0;
+                    right: -7px;
+                    transform: translateY(0.5rem);
+                  "
+                  >{{ j + 1 }}</span
+                ></span
+              >
+              <input
+                type="number"
+                [(ngModel)]="equations[i][j]"
+                (focus)="onFocus(i, j)"
+                (blur)="onBlur(i, j)"
+                (keydown.enter)="onEnter(i, j)"
+                #input
+              />
+            </div>
+            <span>=</span>
+            <input
+              type="number"
+              [(ngModel)]="results[i]"
+              (focus)="onFocusResult(i)"
+              (blur)="onBlurResult(i)"
+              (keydown.enter)="onEnterResult(i)"
+              #resultInput
+            />
+          </div>
+        </div>
+        <button class="bin-button" (click)="clearForm()">
+          <svg
+            class="bin-top"
+            viewBox="0 0 39 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+            <line
+              x1="12"
+              y1="1.5"
+              x2="26.0357"
+              y2="1.5"
+              stroke="white"
+              stroke-width="3"
+            ></line>
+          </svg>
+          <svg
+            class="bin-bottom"
+            viewBox="0 0 33 39"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <mask id="path-1-inside-1_8_19" fill="white">
+              <path
+                d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+              ></path>
+            </mask>
+            <path
+              d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+              fill="white"
+              mask="url(#path-1-inside-1_8_19)"
+            ></path>
+            <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+            <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="bottom-container">
+        <button class="btnHistory">
+          <mat-icon>history</mat-icon>
+        </button>
+        <div class="result">
+          <div class="nameResult">Result:</div>
+          <div class="numberResult">{{ serverResponse }}</div>
+          <div class="speed">{{ time }}s</div>
+        </div>
+        <div class="button-send-area">
+          <button class="button-send" (click)="sendData()">
+            <div class="button-box">
+              <span class="button-elem">
+                <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                  ></path>
+                </svg>
+              </span>
+              <span class="button-elem">
+                <svg viewBox="0 0 46 40">
+                  <path
+                    d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>

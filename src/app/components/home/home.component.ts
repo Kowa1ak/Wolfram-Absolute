@@ -69,6 +69,11 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/compound-interest']);
     }, 200);
   }
+  navigateToSlau() {
+    setTimeout(() => {
+      this.router.navigate(['/slau']);
+    }, 200);
+  }
 
   reloadPage() {
     window.location.reload();

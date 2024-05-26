@@ -8,7 +8,8 @@
     "arithmetic": "Арифметика",
     "numberSystems": "Системы счисления",
     "matrixOperation": "Операции с матрицами",
-    "compound-interest": "Сложные проценты"
+    "compound-interest": "Сложные проценты",
+    "slau": "СЛАУ"
   },
   "login": {
     "welcome": "Добро пожаловать",

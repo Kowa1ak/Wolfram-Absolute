@@ -5,11 +5,11 @@
     "SignOut": "Выйсці",
     "SignIn": "Увайсці",
     "SignUp": "Рэгістрацыя",
-
     "arithmetic": "Арыфметыка",
     "numberSystems": "Сістэмы лічэння",
     "matrixOperation": "Матрычныя аперацыі",
-    "compound-interest": "Складаныя ўлікі"
+    "compound-interest": "Складаныя ўлікі",
+    "slau": "СЛАУ"
   },
   "login": {
     "welcome": "Сардэчна запрашаем",

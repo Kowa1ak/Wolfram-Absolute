@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { NumberSystemsComponent } from './components/number-systems/number-systems.component';
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
+import { SlauComponent } from './components/slau/slau.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CompoundInterestComponent } from './components/compound-interest/compou
     NumberSystemsComponent,
     MatrixComponent,
     CompoundInterestComponent,
+    SlauComponent,
   ],
   imports: [
     FormsModule,

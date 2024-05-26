@@ -9,6 +9,7 @@ import { ArithmeticComponent } from './components/arithmetic/arithmetic.componen
 import { NumberSystemsComponent } from './components/number-systems/number-systems.component';
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
+import { SlauComponent } from './components/slau/slau.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'compound-interest',
     component: CompoundInterestComponent,
+  },
+  {
+    path: 'slau',
+    component: SlauComponent,
   },
 ];
 
