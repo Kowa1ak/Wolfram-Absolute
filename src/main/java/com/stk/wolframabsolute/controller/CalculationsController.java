@@ -1,7 +1,11 @@
 package com.stk.wolframabsolute.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stk.wolframabsolute.calculations.*;
+import com.stk.wolframabsolute.entity.Calculation;
 import com.stk.wolframabsolute.requests.*;
+import com.stk.wolframabsolute.service.CalculationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,14 +22,32 @@ import java.util.*;
 @AllArgsConstructor
 public class CalculationsController {
     private static final Logger logger = LogManager.getLogger(CalculationsController.class);
+    private final ObjectMapper objectMapper;
     BasicOperations basicOperations;
     NumberSystemConverter converter;
     SLAUSolverService solverService;
     CompoundInterestCalculator compoundInterestCalculator;
     ODESolverService ODEsolver;
+    CalculationService calculationService;
+
+    @PostMapping("/by-email")
+    public ResponseEntity<?> getCalculationsByEmail(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email is required");
+        }
+
+        try {
+            List<Calculation> calculations = calculationService.getCalculationsByEmail(email);
+            return ResponseEntity.ok(calculations);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 
     @PostMapping("/solveODE")
     public ResponseEntity<?> solveODE(@RequestBody ODERequest odeRequest) {
+        logger.info("Received ODE calculation request: {}", odeRequest);
         String result = ODEsolver.solveODE(
                 odeRequest.getEquation(),
                 odeRequest.getY0(),
@@ -34,28 +56,44 @@ public class CalculationsController {
                 odeRequest.getStepSize()
         );
         if (result.startsWith("Error:")) {
+            logger.error("Error", "Error in system solving: " + result);
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", result));
         }
+        logger.info("calculation result: {}", result);
+        Calculation calculation = new Calculation();
+        calculation.setEmail(odeRequest.getEmail());
+        calculation.setCalculationType("ode");
+        calculation.setInputData(odeRequest.getEquation());
+        calculation.setResultData(result);
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(Collections.singletonMap("solution", result));
     }
 
     @PostMapping("/slau")
     public ResponseEntity<Map<String, String>> solveSlau(@RequestBody SlauRequest request) {
+        logger.info("Received sys solving calculation request: {}", request);
+        String result;
         Map<String, String> response = new HashMap<>();
         try {
-            String result = solverService.solve(request.getEquations(), request.getThreads());
+            result = solverService.solve(request.getEquations(), request.getThreads());
             response.put("Result", result);
         } catch (Exception e) {
             response.put("Error", "Error in system solving: " + e.getMessage());
+            logger.error("Error", "Error in system solving: " + e.getMessage());
             return ResponseEntity.status(500).body(response);
         }
+        logger.info("calculation result: {}", response);
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("slau");
+        calculation.setInputData(request.getEquations());
+        calculation.setResultData(result);
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
 
     //Basic operations mappings
-
-    //TODO:  запись запроса и результата в БД
     @PostMapping("/basic")
     public ResponseEntity<Map<String, String>> calculateResult(@RequestBody CalculationRequest request) {
         logger.info("Received basic calculation request: {}", request);
@@ -63,10 +101,15 @@ public class CalculationsController {
         Map<String, String> response = new HashMap<>();
         response.put("Result", result);
         logger.info("Basic calculation result: {}", result);
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("slau");
+        calculation.setInputData(request.getExpression());
+        calculation.setResultData(result);
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
-    //TODO:  запись запроса и результата в БД
     @PostMapping("/converter")
     public ResponseEntity<Map<String, String>> numSysConv(@RequestBody NumSysConverterRequest request) {
         logger.info("Received number system conversion request: {}", request);
@@ -74,6 +117,12 @@ public class CalculationsController {
         Map<String, String> response = new HashMap<>();
         response.put("Result", result.toUpperCase());
         logger.info("Number system conversion result: {}", result.toUpperCase());
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("slau");
+        calculation.setInputData(request.getNumber());
+        calculation.setResultData(result);
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
@@ -102,16 +151,49 @@ public class CalculationsController {
         }
 
         logger.info("Compound interest calculation completed with {} years of data.", results.size());
+
+        CompoundInterestCalculator.YearlyInfo finalResult = results.get(results.size() - 1);
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("compound_interest");
+        calculation.setInputData(request.toString());
+
+        try {
+            String finalResultData = objectMapper.writeValueAsString(finalResult);
+            calculation.setResultData(finalResultData);
+        } catch (JsonProcessingException e) {
+            logger.error("Error serializing calculation results", e);
+            return ResponseEntity.status(500).body(null);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/exp")
     public ResponseEntity<Map<String, String>> exponentiation(@RequestBody ExponentiationRequest request) {
         logger.info("Received exponentiation request: {}", request);
-        String result = ExponentiationService.calculateExponentiation(request.getBase(), request.getExponent());
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Exponentiation result: {}", result);
+        Map<String, String> response = new HashMap<>();
+
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("exponentiation");
+        calculation.setInputData(request.toString());
+
+        try {
+            String result = ExponentiationService.calculateExponentiation(request.getBase(), request.getExponent());
+            response.put("Result", result);
+            calculation.setResultData(result);
+            logger.info("Exponentiation result: {}", result);
+        } catch (Exception e) {
+            logger.error("Error during exponentiation", e);
+            response.put("Error", e.getMessage());
+            calculation.setResultData("Error: " + e.getMessage());
+            calculationService.addCalculation(calculation);
+            return ResponseEntity.status(500).body(response);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
@@ -119,50 +201,135 @@ public class CalculationsController {
     @PostMapping("/matrix_sum")
     public ResponseEntity<Map<String, String>> matrix_sum(@RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix sum request: {}", request);
-        String result = MatrixOperations.addMatrices(request.getMatrix1(), request.getMatrix2(), request.getThreads());
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Matrix sum result: {}", result);
+        Map<String, String> response = new HashMap<>();
+
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("matrix_sum");
+        calculation.setInputData(request.toString());
+
+        try {
+            String result = MatrixOperations.addMatrices(request.getMatrix1(), request.getMatrix2(), request.getThreads());
+            response.put("Result", result);
+            calculation.setResultData(result);
+            logger.info("Matrix sum result: {}", result);
+        } catch (Exception e) {
+            logger.error("Error during matrix sum operation", e);
+            response.put("Error", e.getMessage());
+            calculation.setResultData("Error: " + e.getMessage());
+            calculationService.addCalculation(calculation);
+            return ResponseEntity.status(500).body(response);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/matrix_multiply")
     public ResponseEntity<Map<String, String>> matrix_multiply(@RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix multiplication request: {}", request);
-        String result = MatrixOperations.multiplyMatrices(request.getMatrix1(), request.getMatrix2(), request.getThreads());
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Matrix multiplication result: {}", result);
+        Map<String, String> response = new HashMap<>();
+
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("matrix_multiply");
+        calculation.setInputData(request.toString());
+
+        try {
+            String result = MatrixOperations.multiplyMatrices(request.getMatrix1(), request.getMatrix2(), request.getThreads());
+            response.put("Result", result);
+            calculation.setResultData(result);
+            logger.info("Matrix multiplication result: {}", result);
+        } catch (Exception e) {
+            logger.error("Error during matrix multiplication operation", e);
+            response.put("Error", e.getMessage());
+            calculation.setResultData("Error: " + e.getMessage());
+            calculationService.addCalculation(calculation);
+            return ResponseEntity.status(500).body(response);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/matrix_transpose")
     public ResponseEntity<Map<String, String>> matrix_transpose(@RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix transpose request: {}", request);
-        String result = MatrixOperations.transposeMatrix(request.getMatrix1(), request.getThreads());
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Matrix transpose result: {}", result);
+        Map<String, String> response = new HashMap<>();
+
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("matrix_transpose");
+        calculation.setInputData(request.toString());
+
+        try {
+            String result = MatrixOperations.transposeMatrix(request.getMatrix1(), request.getThreads());
+            response.put("Result", result);
+            calculation.setResultData(result);
+            logger.info("Matrix transpose result: {}", result);
+        } catch (Exception e) {
+            logger.error("Error during matrix transpose operation", e);
+            response.put("Error", e.getMessage());
+            calculation.setResultData("Error: " + e.getMessage());
+            calculationService.addCalculation(calculation);
+            return ResponseEntity.status(500).body(response);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/matrix_by_scalar")
     public ResponseEntity<Map<String, String>> matrix_by_scalar(@RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix by scalar multiplication request: {}", request);
-        String result = MatrixOperations.multiplyMatrixByScalar(request.getMatrix1(), Integer.valueOf(request.getMatrix2()));
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Matrix by scalar multiplication result: {}", result);
+        Map<String, String> response = new HashMap<>();
+
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("matrix_by_scalar");
+        calculation.setInputData(request.toString());
+
+        try {
+            String result = MatrixOperations.multiplyMatrixByScalar(request.getMatrix1(), Integer.valueOf(request.getMatrix2()));
+            response.put("Result", result);
+            calculation.setResultData(result);
+            logger.info("Matrix by scalar multiplication result: {}", result);
+        } catch (Exception e) {
+            logger.error("Error during matrix by scalar multiplication operation", e);
+            response.put("Error", e.getMessage());
+            calculation.setResultData("Error: " + e.getMessage());
+            calculationService.addCalculation(calculation);
+            return ResponseEntity.status(500).body(response);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/matrix_find_inverse")
     public ResponseEntity<Map<String, String>> matrix_find_inverse(@RequestBody MatrixOperationsRequest request) {
         logger.info("Find inverse matrix request: {}", request);
-        String result = MatrixOperations.findInverseMatrix(request.getMatrix1(), request.getThreads());
-        Map<String,String> response = new HashMap<>();
-        response.put("Result", result);
-        logger.info("Find inverse matrix result: {}", result);
+        Map<String, String> response = new HashMap<>();
+
+        Calculation calculation = new Calculation();
+        calculation.setEmail(request.getEmail());
+        calculation.setCalculationType("matrix_find_inverse");
+        calculation.setInputData(request.toString());
+
+        try {
+            String result = MatrixOperations.findInverseMatrix(request.getMatrix1(), request.getThreads());
+            response.put("Result", result);
+            calculation.setResultData(result);
+            logger.info("Find inverse matrix result: {}", result);
+        } catch (Exception e) {
+            logger.error("Error during find inverse matrix operation", e);
+            response.put("Error", e.getMessage());
+            calculation.setResultData("Error: " + e.getMessage());
+            calculationService.addCalculation(calculation);
+            return ResponseEntity.status(500).body(response);
+        }
+
+        calculationService.addCalculation(calculation);
         return ResponseEntity.ok(response);
     }
 
