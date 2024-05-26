@@ -81,7 +81,6 @@ export class CompoundInterestComponent implements AfterViewInit {
             {
               label: 'Начальная сумма',
               data: initialBalances,
-
               backgroundColor: 'rgba(143, 140, 255, 0.6)',
               borderColor: 'rgba(143, 140, 255, 1)',
               borderWidth: 1,
@@ -106,16 +105,16 @@ export class CompoundInterestComponent implements AfterViewInit {
           ],
         },
         options: {
-          responsive: true, // График будет менять размер в соответствии с родительским элементом
+          responsive: true,
           maintainAspectRatio: false,
           scales: {
             y: {
               stacked: true,
               beginAtZero: true,
               ticks: {
-                color: 'white', // Устанавливаем цвет шрифта на оси Y
+                color: 'white',
                 font: {
-                  size: 20, // Увеличиваем размер шрифта на оси Y
+                  size: 20,
                 },
               },
             },
