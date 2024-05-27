@@ -74,6 +74,11 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/slau']);
     }, 200);
   }
+  navigateToIntegral() {
+    setTimeout(() => {
+      this.router.navigate(['/integral']);
+    }, 200);
+  }
 
   reloadPage() {
     window.location.reload();

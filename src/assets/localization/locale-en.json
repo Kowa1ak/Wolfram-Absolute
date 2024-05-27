@@ -8,9 +8,10 @@
 
     "arithmetic": "Arithmetic",
     "numberSystems": "Number Systems",
-    "matrixOperation": "Matrix Operation",
+    "matrixOperation": "Matrix Operations",
     "compound-interest": "Compound Interest",
-    "slau": "SLAU"
+    "slau": "SLAU",
+    "integral": "Integral Operations"
   },
   "login": {
     "welcome": "Welcome",

@@ -25,6 +25,7 @@ import { NumberSystemsComponent } from './components/number-systems/number-syste
 import { MatrixComponent } from './components/matrix/matrix.component';
 import { CompoundInterestComponent } from './components/compound-interest/compound-interest.component';
 import { SlauComponent } from './components/slau/slau.component';
+import { IntegralComponent } from './components/integral/integral.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SlauComponent } from './components/slau/slau.component';
     MatrixComponent,
     CompoundInterestComponent,
     SlauComponent,
+    IntegralComponent,
   ],
   imports: [
     FormsModule,
