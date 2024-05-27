@@ -15,7 +15,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { gsap } from 'gsap';
-
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 import {
   FormBuilder,
   FormControl,
@@ -68,7 +68,8 @@ export class MatrixComponent implements AfterViewChecked {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private messageService: MessageService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private calculationHistoryService: CalculationHistoryService
   ) {}
 
   ngAfterViewChecked() {
@@ -88,7 +89,10 @@ export class MatrixComponent implements AfterViewChecked {
       this.rightBracket3
     );
   }
-
+  toggleHistory(event: MouseEvent) {
+    event.stopPropagation();
+    this.calculationHistoryService.toggleHistory();
+  }
   selectThread(thread: string) {
     const threadButton = document.querySelector(
       `button[data-thread="${thread}"]`

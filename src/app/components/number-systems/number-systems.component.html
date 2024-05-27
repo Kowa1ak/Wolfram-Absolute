@@ -10,7 +10,7 @@
     <div class="nameProjectDop">NUMBER SYSTEMS</div>
     <div class="calculator">
       <div class="input-container">
-        <button class="btnHistory">
+        <button class="btnHistory" (click)="toggleHistory($event)">
           <mat-icon>history</mat-icon>
         </button>
         <div class="formInput" [formGroup]="form" [class.shake]="errorOccurred">

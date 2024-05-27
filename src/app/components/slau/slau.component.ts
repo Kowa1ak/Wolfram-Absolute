@@ -15,7 +15,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { gsap } from 'gsap';
-
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 @Component({
   selector: 'app-slau',
   templateUrl: './slau.component.html',
@@ -25,7 +25,8 @@ export class SlauComponent implements AfterViewChecked {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private calculationHistoryService: CalculationHistoryService
   ) {}
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
   @ViewChildren('resultInput') resultInputs!: QueryList<ElementRef>;
@@ -38,6 +39,7 @@ export class SlauComponent implements AfterViewChecked {
   highlightPosition = 0;
   serverResponse: string = '';
   time: string = '0.0';
+  history: any[] = [];
   equations = Array.from({ length: this.counter }, () =>
     Array(this.counter).fill(0)
   );
@@ -45,6 +47,10 @@ export class SlauComponent implements AfterViewChecked {
   results = Array(this.counter).fill(0);
   ngAfterViewChecked() {
     // this.adjustBracketSize(this.leftBracket);
+  }
+  toggleHistory(event: MouseEvent) {
+    event.stopPropagation();
+    this.calculationHistoryService.toggleHistory();
   }
   selectThread(thread: string) {
     const threadButton = document.querySelector(

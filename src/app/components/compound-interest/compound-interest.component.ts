@@ -13,6 +13,7 @@ Chart.register(...registerables);
 import { throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import 'chartjs-plugin-zoom';
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 import {
   FormBuilder,
   FormControl,
@@ -56,12 +57,16 @@ export class CompoundInterestComponent implements AfterViewInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private calculationHistoryService: CalculationHistoryService
   ) {}
   ngAfterViewInit() {
     this.initChart();
   }
-
+  toggleHistory(event: MouseEvent) {
+    event.stopPropagation();
+    this.calculationHistoryService.toggleHistory();
+  }
   initChart() {
     const initialBalances = [10, 10, 10, 10, 10, 10];
     const replenishments = [10, 20, 30, 40, 50, 60];

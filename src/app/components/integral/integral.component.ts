@@ -15,7 +15,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { gsap } from 'gsap';
-
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 import {
   FormBuilder,
   FormControl,
@@ -73,7 +73,8 @@ export class IntegralComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private msgService: MessageService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private calculationHistoryService: CalculationHistoryService
   ) {
     this.form = this.formBuilder.group({
       initialCondition: ['', Validators.required],
@@ -99,6 +100,10 @@ export class IntegralComponent implements OnInit {
     sqrt: 'Квадратный корень',
     tanh: 'Гиперболический тангенс',
   };
+  toggleHistory(event: MouseEvent) {
+    event.stopPropagation();
+    this.calculationHistoryService.toggleHistory();
+  }
   ngOnInit() {
     this.form = this.formBuilder.group({
       inputArithmetic: new FormControl(''),

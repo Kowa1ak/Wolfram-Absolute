@@ -324,6 +324,32 @@ img {
     opacity: 1;
   }
 }
+.history-panel {
+  z-index: 1001;
+  position: fixed;
+  overflow: auto;
+  scrollbar-width: none;
+  left: -30%;
+  top: 0;
+  bottom: 0;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  transition: left 0.3s ease;
+  background-color: #242424;
+  box-shadow: 10px 10px 48px 5px rgba(0, 0, 0, 0.2);
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px 50px;
+}
+.history-panel.open {
+  left: 0;
+}
 .overlay {
   width: 100%;
   height: 100%;
@@ -333,4 +359,46 @@ img {
   top: 0;
   background-color: transparent;
 }
+
+/* .history-card {
+ 
+} */
+.history-panel .history-card {
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #181818;
+  border-radius: 20px;
+  width: 100%;
+  max-height: none; /* Удалите ограничение максимальной высоты */
+  height: auto; /* Измените на auto */
+  transition: 400ms;
+}
+
+.history-card p {
+  max-width: 320px;
+  text-align: center;
+  max-height: none; 
+  height: auto; 
+  overflow: visible; 
+  color: white;
+  font-size: 16px;
+  word-wrap: break-word; 
+}
+
+.history-panel .history-card:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.history-panel .history-card:hover ~ .history-card {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+.blur {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+
 /* #393EB7  #242424 #181818*/

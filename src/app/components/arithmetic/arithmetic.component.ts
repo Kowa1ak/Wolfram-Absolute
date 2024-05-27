@@ -10,7 +10,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageService } from 'primeng/api';
-
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 @Component({
   selector: 'app-arithmetic',
   templateUrl: './arithmetic.component.html',
@@ -27,12 +27,17 @@ export class ArithmeticComponent implements OnInit {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private msgService: MessageService
+    private msgService: MessageService,
+    private calculationHistoryService: CalculationHistoryService
   ) {}
   ngOnInit() {
     this.form = this.formBuilder.group({
       inputArithmetic: new FormControl(''),
     });
+  }
+  toggleHistory(event: MouseEvent) {
+    event.stopPropagation();
+    this.calculationHistoryService.toggleHistory();
   }
   errorShown = false;
   preventRussianCharacters(event: KeyboardEvent) {

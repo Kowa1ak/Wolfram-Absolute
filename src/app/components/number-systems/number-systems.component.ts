@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 import { of } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import {
@@ -32,8 +32,13 @@ export class NumberSystemsComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private calculationHistoryService: CalculationHistoryService
   ) {}
+  toggleHistory(event: MouseEvent) {
+    event.stopPropagation();
+    this.calculationHistoryService.toggleHistory();
+  }
   navigateToHome() {
     this.router.navigate(['']);
   }

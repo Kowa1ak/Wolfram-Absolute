@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Client, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -31,12 +32,17 @@ export class AppComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription | undefined;
   loggedInUsers$: Observable<User[]> = of([]);
   isChatOpen = false;
+  isHistoryOpen = false;
+  globalClickOutsideHistory: Function | null = null;
   globalClick: Function | null = null;
   @ViewChild('chatPanel', { static: false }) chatPanel!: ElementRef;
+  @ViewChild('historyPanel', { static: false }) historyPanel!: ElementRef;
   @ViewChild('name') name: ElementRef | undefined;
+  @ViewChild('toggleButton', { static: false }) toggleButton!: ElementRef;
   isButtonActive = false;
   isOverlayVisible = false;
-
+  history: any[] = [];
+  hoveredCardIndex: number | null = null;
   constructor(
     @Inject(L10N_LOCALE) public locale: L10nLocale,
     private translationService: L10nTranslationService,
@@ -44,9 +50,34 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    public calculationHistoryService: CalculationHistoryService
+  ) {
+    this.calculationHistoryService.history.subscribe((newHistory) => {
+      this.history = newHistory;
+    });
+  }
+  onMouseEnter(index: number): void {
+    this.hoveredCardIndex = index;
+  }
 
+  onMouseLeave(): void {
+    this.hoveredCardIndex = null;
+  }
+  formatTime(time: string): string {
+    return (parseFloat(time) * 10000 || 0).toFixed(3);
+  }
+  formatResult(result: string): string {
+    return result
+      .split(' ')
+      .map((num) => {
+        const parsedNum = parseFloat(num);
+        return Number.isInteger(parsedNum)
+          ? parsedNum.toString()
+          : parsedNum.toFixed(3);
+      })
+      .join(' ');
+  }
   ngOnInit() {
     this.connect();
     this.globalClick = this.renderer.listen('document', 'click', (event) => {
@@ -58,8 +89,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isOverlayVisible = false;
       }
     });
-    this.routeSubscription = this.router.events.subscribe((event) => {
-      this.isOverlayVisible = false;
+
+    this.globalClick = this.renderer.listen('document', 'click', (event) => {
+      if (
+        !this.historyPanel.nativeElement.contains(event.target) &&
+        this.calculationHistoryService._isHistoryOpen.value
+      ) {
+        this.calculationHistoryService.setHistoryOpen(false);
+      }
     });
   }
 
@@ -70,11 +107,13 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.globalClick) {
       this.globalClick();
     }
+    if (this.globalClickOutsideHistory) {
+      this.globalClickOutsideHistory();
+    }
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
   }
-
   toggleChat(event: MouseEvent) {
     event.stopPropagation();
     this.isChatOpen = !this.isChatOpen;
