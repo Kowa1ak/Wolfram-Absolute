@@ -6,6 +6,12 @@ import com.stk.wolframabsolute.calculations.*;
 import com.stk.wolframabsolute.entity.Calculation;
 import com.stk.wolframabsolute.requests.*;
 import com.stk.wolframabsolute.service.CalculationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +26,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/wolfram")
 @AllArgsConstructor
+@Tag(name  = "Calculations API", description = "API для вычислений различных математических задач")
 public class CalculationsController {
     private static final Logger logger = LogManager.getLogger(CalculationsController.class);
     private final ObjectMapper objectMapper;
@@ -31,7 +38,16 @@ public class CalculationsController {
     CalculationService calculationService;
 
     @PostMapping("/by-email")
-    public ResponseEntity<?> getCalculationsByEmail(@RequestBody Map<String, String> request) {
+    @Operation(summary  = "Получить вычисления по email", description  = "Возвращает список вычислений, связанных с заданным email")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Успешно", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = Calculation.class))
+            }),
+            @ApiResponse(responseCode  = "400", description  = "Некорректный запрос"),
+            @ApiResponse(responseCode  = "404", description  = "Email не найден")
+    })
+    public ResponseEntity<?> getCalculationsByEmail(
+            @RequestBody Map<String, String> request) {
         String email = request.get("email");
         if (email == null || email.isEmpty()) {
             return ResponseEntity.badRequest().body("Email is required");
@@ -46,7 +62,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/solveODE")
-    public ResponseEntity<?> solveODE(@RequestBody ODERequest odeRequest) {
+    @Operation(summary = "Решить ОДУ", description = "Решает обыкновенное дифференциальное уравнение")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<?> solveODE(
+            @RequestBody ODERequest odeRequest) {
         logger.info("Received ODE calculation request: {}", odeRequest);
         String result = ODEsolver.solveODE(
                 odeRequest.getEquation(),
@@ -70,7 +92,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/slau")
-    public ResponseEntity<Map<String, String>> solveSlau(@RequestBody SlauRequest request) {
+    @Operation(summary = "Решить систему линейных уравнений", description = "Решает систему линейных алгебраических уравнений (СЛАУ)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> solveSlau(
+            @RequestBody SlauRequest request) {
         logger.info("Received sys solving calculation request: {}", request);
         String result;
         Map<String, String> response = new HashMap<>();
@@ -95,7 +123,13 @@ public class CalculationsController {
 
     //Basic operations mappings
     @PostMapping("/basic")
-    public ResponseEntity<Map<String, String>> calculateResult(@RequestBody CalculationRequest request) {
+    @Operation(summary = "Выполнить базовые операции", description = "Выполняет базовые математические операции")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> calculateResult(
+            @RequestBody CalculationRequest request) {
         logger.info("Received basic calculation request: {}", request);
         String result = basicOperations.calcResult(request.getThreads(), request.getExpression());
         Map<String, String> response = new HashMap<>();
@@ -111,7 +145,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/converter")
-    public ResponseEntity<Map<String, String>> numSysConv(@RequestBody NumSysConverterRequest request) {
+    @Operation(summary = "Конвертация систем счисления", description = "Конвертирует число из одной системы счисления в другую")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> numSysConv(
+            @RequestBody NumSysConverterRequest request) {
         logger.info("Received number system conversion request: {}", request);
         String result = converter.baseConversion(request.getNumber(), request.getBase1(), request.getBase2());
         Map<String, String> response = new HashMap<>();
@@ -127,7 +167,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/compound")
-    public ResponseEntity<List<Map<String, String>>> calculateInterest(@RequestBody CompoundInterestRequest request) {
+    @Operation(summary = "Рассчитать сложные проценты", description = "Рассчитывает сложные проценты на основе заданных параметров")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<List<Map<String, String>>> calculateInterest(
+            @RequestBody CompoundInterestRequest request) {
         logger.info("Received compound interest calculation request: {}", request);
 
         List<CompoundInterestCalculator.YearlyInfo> results = compoundInterestCalculator.calculate(
@@ -171,7 +217,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/exp")
-    public ResponseEntity<Map<String, String>> exponentiation(@RequestBody ExponentiationRequest request) {
+    @Operation(summary = "Выполнить возведение в степень", description = "Выполняет операцию возведения числа в степень")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> exponentiation(
+            @RequestBody ExponentiationRequest request) {
         logger.info("Received exponentiation request: {}", request);
         Map<String, String> response = new HashMap<>();
 
@@ -199,7 +251,13 @@ public class CalculationsController {
 
     // Matrix mappings
     @PostMapping("/matrix_sum")
-    public ResponseEntity<Map<String, String>> matrix_sum(@RequestBody MatrixOperationsRequest request) {
+    @Operation(summary = "Сложить матрицы", description = "Выполняет операцию сложения двух матриц")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> matrix_sum(
+            @RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix sum request: {}", request);
         Map<String, String> response = new HashMap<>();
 
@@ -226,7 +284,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/matrix_multiply")
-    public ResponseEntity<Map<String, String>> matrix_multiply(@RequestBody MatrixOperationsRequest request) {
+    @Operation(summary = "Перемножить матрицы", description = "Выполняет операцию умножения двух матриц")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> matrix_multiply(
+            @RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix multiplication request: {}", request);
         Map<String, String> response = new HashMap<>();
 
@@ -253,7 +317,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/matrix_transpose")
-    public ResponseEntity<Map<String, String>> matrix_transpose(@RequestBody MatrixOperationsRequest request) {
+    @Operation(summary = "Транспонировать матрицу", description = "Выполняет операцию транспонирования матрицы")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> matrix_transpose(
+            @RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix transpose request: {}", request);
         Map<String, String> response = new HashMap<>();
 
@@ -280,7 +350,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/matrix_by_scalar")
-    public ResponseEntity<Map<String, String>> matrix_by_scalar(@RequestBody MatrixOperationsRequest request) {
+    @Operation(summary = "Умножить матрицу на скаляр", description = "Выполняет операцию умножения матрицы на скаляр")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> matrix_by_scalar(
+            @RequestBody MatrixOperationsRequest request) {
         logger.info("Received matrix by scalar multiplication request: {}", request);
         Map<String, String> response = new HashMap<>();
 
@@ -307,7 +383,13 @@ public class CalculationsController {
     }
 
     @PostMapping("/matrix_find_inverse")
-    public ResponseEntity<Map<String, String>> matrix_find_inverse(@RequestBody MatrixOperationsRequest request) {
+    @Operation(summary = "Найти обратную матрицу", description = "Выполняет операцию нахождения обратной матрицы")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description  = "Успешно"),
+            @ApiResponse(responseCode = "500", description  = "Ошибка сервера")
+    })
+    public ResponseEntity<Map<String, String>> matrix_find_inverse(
+            @RequestBody MatrixOperationsRequest request) {
         logger.info("Find inverse matrix request: {}", request);
         Map<String, String> response = new HashMap<>();
 

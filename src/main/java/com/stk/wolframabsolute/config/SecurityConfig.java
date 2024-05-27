@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("wolfram/welcome", "wolfram/login", "wolfram/users", "wolfram/registration","wolfram/by-email",
+                        .requestMatchers("wolfram/welcome", "wolfram/login", "wolfram/users", "wolfram/registration","wolfram/by-email","/swagger-ui/**", "/v2/api-docs",
                                 "wolfram/basic", "wolfram/compound", "wolfram/converter", "wolfram/exp", "wolfram/slau","wolfram/solveODE", // база
                                 "wolfram/matrix_sum", "wolfram/matrix_multiply", "wolfram/matrix_transpose", "wolfram/matrix_by_scalar", "wolfram/matrix_find_inverse",//матрицы
                                 "/ws", "/ws/**", "/ws/info", // чат
