@@ -1,13 +1,7 @@
-# Build stage
-FROM maven:3.8.6-amazoncorretto-17 as build
-WORKDIR /build/
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src/ src/
-RUN mvn package -DskipTests
+FROM openjdk:22-jdk
 
-# Run stage
-FROM openjdk:17-alpine
-ARG JAR_FILE=/build/target/*.jar
-COPY --from=build ${JAR_FILE} /opt/wolfram-absolute/wolfram.jar
-ENTRYPOINT ["java", "-jar", "/opt/wolfram-absolute/wolfram.jar"]
+COPY target/WolframAbsolute-0.0.1-SNAPSHOT.jar .
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "WolframAbsolute-0.0.1-SNAPSHOT.jar"]
