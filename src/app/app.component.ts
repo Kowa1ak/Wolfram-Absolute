@@ -220,11 +220,11 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.history[index]) {
       const historyItem = this.history[index];
       const messageContent = `Shared history: \n
-                              ID: ${historyItem.id} \n
-                              Email: ${historyItem.email} \n
-                              Calculation Type: ${historyItem.calculationType} \n
-                              Input Data: ${historyItem.inputData} \n
-                              Result Data: ${historyItem.resultData}`;
+                            ID: ${historyItem.id} \n
+                            Email: ${historyItem.email} \n
+                            Calculation Type: ${historyItem.calculationType} \n
+                            Input Data: ${historyItem.inputData} \n
+                            Result Data: ${historyItem.resultData}`;
 
       if (messageContent && this.stompClient && this.username) {
         const chatMessage = {

@@ -69,11 +69,15 @@
             [class.history-message]="message.isHistory"
           >
             <p
-              *ngIf="message.type === 'JOIN' || message.type === 'LEAVE'"
+              *ngIf="
+                (message.type === 'JOIN' || message.type === 'LEAVE') &&
+                !message.isHistory
+              "
               class="join-message"
             >
               {{ message.content }}
             </p>
+
             <div
               class="message-area"
               *ngIf="message.type === 'CHAT'"
@@ -88,6 +92,8 @@
               </span>
               <p>{{ message.content }}</p>
             </div>
+
+            <!-- Добавляем отдельный элемент <p> для сообщений истории -->
           </li>
         </ul>
       </div>
@@ -145,9 +151,20 @@
     (mouseenter)="onMouseEnter(i)"
     (mouseleave)="onMouseLeave()"
   >
-    <button mat-button (click)="shareHistory(i)">
-      <mat-icon>share</mat-icon>
-      Share
+    <button class="signupBtn" (click)="shareHistory(i)">
+      SHARE
+      <span class="arrow">
+        <svg
+          fill="black"
+          viewBox="0 0 320 512"
+          height="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+          ></path>
+        </svg>
+      </span>
     </button>
     <p>Тип вычисления: {{ item.calculationType }}</p>
     <p>Входные данные: {{ item.inputData }}</p>

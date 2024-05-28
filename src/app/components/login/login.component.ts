@@ -66,6 +66,11 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('email', email as string);
         sessionStorage.setItem('username', response.username);
         this.router.navigate(['/home']);
+        this.msgService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Login successfully',
+        });
       },
       (error) => {
         console.error(error);
