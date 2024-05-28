@@ -29,7 +29,12 @@ export class AppComponent implements OnInit, OnDestroy {
   public stompClient: any;
   public username: string | null = null;
   public messageInput: string = '';
-  public messages: { sender: string; content: string; type: string }[] = [];
+  public messages: {
+    sender: string;
+    content: string;
+    type: string;
+    isHistory?: boolean;
+  }[] = [];
   routeSubscription: Subscription | undefined;
   loggedInUsers$: Observable<User[]> = of([]);
   isChatOpen = false;
@@ -179,6 +184,7 @@ export class AppComponent implements OnInit, OnDestroy {
         sender: this.username,
         content: this.messageInput,
         type: 'CHAT',
+        isHistory: true,
       };
       this.stompClient.send(
         '/app/chat.sendMessage',
@@ -193,7 +199,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   onMessageReceived(payload: any) {
     const message = JSON.parse(payload.body);
-
+    console.log('Received message:', message);
     if (message.type === 'JOIN') {
       message.content = message.sender + ' joined!';
     } else if (message.type === 'LEAVE') {
@@ -202,7 +208,39 @@ export class AppComponent implements OnInit, OnDestroy {
     if (!message.content || !message.sender) {
       return; // Не добавлять сообщение, если нет содержимого или отправителя
     }
+
+    // Проверка, является ли сообщение историей
+    if (message.content.startsWith('Shared history:')) {
+      message.isHistory = true;
+    }
+
     this.messages.unshift(message);
+  }
+  shareHistory(index: number) {
+    if (this.history[index]) {
+      const historyItem = this.history[index];
+      const messageContent = `Shared history: \n
+                              ID: ${historyItem.id} \n
+                              Email: ${historyItem.email} \n
+                              Calculation Type: ${historyItem.calculationType} \n
+                              Input Data: ${historyItem.inputData} \n
+                              Result Data: ${historyItem.resultData}`;
+
+      if (messageContent && this.stompClient && this.username) {
+        const chatMessage = {
+          sender: this.username,
+          content: messageContent,
+          type: 'CHAT',
+          isHistory: true, // установите это свойство в true
+        };
+
+        this.stompClient.send(
+          '/app/chat.sendMessage',
+          {},
+          JSON.stringify(chatMessage)
+        );
+      }
+    }
   }
   userColors: { [key: string]: string } = {};
 

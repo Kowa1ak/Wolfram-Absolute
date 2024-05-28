@@ -66,6 +66,7 @@
             *ngFor="let message of messages"
             [class.event-message]="message.type !== 'CHAT'"
             [class.chat-message]="message.type === 'CHAT'"
+            [class.history-message]="message.isHistory"
           >
             <p
               *ngIf="message.type === 'JOIN' || message.type === 'LEAVE'"
@@ -128,15 +129,6 @@
     </div>
   </ng-template>
 </div>
-<!-- <button
-  #toggleButton
-  class="chat-button"
-  style="top: 20%"
-  [ngClass]="{ open: calculationHistoryService.isHistoryOpen | async }"
-  (click)="toggleHistory($event)"
->
-  <mat-icon>history</mat-icon>
-</button> -->
 <div *ngIf="isOverlayVisible" class="overlay"></div>
 <div
   #historyPanel
@@ -153,31 +145,13 @@
     (mouseenter)="onMouseEnter(i)"
     (mouseleave)="onMouseLeave()"
   >
+    <button mat-button (click)="shareHistory(i)">
+      <mat-icon>share</mat-icon>
+      Share
+    </button>
     <p>Тип вычисления: {{ item.calculationType }}</p>
     <p>Входные данные: {{ item.inputData }}</p>
     <p>Результат: {{ item.resultData.split("Time:")[0] }}</p>
-    <p>Время: {{ formatTime(item.resultData.split("Time:")[1]) }}s</p>
+    <p>Время: {{ formatTime(item.resultData.split("Time:")[1]) }}ms</p>
   </div>
 </div>
-<!-- <div
-    *ngFor="
-      let item of calculationHistoryService.history | async;
-      let i = index
-    "
-    class="history-card"
-    [class.blur]="hoveredCardIndex !== null && i !== hoveredCardIndex"
-    (mouseenter)="onMouseEnter(i)"
-    (mouseleave)="onMouseLeave()"
-  >
-    <p>Тип вычисления: {{ item.calculationType }}</p>
-    <p>Входные данные: {{ item.inputData }}</p>
-    <p>
-      Результат:
-      {{
-        item.calculationType === "matrix_transpose"
-          ? item.resultData.split(",")[0]
-          : formatResult(item.resultData.split(",")[0])
-      }}
-    </p>
-    <p>Время: {{ formatTime(item.resultData.split(",")[1]) }}s</p>
-  </div> -->

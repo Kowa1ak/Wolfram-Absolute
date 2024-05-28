@@ -376,7 +376,7 @@ img {
   height: auto; /* Измените на auto */
   transition: 400ms;
 }
-
+ 
 .history-card p {
   max-width: 320px;
   text-align: center;
@@ -399,6 +399,20 @@ img {
 .blur {
   filter: blur(10px);
   transform: scale(0.9, 0.9);
+}
+.history-message {
+  font-size: 10px;
+  color: rgb(173, 173, 173);
+  font-weight: bold;
+}
+.history-message .message-area {
+  /* Стили для сообщений истории */
+  max-width: 80%;
+  
+}
+.history-message .my-message {
+ background: none;
+ background-color: #23243C;
 }
 
 /* #393EB7  #242424 #181818*/
