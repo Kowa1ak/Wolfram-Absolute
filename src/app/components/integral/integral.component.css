@@ -30,6 +30,14 @@ header {
   z-index: 11;
   position: fixed;
 }
+.content {
+  height: 100vh;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .logo {
   cursor: pointer;
   top: 0;
@@ -78,14 +86,7 @@ header {
   align-items: center;
   justify-content: center;
 }
-.content {
-  height: 100vh;
-  z-index: -1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+
 .calculator {
   display: flex;
   flex-direction: column;

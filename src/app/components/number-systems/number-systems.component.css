@@ -21,6 +21,16 @@ body {
 }
 header {
   width: 100%;
+  z-index: 11;
+  position: fixed;
+}
+.content {
+  height: 100vh;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .logo {
   cursor: pointer;
@@ -57,7 +67,7 @@ line-height: normal;
 display: flex;
 align-items: center;
 justify-content: center;
-margin-top: 10%;
+
 }
 .nameProjectDop {
   text-align: center;

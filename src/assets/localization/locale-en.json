@@ -10,11 +10,14 @@
     "numberSystems": "Number Systems",
     "matrixOperation": "Matrix Operations",
     "compound-interest": "Compound Interest",
-    "slau": "SLAU",
+    "slau": "SLAE",
     "integral": "Integral Operations"
   },
+  "app": {
+    "chat": "CHAT"
+  },
   "login": {
-    "welcome": "Welcome",
+    "welcome": "WELCOME",
     "email": "Email",
     "password": "Password",
     "emailRequired": "Email is required",

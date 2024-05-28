@@ -84,7 +84,7 @@ export class CompoundInterestComponent implements AfterViewInit {
           labels: Array.from({ length: 6 }, (_, i) => i + 1),
           datasets: [
             {
-              label: 'Начальная сумма',
+              label: 'Initial amount',
               data: initialBalances,
               backgroundColor: 'rgba(143, 140, 255, 0.6)',
               borderColor: 'rgba(143, 140, 255, 1)',
@@ -92,7 +92,7 @@ export class CompoundInterestComponent implements AfterViewInit {
               barPercentage: 0.5,
             },
             {
-              label: 'Пополнение',
+              label: 'Replenishment',
               data: replenishments,
               backgroundColor: 'rgba(106, 103, 219, 0.6)',
               borderColor: 'rgba(106, 103, 219, 1)',
@@ -100,7 +100,7 @@ export class CompoundInterestComponent implements AfterViewInit {
               barPercentage: 0.5,
             },
             {
-              label: 'Начисление процента',
+              label: 'Interest accrual',
               data: interests,
               backgroundColor: 'rgba(58, 71, 215, 0.6)',
               borderColor: 'rgba(58, 71, 215, 1)',
@@ -150,7 +150,6 @@ export class CompoundInterestComponent implements AfterViewInit {
           },
         },
       });
-      console.log('График создан');
     }
   }
   selectContributionButton(event: Event) {

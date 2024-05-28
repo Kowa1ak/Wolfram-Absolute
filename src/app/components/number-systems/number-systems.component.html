@@ -6,142 +6,148 @@
         <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
       </div>
     </header>
-    <div class="nameProject">WOLFRAM ABSOLUTE</div>
-    <div class="nameProjectDop">NUMBER SYSTEMS</div>
-    <div class="calculator">
-      <div class="input-container">
-        <button class="btnHistory" (click)="toggleHistory($event)">
-          <mat-icon>history</mat-icon>
-        </button>
-        <div class="formInput" [formGroup]="form" [class.shake]="errorOccurred">
-          <input
-            #inputNumberSystems
-            type="text"
-            formControlName="inputNumberSystems"
-            name="inputNumberSystems"
-            placeholder="Start typing..."
-          />
-          <div class="equels">
-            <img
-              #image
-              src="/assets/img/Equel.png"
-              alt="My Image"
-              (click)="sendData()"
+    <div class="content">
+      <div class="nameProject">WOLFRAM ABSOLUTE</div>
+      <div class="nameProjectDop">NUMBER SYSTEMS</div>
+      <div class="calculator">
+        <div class="input-container">
+          <button class="btnHistory" (click)="toggleHistory($event)">
+            <mat-icon>history</mat-icon>
+          </button>
+          <div
+            class="formInput"
+            [formGroup]="form"
+            [class.shake]="errorOccurred"
+          >
+            <input
+              #inputNumberSystems
+              type="text"
+              formControlName="inputNumberSystems"
+              name="inputNumberSystems"
+              placeholder="Start typing..."
             />
+            <div class="equels">
+              <img
+                #image
+                src="/assets/img/Equel.png"
+                alt="My Image"
+                (click)="sendData()"
+              />
+            </div>
+          </div>
+          <div class="btnLibraryList">
+            <button
+              mat-button
+              (click)="selectedButton = 'Java'"
+              [class.selected]="selectedButton === 'Java'"
+            >
+              Java
+              <mat-icon>check</mat-icon>
+            </button>
+            <button
+              mat-button
+              (click)="selectedButton = 'C++'"
+              [class.selected]="selectedButton === 'C++'"
+            >
+              C++
+              <mat-icon>check</mat-icon>
+            </button>
           </div>
         </div>
-        <div class="btnLibraryList">
-          <button
-            mat-button
-            (click)="selectedButton = 'Java'"
-            [class.selected]="selectedButton === 'Java'"
-          >
-            Java
-            <mat-icon>check</mat-icon>
-          </button>
-          <button
-            mat-button
-            (click)="selectedButton = 'C++'"
-            [class.selected]="selectedButton === 'C++'"
-          >
-            C++
-            <mat-icon>check</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="number-systems">
-        <div class="first-column">
-          <h3>Его система счисления</h3>
-          <label
-            >Двоичная<input
-              type="radio"
-              name="sourceSystem"
-              [(ngModel)]="base1"
-              value="2"
-          /></label>
-          <label
-            >Троичная<input
-              type="radio"
-              name="sourceSystem"
-              [(ngModel)]="base1"
-              value="3"
-          /></label>
-          <label
-            >Восьмеричная<input
-              type="radio"
-              name="sourceSystem"
-              [(ngModel)]="base1"
-              value="8"
-          /></label>
-          <label
-            >Десятичная<input
-              type="radio"
-              name="sourceSystem"
-              [(ngModel)]="base1"
-              value="10"
-          /></label>
-          <label
-            >Шестнадцатиричная<input
-              type="radio"
-              name="sourceSystem"
-              [(ngModel)]="base1"
-              value="16"
-          /></label>
-        </div>
+        <div class="number-systems">
+          <div class="first-column">
+            <h3>Его система счисления</h3>
+            <label
+              >Двоичная<input
+                type="radio"
+                name="sourceSystem"
+                [(ngModel)]="base1"
+                value="2"
+            /></label>
+            <label
+              >Троичная<input
+                type="radio"
+                name="sourceSystem"
+                [(ngModel)]="base1"
+                value="3"
+            /></label>
+            <label
+              >Восьмеричная<input
+                type="radio"
+                name="sourceSystem"
+                [(ngModel)]="base1"
+                value="8"
+            /></label>
+            <label
+              >Десятичная<input
+                type="radio"
+                name="sourceSystem"
+                [(ngModel)]="base1"
+                value="10"
+            /></label>
+            <label
+              >Шестнадцатиричная<input
+                type="radio"
+                name="sourceSystem"
+                [(ngModel)]="base1"
+                value="16"
+            /></label>
+          </div>
 
-        <div class="second-column">
-          <h3>Перевести в</h3>
-          <label
-            ><input
-              type="radio"
-              name="targetSystem"
-              [(ngModel)]="base2"
-              value="2"
-            />
-            Двоичная</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="targetSystem"
-              [(ngModel)]="base2"
-              value="3"
-            />
-            Троичная</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="targetSystem"
-              [(ngModel)]="base2"
-              value="8"
-            />
-            Восьмеричная</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="targetSystem"
-              [(ngModel)]="base2"
-              value="10"
-            />
-            Десятичная</label
-          >
-          <label
-            ><input
-              type="radio"
-              name="targetSystem"
-              [(ngModel)]="base2"
-              value="16"
-            />
-            Шестнадцатиричная</label
-          >
+          <div class="second-column">
+            <h3>Перевести в</h3>
+            <label
+              ><input
+                type="radio"
+                name="targetSystem"
+                [(ngModel)]="base2"
+                value="2"
+              />
+              Двоичная</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="targetSystem"
+                [(ngModel)]="base2"
+                value="3"
+              />
+              Троичная</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="targetSystem"
+                [(ngModel)]="base2"
+                value="8"
+              />
+              Восьмеричная</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="targetSystem"
+                [(ngModel)]="base2"
+                value="10"
+              />
+              Десятичная</label
+            >
+            <label
+              ><input
+                type="radio"
+                name="targetSystem"
+                [(ngModel)]="base2"
+                value="16"
+              />
+              Шестнадцатиричная</label
+            >
+          </div>
         </div>
-      </div>
-      <div class="result">
-        Result:
-        <div class="serverResponse">
-          {{ serverResponse }}
+        <div class="result">
+          Result:
+          <div class="serverResponse">
+            {{ serverResponse }}
+          </div>
         </div>
       </div>
     </div>

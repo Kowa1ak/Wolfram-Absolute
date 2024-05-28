@@ -8,6 +8,7 @@ import {
   AfterViewChecked,
   QueryList,
   HostBinding,
+  SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -28,7 +29,7 @@ import {
   templateUrl: './matrix.component.html',
   styleUrls: ['./matrix.component.css'],
 })
-export class MatrixComponent implements AfterViewChecked {
+export class MatrixComponent implements AfterViewChecked, OnInit {
   @ViewChild('leftBracket', { static: false }) leftBracket!: ElementRef;
   @ViewChild('rightBracket', { static: false }) rightBracket!: ElementRef;
   @ViewChild('leftBracket2', { static: false }) leftBracket2!: ElementRef;
@@ -37,6 +38,8 @@ export class MatrixComponent implements AfterViewChecked {
   @ViewChild('rightBracket3', { static: false }) rightBracket3!: ElementRef;
   @ViewChild('highlight', { static: false }) highlight!: ElementRef;
   @ViewChildren('input') inputs!: QueryList<ElementRef>;
+  @ViewChild('middleContainer', { static: false }) middleContainer!: ElementRef;
+  @ViewChild('content', { static: false }) content!: ElementRef;
   @HostBinding('style.color') color: string = 'white';
   isModalOpen = false;
   gridItems = Array(25);
@@ -44,7 +47,7 @@ export class MatrixComponent implements AfterViewChecked {
   gridSize = 5;
   selectedMatrix: { value: string }[][][] = [];
   currentOperation: string = '';
-
+  isMiddleContainerVisible: boolean = false;
   firstMatrixAdded = false;
   operationSelected = false;
   currentMatrixIndex: number = 0;
@@ -88,6 +91,23 @@ export class MatrixComponent implements AfterViewChecked {
       this.leftBracket3,
       this.rightBracket3
     );
+  }
+  ngOnInit() {
+    this.adjustContentPosition();
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedMatrix']) {
+      this.adjustContentPosition();
+    }
+  }
+  adjustContentPosition() {
+    if (this.content && this.content.nativeElement) {
+      if (this.middleContainer && this.middleContainer.nativeElement) {
+        this.content.nativeElement.style.justifyContent = 'flex-start';
+      } else {
+        this.content.nativeElement.style.justifyContent = 'center'; // или любое другое значение по умолчанию
+      }
+    }
   }
   toggleHistory(event: MouseEvent) {
     event.stopPropagation();

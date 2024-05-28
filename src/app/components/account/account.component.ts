@@ -17,6 +17,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class AccountComponent {
   form: FormGroup;
+  email: string = '';
+  username: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -29,6 +31,8 @@ export class AccountComponent {
       newPassword: new FormControl(''),
       confirmPassword: new FormControl(''),
     });
+    this.email = sessionStorage.getItem('email') || ''; // Если значение null, присвоить пустую строку
+    this.username = sessionStorage.getItem('username') || ''; // Если значение null, присвоить пустую строку
   }
   changePassword() {
     // Проверка, что форма и ее поля были инициализированы

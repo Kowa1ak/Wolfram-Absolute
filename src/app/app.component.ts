@@ -19,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
 import { Client, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import { CalculationHistoryService } from 'src/app/services/calculation-history.service';
+import { LanguageService } from 'src/app/services/localization.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -51,7 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    public calculationHistoryService: CalculationHistoryService
+    public calculationHistoryService: CalculationHistoryService,
+    public languageService: LanguageService
   ) {
     this.calculationHistoryService.history.subscribe((newHistory) => {
       this.history = newHistory;
@@ -80,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.connect();
+    this.languageService.setActiveLanguage(this.languageService.activeLanguage);
     this.globalClick = this.renderer.listen('document', 'click', (event) => {
       if (
         !this.chatPanel.nativeElement.contains(event.target) &&
@@ -212,6 +215,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   handleInput(event: any) {
     this.messageInput = event.target.value;
+  }
+  hideOverlay() {
+    this.isOverlayVisible = false;
   }
   disconnect() {
     if (this.stompClient) {

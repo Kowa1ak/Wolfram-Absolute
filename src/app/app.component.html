@@ -24,7 +24,9 @@
   <mat-icon>{{
     isChatOpen ? "keyboard_arrow_right" : "keyboard_arrow_left"
   }}</mat-icon>
-  <span *ngIf="!isChatOpen">CHAT</span>
+  <span *ngIf="!isChatOpen">{{
+    "app.chat" | translate : languageService.locale.language
+  }}</span>
 </button>
 <div *ngIf="isOverlayVisible" class="overlay"></div>
 <div
@@ -108,8 +110,20 @@
     <div class="guest-content">
       <h1 class="form-title">CHAT NOW</h1>
       <div class="buttonsAuth">
-        <button class="large-button" routerLink="/login">Login</button>
-        <button class="large-button" routerLink="/register">Register</button>
+        <button
+          class="large-button"
+          routerLink="/login"
+          (click)="hideOverlay()"
+        >
+          Login
+        </button>
+        <button
+          class="large-button"
+          routerLink="/register"
+          (click)="hideOverlay()"
+        >
+          Register
+        </button>
       </div>
     </div>
   </ng-template>

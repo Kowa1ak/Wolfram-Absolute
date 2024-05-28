@@ -6,15 +6,17 @@
         <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
       </div>
     </header>
-    <div class="content">
+    <div
+      #content
+      class="content"
+      [ngClass]="{ 'flex-start': selectedMatrix.length > 0 }"
+    >
       <div class="nameProject">WOLFRAM ABSOLUTE</div>
       <div class="nameProjectDop">MATRIX OPERATIONS</div>
       <div class="calculator">
         <div class="btn-container">
-          <button class="large-button" (click)="openModal()">
-            Добавить матрицу
-          </button>
-          <button class="large-button" (click)="sendData()">Вычислить</button>
+          <button class="large-button" (click)="openModal()">Add matrix</button>
+          <button class="large-button" (click)="sendData()">Calculate</button>
         </div>
         <div
           class="operations-container"
@@ -29,7 +31,11 @@
           <button class="operation-button" (click)="inverse()">-1</button>
           <button class="operation-button" (click)="transpose()">T</button>
         </div>
-        <div class="midle-container" *ngIf="selectedMatrix.length > 0">
+        <div
+          #middleContainer
+          class="midle-container"
+          *ngIf="selectedMatrix.length > 0"
+        >
           <div class="additional-button">
             <div class="btnLibraryList">
               <button
