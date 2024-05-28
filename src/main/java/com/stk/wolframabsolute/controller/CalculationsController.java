@@ -153,7 +153,7 @@ public class CalculationsController {
     public ResponseEntity<Map<String, String>> numSysConv(
             @RequestBody NumSysConverterRequest request) {
         logger.info("Received number system conversion request: {}", request);
-        String result = converter.baseConversion(request.getNumber(), request.getBase1(), request.getBase2());
+        String result = converter.baseConversion(request.getNumber(), request.getBase1(), request.getBase2(), request.getLibrary());
         Map<String, String> response = new HashMap<>();
         response.put("Result", result.toUpperCase());
         logger.info("Number system conversion result: {}", result.toUpperCase());
