@@ -1,4 +1,1 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> d2a0090 (added account logout)
+## [Backend repo](https://github.com/SoTokcuk/WolframAbsoluteBackend/tree/dev) 
