@@ -1,0 +1,49 @@
+{
+  "home": {
+    "account": "Account",
+    "about": "About",
+    "SignOut": "Sign Out",
+    "SignIn": "Sign In",
+    "SignUp": "Sign Up",
+
+    "arithmetic": "Arithmetic",
+    "numberSystems": "Number Systems",
+    "matrixOperation": "Matrix Operations",
+    "compound-interest": "Compound Interest",
+    "slau": "SLAE",
+    "integral": "Integral Operations"
+  },
+  "app": {
+    "chat": "CHAT"
+  },
+  "login": {
+    "welcome": "WELCOME",
+    "email": "Email",
+    "password": "Password",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password should have at least 6 characters",
+    "signIn": "Sign In",
+    "notMember": "Not a member?",
+    "register": "Register"
+  },
+  "register": {
+    "welcome": "SIGN UP NOW",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "nameRequired": "Name is required",
+    "validName": "Please enter a valid name",
+    "emailRequired": "Email is required",
+    "validEmail": "Please enter a valid email",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password should have at least 6 characters",
+    "confirmPasswordRequired": "Confirm Password is required",
+    "passwordMismatch": "Passwords do not match",
+    "alreadyMember": "Already a member?",
+    "SignUp": "Sign Up",
+    "logIn": "Login"
+  }
+}

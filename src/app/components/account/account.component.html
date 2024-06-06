@@ -1,0 +1,49 @@
+<body>
+  <div class="mainContent">
+    <div class="logo" (click)="navigateToHome()"></div>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="formContent">
+      <form [formGroup]="form" (ngSubmit)="submitDetails()">
+        <div class="goHome">
+          <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+        </div>
+        <h1 class="form-title">ACCOUNT SETTINGS</h1>
+        <div class="field">
+          <div class="labelName">USERNAME</div>
+          <div class="labelInfo">{{ username }}</div>
+        </div>
+        <div class="field">
+          <div class="labelName">EMAIL</div>
+          <div class="labelInfo">{{ email }}</div>
+        </div>
+        <div class="field">
+          <div class="labelName">NEW PASSWORD</div>
+          <input
+            type="password"
+            formControlName="newPassword"
+            name="newPassword"
+            placeholder=""
+          />
+        </div>
+        <div class="field">
+          <div class="labelName">REPEAT PASSWORD</div>
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            name="confirmPassword"
+            placeholder=""
+          />
+        </div>
+        <div class="buttons">
+          <button class="buttonCancel" (click)="navigateToHome()">
+            Cancel
+          </button>
+          <button class="buttonChange" (click)="changePassword()">
+            Change Password
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>
