@@ -326,10 +326,10 @@ body {
     margin: 10px 0px;
   }
   .frequency button {
-    max-width: 220px;
+    max-width: 250px;
     width: 100%;
     height: 30px;
-    padding: 0 15px;
+    padding: 0 28px;
     margin-bottom: 20px;
     border: 1px solid #C6CACE;
     border-radius: 15px;
