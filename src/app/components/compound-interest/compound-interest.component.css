@@ -228,6 +228,13 @@ body {
     border: none;
     color: #fff;
     font-size: 20px;
+   
+  }
+  option {
+    border: none;
+    margin-right: 10px;
+    text-align: center;
+    background-color: #23243C;
   }
   
   .infoCurrency {
@@ -480,6 +487,7 @@ body {
     transform: translateX(0);
     transform: scale(0.8);
   }
+
   @media (max-width: 900px) {
     .result {
         flex-direction: column;

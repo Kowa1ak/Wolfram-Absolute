@@ -25,12 +25,12 @@
               id="currency"
               name="currency"
               class="select"
-              style="-webkit-appearance: none; appearance: none"
+              style="-webkit-appearance: none; appearance: none; border: none;" 
               (change)="onCurrencyChange($event)"
             >
-              <option value="USD">$</option>
-              <option value="EUR">€</option>
-              <option value="RUB">₽</option>
+              <option value="USD"  style="border: none;" >$</option>
+              <option value="EUR" style="border: none;">€</option>
+              <option value="RUB" style="border: none;">₽</option>
               <!-- Добавьте другие валюты по необходимости -->
             </select>
             <label class="user-label" for="additionalContributions"
