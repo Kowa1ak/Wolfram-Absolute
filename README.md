@@ -99,5 +99,4 @@ docker-compose up --build
 
 ## Схема базы данных
 
-![Схема базы данных](./docs/db_scheme.png)
->>>>>>> partner-repo/dev
+![Схема базы данных](./back-end/docs/db_scheme.png)
