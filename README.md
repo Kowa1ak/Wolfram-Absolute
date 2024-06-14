@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Wolfram-Absolute
 educational project for university
 =======
@@ -66,25 +65,25 @@ docker-compose up --build
 ## Работа проекта
 
 ### Вычисления
-![Вычисления](./docs/vid0.gif)
+![Вычисления](./back-end/docs/vid0.gif)
 
-![Вычисления](./docs/vid1.gif)
+![Вычисления](/back-end/docs/vid1.gif)
 
-![Вычисления](./docs/vid2.gif)
+![Вычисления](./back-end/docs/vid2.gif)
 
-![Вычисления](./docs/vid3.gif)
+![Вычисления](./back-end/docs/vid3.gif)
 
 ### Экран логина
-![Экран логина](./docs/login_page.png)
+![Экран логина](./back-end/docs/login_page.png)
 
 ### Экран регистрации
-![Экран логина](./docs/reg_page.png)
+![Экран логина](./back-end/docs/reg_page.png)
 
 ### Главная страница
-![Главная страница](./docs/main_page.png)
+![Главная страница](./back-end/docs/main_page.png)
 
 ### Чат
-![Чат](./docs/chat_page.png)
+![Чат](./back-end/docs/chat_page.png)
 
 ## Прмиер логов
 
