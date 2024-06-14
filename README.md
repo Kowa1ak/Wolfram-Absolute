@@ -1,10 +1,9 @@
 # Wolfram-Absolute
 educational project for university
 =======
-# WolframAbsoluteBackend
+**Название проекта:** Wolfram Absolute
 
-**Название проекта:** WolframAbsoluteBackend  
-**Описание:** WolframAbsoluteBackend - это серверная часть для системы вычислений, которая включает в себя авторизацию, вычисления, историю операций и чат. Проект написан на Java и использует современные технологии для обеспечения надежной и масштабируемой работы.
+**Описание:** Wolfram Absolute - это комплексная система вычислений, включающая в себя как серверную, так и клиентскую части. Бэкенд проекта написан на Java и оснащен функциями авторизации, вычислений, истории операций и чата, что обеспечивает надежную и масштабируемую работу. Фронтенд реализован на Angular, предоставляя пользователям интуитивно понятный и удобный интерфейс для взаимодействия с системой. 
 
 ## Стек технологий
 
@@ -39,11 +38,10 @@ ng serve
 
 ## Инструкция по развертыванию и настройке проекта в Docker
 
-### Клонируйте репозитории проекта на локальный компьютер:
+### Клонируйте репозиторий проекта на локальный компьютер:
 
 ```bash
-git clone https://github.com/SoTokcuk/WolframAbsoluteBackend.git
-git clone https://github.com/SoTokcuk/WolframAbsolute.git
+git https://github.com/Kowa1ak/Wolfram-Absolute.git
 ```
 
 ### Убедитесь, что на вашем компьютере установлен Docker
@@ -52,6 +50,7 @@ git clone https://github.com/SoTokcuk/WolframAbsolute.git
 
 *Выполните команду*
 ```bash
+cd Wolfram-Absolute/
 docker-compose up --build
 ```
 
