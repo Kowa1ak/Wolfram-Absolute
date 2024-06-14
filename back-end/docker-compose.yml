@@ -17,7 +17,7 @@ services:
   app:
     image: new-spring-boot-app:latest
     build:
-      context: ./WolframAbsoluteBackend-dev/WolframAbsoluteBackend-dev
+      context: ./Wolfram-Absolute/back-end
       dockerfile: Dockerfile
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/wolframabsolute
@@ -31,7 +31,7 @@ services:
       - mysql
   app-ui:
     image: new-angular-front-end:latest
-    build: ./WolframAbsolute-front-end
+    build: ./Wolfram-Absolute/front-end
     ports:
       - 4200:4200
     depends_on:
