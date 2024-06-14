@@ -1,0 +1,240 @@
+<body>
+  <div class="mainContent">
+    <header>
+      <div class="logo" (click)="navigateToHome()"></div>
+      <div class="goHome">
+        <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+      </div>
+      <div class="nameProject">WOLFRAM ABSOLUTE</div>
+      <div class="nameProjectDop">COMPOUND INTEREST</div>
+    </header>
+    <div class="content">
+      <div class="tool-bar">
+        <form>
+          <div class="input-group">
+            <input
+              #initialAmountInput
+              required=""
+              type="number"
+              id="initialAmount"
+              name="initialAmount"
+              autocomplete="off"
+              class="input"
+            />
+            <select
+              id="currency"
+              name="currency"
+              class="select"
+              style="-webkit-appearance: none; appearance: none; border: none;" 
+              (change)="onCurrencyChange($event)"
+            >
+              <option value="USD"  style="border: none;" >$</option>
+              <option value="EUR" style="border: none;">€</option>
+              <option value="RUB" style="border: none;">₽</option>
+              <!-- Добавьте другие валюты по необходимости -->
+            </select>
+            <label class="user-label" for="additionalContributions"
+              >Initial Amount</label
+            >
+          </div>
+          <div class="input-group">
+            <input
+              #monthlyContributionInput
+              required=""
+              type="number"
+              id="additionalContributions"
+              name="additionalContributions"
+              autocomplete="off"
+              class="input"
+            />
+            <span class="infoCurrency">{{ selectedCurrency }}</span>
+            <label class="user-label" for="additionalContributions"
+              >Additional Contributions</label
+            >
+          </div>
+          <div class="PB-range-slider-div">
+            <input
+              #interestRateInput
+              type="range"
+              min="0"
+              max="100"
+              value="0"
+              class="PB-range-slider"
+              id="interestRate"
+              name="interestRate"
+              (input)="onRangeChange($event)"
+            />
+            <p class="PB-range-slidervalue" id="rangeValue">
+              {{ rangeValue }}%
+            </p>
+            <label for="interestRate" class="user-label">Interest Rate</label>
+          </div>
+          <div class="btn-periodicity">
+            <div class="frequency">
+              <span for="contributionFrequency">Contribution Frequency</span>
+
+              <button
+                value="1"
+                (click)="setFrequency($event); selectContributionButton($event)"
+              >
+                Every year
+              </button>
+              <button
+                value="3"
+                (click)="setFrequency($event); selectContributionButton($event)"
+              >
+                Every quarter
+              </button>
+              <button
+                value="6"
+                (click)="setFrequency($event); selectContributionButton($event)"
+              >
+                Every half year
+              </button>
+              <button
+                value="12"
+                (click)="setFrequency($event); selectContributionButton($event)"
+              >
+                Every month
+              </button>
+            </div>
+            <div class="frequency">
+              <span for="interestFrequency">Interest Frequency</span>
+
+              <button
+                value="1"
+                (click)="setFrequency($event); selectInterestButton($event)"
+              >
+                Every year
+              </button>
+              <button
+                value="3"
+                (click)="setFrequency($event); selectInterestButton($event)"
+              >
+                Every quarter
+              </button>
+              <button
+                value="6"
+                (click)="setFrequency($event); selectInterestButton($event)"
+              >
+                Every half year
+              </button>
+              <button
+                value="12"
+                (click)="setFrequency($event); selectInterestButton($event)"
+              >
+                Every month
+              </button>
+            </div>
+          </div>
+          <div class="input-group">
+            <input
+              #yearsInput
+              required=""
+              type="number"
+              id="years"
+              name="years"
+              autocomplete="off"
+              class="input"
+            />
+
+            <label class="user-label" for="additionalContributions"
+              >Years</label
+            >
+          </div>
+          <div class="main-btn">
+            <button class="bin-button" (click)="clearForm()">
+              <svg
+                class="bin-top"
+                viewBox="0 0 39 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line
+                  y1="5"
+                  x2="39"
+                  y2="5"
+                  stroke="white"
+                  stroke-width="4"
+                ></line>
+                <line
+                  x1="12"
+                  y1="1.5"
+                  x2="26.0357"
+                  y2="1.5"
+                  stroke="white"
+                  stroke-width="3"
+                ></line>
+              </svg>
+              <svg
+                class="bin-bottom"
+                viewBox="0 0 33 39"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <mask id="path-1-inside-1_8_19" fill="white">
+                  <path
+                    d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                  ></path>
+                </mask>
+                <path
+                  d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                  fill="white"
+                  mask="url(#path-1-inside-1_8_19)"
+                ></path>
+                <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+              </svg>
+            </button>
+            <button class="btnHistory" (click)="toggleHistory($event)">
+              <mat-icon>history</mat-icon>
+            </button>
+            <div class="btnLibraryList">
+              <button
+                mat-button
+                (click)="selectedButton = 'Java'"
+                [class.selected]="selectedButton === 'Java'"
+              >
+                Java
+                <mat-icon>check</mat-icon>
+              </button>
+              <button
+                mat-button
+                (click)="selectedButton = 'C++'"
+                [class.selected]="selectedButton === 'C++'"
+              >
+                C++
+                <mat-icon>check</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button class="send-btn" type="button" (click)="sendData()">
+            Submit
+          </button>
+        </form>
+      </div>
+      <div class="grafik">
+        <div class="result">
+          <div class="serverResponse">
+            <p>{{ totalReplenishments }} {{ selectedCurrency }}</p>
+            Total replenishments
+          </div>
+          <div class="serverResponse">
+            <p style="font-weight: 700">
+              {{ totalFinalAmount }} {{ selectedCurrency }}
+            </p>
+            Total balance
+          </div>
+          <div class="serverResponse">
+            <p>{{ totalInterests }} {{ selectedCurrency }}</p>
+            Total interests
+          </div>
+        </div>
+        <div class="chart">
+          <canvas id="myChart" #myChart></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>

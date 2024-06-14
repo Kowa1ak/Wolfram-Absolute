@@ -1,0 +1,180 @@
+
+body {
+  position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.mainContent {
+  position: relative;
+  z-index: 1;
+}
+.backImage {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/img/background.png');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+} 
+.languages {
+  padding-top: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: flex-start;
+  float: left;
+  width: 200px;
+  height: 150px;
+}
+
+.languageOptions {
+  margin-top: 10px;
+  width: 90%;
+  height: 50%;
+  border-radius: 20px;
+  background-color: #23243C;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.languageButton {
+  color: #FFF;
+  border: none;
+  font-family: "Inter", sans-serif;
+}
+.logo {
+    float: left;
+    width: 135px;
+    height: 100px;
+    background-image: url(https://i.imgur.com/I1VDLHu.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+header {
+  width: 100%;
+  z-index: 11;
+  position: fixed;
+}
+.content {
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+ 
+}
+.nameProject {
+  width: 100%;
+    color: #FFF;
+    font-family: "KoHo", sans-serif;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+   
+} 
+.authButtons {
+    padding: 20px 20px 0 0;
+    text-align: right;
+    
+}
+button {
+    color: #FFF;
+    font-family: "Inter", sans-serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: normal;
+    cursor: pointer;
+    background-color: transparent;
+    margin-left: 10px;
+}
+.SignButton {
+    width: 120px;
+    height: 50px;
+    border: none;
+}
+.SignUpButton {
+    margin-left: 20px;
+    padding: 0 20px;
+    width: auto;
+    height: 50px;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.container { 
+  padding-top: 3%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  justify-items: center;
+  align-items: center;
+  margin-left: auto; 
+  margin-right: auto;
+}
+@media (max-width: 1000px) {
+  .content {
+    z-index: 12;
+    transform: translateY(100px);
+  }
+  .container {
+    padding: 4% 5%;
+    grid-template-columns: 1fr;
+  }
+  .container button {
+    min-width: none;
+    max-width: 450px;
+    width: 100%;
+   
+  }
+}
+
+
+.container button {
+  min-width: 400px;
+  width: 100%;
+  padding: 20px 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 0;
+  background-color: #23243C;
+  box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 20px;
+  transition: all 0.5s ease;
+}
+
+.container button:hover {
+  letter-spacing: 5px;
+  background-color: hsl(262, 64%, 49%); /* #6C2FCD */
+  color: hsl(0, 0%, 100%);
+  box-shadow: #0F102B 0px 7px 29px 0px;
+}
+
+.container button:active {
+  letter-spacing: 5px;
+  background-color: hsl(262, 64%, 49%); /* #6C2FCD */
+  color: hsl(0, 0%, 100%);
+  box-shadow: #0F102B 0px 0px 0px 0px;
+  transform: translateY(10px);
+  transition: 100ms;
+}
+
+
+
+
+
+
+
+

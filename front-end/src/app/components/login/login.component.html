@@ -1,0 +1,119 @@
+<body>
+  <div class="mainContent">
+    <div class="logo" (click)="navigateToHome()"></div>
+    <div class="nameProject">WOLFRAM ABSOLUTE</div>
+    <div class="formContent">
+      <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+        <div class="menuBar">
+          <div class="goHome">
+            <mat-icon class="home-icon" (click)="navigateToHome()"
+              >home</mat-icon
+            >
+          </div>
+          <div class="languages">
+            <button
+              type="button"
+              (click)="toggleLanguageOptions()"
+              class="languageButton"
+            >
+              {{ languageService.activeLanguage }}
+            </button>
+            <div *ngIf="showLanguageOptions" class="languageOptions">
+              <button (click)="setActiveLanguage('RU')" class="languageButton">
+                RU
+              </button>
+              <button (click)="setActiveLanguage('BY')" class="languageButton">
+                BY
+              </button>
+              <button (click)="setActiveLanguage('EN')" class="languageButton">
+                EN
+              </button>
+            </div>
+          </div>
+        </div>
+        <h1 class="form-title">
+          {{ "login.welcome" | translate : languageService.locale.language }}
+        </h1>
+
+        <div class="field">
+          <input
+            type="text"
+            formControlName="email"
+            name="email"
+            placeholder=" {{
+              'login.email' | translate : languageService.locale.language
+            }} "
+            [class.error]="
+              loginForm.controls.email.invalid &&
+              (loginForm.controls.email.dirty ||
+                loginForm.controls.email.touched)
+            "
+          />
+          <div
+            *ngIf="
+              loginForm.controls.email.invalid &&
+              (loginForm.controls.email.dirty ||
+                loginForm.controls.email.touched)
+            "
+            class="p-error"
+          >
+            <small *ngIf="loginForm.controls.email.errors?.['required']">{{
+              "login.emailRequired"
+                | translate : languageService.locale.language
+            }}</small>
+            <small *ngIf="loginForm.controls.email.errors?.['email']">{{
+              "login.emailInvalid" | translate : languageService.locale.language
+            }}</small>
+          </div>
+        </div>
+        <div class="field">
+          <input
+            type="password"
+            formControlName="password"
+            name="password"
+            placeholder="{{
+              'login.password' | translate : languageService.locale.language
+            }}"
+            [class.error]="
+              loginForm.controls.password.invalid &&
+              (loginForm.controls.password.dirty ||
+                loginForm.controls.password.touched)
+            "
+          />
+          <div
+            *ngIf="
+              loginForm.controls.password.invalid &&
+              (loginForm.controls.password.dirty ||
+                loginForm.controls.password.touched)
+            "
+            class="p-error"
+          >
+            <small *ngIf="loginForm.controls.password.errors?.['required']">
+              {{
+                "login.passwordRequired"
+                  | translate : languageService.locale.language
+              }}
+            </small>
+            <small *ngIf="loginForm.controls.password.errors?.['minlength']">
+              {{
+                "login.passwordMinLength"
+                  | translate : languageService.locale.language
+              }}
+            </small>
+          </div>
+        </div>
+        <!-- [disabled]="loginForm.invalid" -->
+        <button class="btnSignIn" (click)="onButtonClick($event)" type="button">
+          {{ "login.signIn" | translate : languageService.locale.language }}
+        </button>
+        <div class="addOption">
+          {{ "login.notMember" | translate : languageService.locale.language }}
+          <a routerLink="/register">{{
+            "login.register" | translate : languageService.locale.language
+          }}</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>

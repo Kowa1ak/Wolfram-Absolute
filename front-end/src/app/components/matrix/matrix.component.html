@@ -1,0 +1,208 @@
+<body>
+  <div class="mainContent">
+    <header>
+      <div class="logo" (click)="navigateToHome()"></div>
+      <div class="goHome">
+        <mat-icon class="home-icon" (click)="navigateToHome()">home</mat-icon>
+      </div>
+    </header>
+    <div
+      #content
+      class="content"
+      [ngClass]="{ 'flex-start': selectedMatrix.length > 0 }"
+    >
+      <div class="nameProject">WOLFRAM ABSOLUTE</div>
+      <div class="nameProjectDop">MATRIX OPERATIONS</div>
+      <div class="calculator">
+        <div class="btn-container">
+          <button class="large-button" (click)="openModal()">Add matrix</button>
+          <button class="large-button" (click)="sendData()">Calculate</button>
+        </div>
+        <div
+          class="operations-container"
+          *ngIf="firstMatrixAdded && !secondMatrixAdded"
+        >
+          <button class="operation-button" (click)="add()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button class="operation-button" (click)="multiply()">
+            <mat-icon>clear</mat-icon>
+          </button>
+          <button class="operation-button" (click)="inverse()">-1</button>
+          <button class="operation-button" (click)="transpose()">T</button>
+        </div>
+        <div
+          #middleContainer
+          class="midle-container"
+          *ngIf="selectedMatrix.length > 0"
+        >
+          <div class="additional-button">
+            <div class="btnLibraryList">
+              <button
+                mat-button
+                (click)="selectedButton = 'Java'"
+                [class.selected]="selectedButton === 'Java'"
+              >
+                Java
+                <mat-icon>check</mat-icon>
+              </button>
+              <button
+                mat-button
+                (click)="selectedButton = 'C++'"
+                [class.selected]="selectedButton === 'C++'"
+              >
+                C++
+                <mat-icon>check</mat-icon>
+              </button>
+            </div>
+            <div class="threads-container">
+              <h3>Threads</h3>
+              <div class="list-thread-button">
+                <div
+                  #highlight
+                  class="thread-highlight"
+                  [style.top.px]="highlightPosition"
+                ></div>
+                <ul>
+                  <button
+                    class="thread-button"
+                    (click)="selectThread('1')"
+                    [class.selected]="selectedThread === '1'"
+                    data-thread="1"
+                  >
+                    1
+                  </button>
+                  <li>
+                    <button
+                      class="thread-button"
+                      (click)="selectThread('2')"
+                      [class.selected]="selectedThread === '2'"
+                      data-thread="2"
+                    >
+                      2
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="thread-button"
+                      (click)="selectThread('3')"
+                      [class.selected]="selectedThread === '3'"
+                      data-thread="3"
+                    >
+                      3
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="thread-button"
+                      (click)="selectThread('4')"
+                      [class.selected]="selectedThread === '4'"
+                      data-thread="4"
+                    >
+                      4
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="input-container">
+            <mat-icon class="delete-icon" (click)="deleteAllAndClose()"
+              >delete_forever</mat-icon
+            >
+            <div class="matrix" *ngIf="selectedMatrix[0]">
+              <span class="bracket" #leftBracket>[</span>
+
+              <div class="matrix-content">
+                <div
+                  class="matrix-row"
+                  *ngFor="let row of selectedMatrix[0]; let i = index"
+                >
+                  <div *ngFor="let item of row; let j = index">
+                    <input
+                      class="matrix-cell"
+                      #input
+                      [(ngModel)]="item.value"
+                      (keyup.enter)="focusNextInput(0, i, j)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <span class="bracket" #rightBracket>]</span>
+            </div>
+            <div class="operation-container">
+              <div
+                class="operation-display"
+                [class.transpose-operation]="currentOperation === 'T'"
+                [class.inverse-operation]="currentOperation === '-1'"
+              >
+                {{ currentOperation }}
+              </div>
+            </div>
+            <div class="matrix" *ngIf="selectedMatrix[1]">
+              <span class="bracket" #leftBracket2>[</span>
+
+              <div class="matrix-content">
+                <div
+                  class="matrix-row"
+                  *ngFor="let row of selectedMatrix[1]; let i = index"
+                >
+                  <div *ngFor="let item of row; let j = index">
+                    <input
+                      class="matrix-cell"
+                      #input
+                      [(ngModel)]="item.value"
+                      (keyup.enter)="focusNextInput(1, i, j)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <span class="bracket" #rightBracket2>]</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal" *ngIf="isModalOpen">
+          <div class="modal-content">
+            <mat-icon class="close-icon" (click)="isModalOpen = false"
+              >close</mat-icon
+            >
+            <div class="grid-container">
+              <button
+                class="grid-item"
+                *ngFor="let item of gridItems; let i = index"
+                [class.highlight]="isHighlighted(i)"
+                (mouseenter)="onMouseEnter(i)"
+                (mouseleave)="onMouseLeave()"
+                (click)="selectMatrixSize(i)"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-container">
+          <button class="btnHistory" (click)="toggleHistory($event)">
+            <mat-icon>history</mat-icon>
+          </button>
+          <div class="result">
+            <div class="nameResult">Result:</div>
+            <div class="numberResult">
+              <span class="bracket" *ngIf="serverResponse.length" #leftBracket3
+                >[</span
+              >
+              <table>
+                <tr class="matrix-row" *ngFor="let row of serverResponse">
+                  <td class="matrix-cell" *ngFor="let cell of row">
+                    {{ cell }}
+                  </td>
+                </tr>
+              </table>
+              <span class="bracket" *ngIf="serverResponse.length" #rightBracket3
+                >]</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="backImage"></div>
+</body>
