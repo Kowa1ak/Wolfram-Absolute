@@ -41,8 +41,7 @@ ng serve
 ### Клонируйте репозитории проекта на локальный компьютер:
 
 ```bash
-git clone https://github.com/SoTokcuk/WolframAbsoluteBackend.git
-git clone https://github.com/SoTokcuk/WolframAbsolute.git
+git https://github.com/Kowa1ak/Wolfram-Absolute.git
 ```
 
 ### Убедитесь, что на вашем компьютере установлен Docker
@@ -51,6 +50,7 @@ git clone https://github.com/SoTokcuk/WolframAbsolute.git
 
 *Выполните команду*
 ```bash
+cd Wolfram-Absolute/
 docker-compose up --build
 ```
 
