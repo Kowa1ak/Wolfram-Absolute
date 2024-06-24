@@ -98,4 +98,4 @@ docker-compose up --build
 
 ## Схема базы данных
 
-![Схема базы данных](./back-end/docs/db_scheme.png)
+![Схема базы данных](./back-end/docs/db_scheme.jpg)
