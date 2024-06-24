@@ -37,4 +37,5 @@ logs/
 
 # System files
 .DS_Store
+.init.sql/
 Thumbs.db
